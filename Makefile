@@ -1,38 +1,38 @@
 # === Colors ===
-RED     	= \033[0;31m
-GREEN   	= \033[0;32m
-YELLOW  	= \033[0;33m
-BLUE    	= \033[0;34m
-MAGENTA 	= \033[0;35m
-CYAN    	= \033[0;36m
-RESET   	= \033[0m
-BOLD		= \033[1m
-UNDERLINE 	= \033[4;32m
-GREEN_BG 	= \033[42m
+RED     			:= \033[0;31m
+GREEN   			:= \033[0;32m
+YELLOW  			:= \033[0;33m
+BLUE    			:= \033[0;34m
+MAGENTA 			:= \033[0;35m
+CYAN    			:= \033[0;36m
+RESET   			:= \033[0m
+BOLD				:= \033[1m
+UNDERLINE 			:= \033[4;32m
+GREEN_BG 			:= \033[42m
 
-NAME = minishell
+NAME 				:= minishell
 
 # Paths
-LIB_DIR = libs
-LIBFT_DIR = $(LIB_DIR)/libft
-SRC_DIR = src
-OBJ_DIR = obj
-HEADERS_DIR = include
-LIBFT_HEADERS_DIR = $(LIBFT_DIR)/include
+LIB_DIR				:= libs
+LIBFT_DIR			:= $(LIB_DIR)/libft
+SRC_DIR				:= src
+OBJ_DIR				:= obj
+HEADERS_DIR 		:= include
+LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
 
 # Compiler
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
+CC		:= cc
+CFLAGS	:= -Wall -Werror -Wextra -g -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
 
 # Linker/Loader ld
-LDFLAGS = -L$(LIBFT_DIR)
+LDFLAGS := -L$(LIBFT_DIR)
 
 # Sources
-SRCS =	$(SRC_DIR)/main.c \
+SRCS 	:= $(SRC_DIR)/main.c \
 
-LIBFT = $(LIBFT_DIR)/libft_bonus.a
+LIBFT 	:= $(LIBFT_DIR)/libft_bonus.a
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS 	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
 
