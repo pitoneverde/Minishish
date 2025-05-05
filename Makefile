@@ -25,12 +25,12 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
 
 # Linker/Loader ld
-LDFLAGS = -L$(LIBFT_DIR) -lft
+LDFLAGS = -L$(LIBFT_DIR)
 
 # Sources
 SRCS =	$(SRC_DIR)/main.c \
 
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT = $(LIBFT_DIR)/libft_bonus.a
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -45,7 +45,7 @@ $(NAME): $(OBJS) $(LIBFT)
 
 $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
-	$(MAKE) -C $(LIBFT_DIR) --quiet
+	$(MAKE) bonus -C $(LIBFT_DIR) --quiet
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
