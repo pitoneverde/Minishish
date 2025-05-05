@@ -1,14 +1,14 @@
 # === Colors ===
-RED     = \033[0;31m
-GREEN   = \033[0;32m
-YELLOW  = \033[0;33m
-BLUE    = \033[0;34m
-MAGENTA = \033[0;35m
-CYAN    = \033[0;36m
-RESET   = \033[0m
+RED     	= \033[0;31m
+GREEN   	= \033[0;32m
+YELLOW  	= \033[0;33m
+BLUE    	= \033[0;34m
+MAGENTA 	= \033[0;35m
+CYAN    	= \033[0;36m
+RESET   	= \033[0m
 BOLD		= \033[1m
-UNDERLINE = \033[4;32m
-GREEN_BG = \033[42m
+UNDERLINE 	= \033[4;32m
+GREEN_BG 	= \033[42m
 
 NAME = libft.a
 BONUS_NAME = libft_bonus.a
@@ -50,13 +50,8 @@ SRCS = 	$(SRC_DIR)/ft_isalpha.c \
 		$(SRC_DIR)/ft_putchar_fd.c \
 		$(SRC_DIR)/ft_putstr_fd.c \
 		$(SRC_DIR)/ft_putendl_fd.c \
-		$(SRC_DIR)/ft_putnbr_fd.c \
-		$(SRC_DIR)/ft_printf.c \
-		$(SRC_DIR)/ft_putptr_fd.c \
-		$(SRC_DIR)/ft_putunbr_fd.c \
-		$(SRC_DIR)/ft_puthex_fd.c \
 		$(SRC_DIR)/get_next_line.c \
-			
+
 SRCS_BONUS = 	$(SRC_DIR)/ft_lstnew.c \
 				$(SRC_DIR)/ft_lstadd_front.c \
 				$(SRC_DIR)/ft_lstsize.c \
