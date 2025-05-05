@@ -10,9 +10,17 @@ BOLD				:= \033[1m
 UNDERLINE 			:= \033[4;32m
 GREEN_BG 			:= \033[42m
 
-NAME 				:= minishell
+# === Tests ===
 
-# Paths
+UNITY_DIR    := unity/src
+UNITY_SRC    := $(UNITY_DIR)/unity.c
+TEST_DIR     := tests
+TEST_SRCS    := $(TEST_DIR)/test0.c
+
+# === Name ===
+NAME		 := minishell
+
+# === Paths ===
 LIB_DIR				:= libs
 LIBFT_DIR			:= $(LIB_DIR)/libft
 SRC_DIR				:= src
@@ -20,15 +28,17 @@ OBJ_DIR				:= obj
 HEADERS_DIR 		:= include
 LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
 
-# Compiler
+# === Compiler ===
 CC		:= cc
-CFLAGS	:= -Wall -Werror -Wextra -g -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
+CFLAGS	:= -Wall -Werror -Wextra -g \
+			-I$(HEADERS_DIR) -I$(SRC_DIR) \
+			-I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR) \
+			-I$(UNITY_DIR)
 
-# Linker/Loader ld
 LDFLAGS := -L$(LIBFT_DIR)
 
-# Sources
-SRCS 	:= $(SRC_DIR)/main.c \
+# === Sources ===
+SRCS 	:= $(SRC_DIR)/main.c
 
 LIBFT 	:= $(LIBFT_DIR)/libft_bonus.a
 
@@ -55,6 +65,11 @@ $(OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
 	mkdir -p $(OBJ_DIR)
 
+test: $(OBJ_DIR) $(OBJS) $(UNITY_SRC) $(TEST_SRCS)
+	@echo "---- Compiling & running tests ----"
+	$(CC) $(CFLAGS) $(UNITY_SRC) $(OBJS) $(TEST_SRCS) -o run_tests
+	./run_tests
+
 # Remove only temporary files
 clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
@@ -76,4 +91,4 @@ fclean: clean
 
 re: fclean all
  
-.PHONY: all clean fclean re
+.PHONY: all test clean fclean re
