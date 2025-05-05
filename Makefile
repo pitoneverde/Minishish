@@ -60,7 +60,7 @@ clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
 	@rm -rf $(OBJ_DIR)
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
-	@echo "$(RED)---- cleaning libft =---$(RESET)"
+	@echo "$(RED)---- Running clean libft ----$(RESET)"
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
 endif
 
@@ -70,7 +70,7 @@ fclean: clean
 		echo "$(RED)---- Removing executable $(NAME)...$(RESET)"; \
 		rm -f $(NAME); \
 	fi
-	@echo "$(RED)---- fcleaning libft ----$(RESET)"
+	@echo "$(RED)---- Running fclean libft ----$(RESET)"
 	@$(MAKE) --no-print-directory LIBFT_CLEAN_ENABLED=0 clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
 
