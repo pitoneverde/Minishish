@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/05 17:53:40 by plichota         ###   ########.fr       */
+/*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
+/*   Updated: 2025/05/05 17:55:16 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int main(void)
-{
-    return 0;
-}
+# ifndef TILE
+#  define TILE 64
+# endif
+
+# include "libft.h"
+# include <stdio.h>
+
+#endif
