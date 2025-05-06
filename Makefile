@@ -10,23 +10,26 @@ BOLD				:= \033[1m
 UNDERLINE 			:= \033[4;32m
 GREEN_BG 			:= \033[42m
 
-# === Tests ===
-
-UNITY_DIR    := unity/src
-UNITY_SRC    := $(UNITY_DIR)/unity.c
-TEST_DIR     := tests
-TEST_SRCS    := $(TEST_DIR)/test0.c
-
 # === Name ===
-NAME		 := minishell
+NAME		 		:= minishell
 
 # === Paths ===
 LIB_DIR				:= libs
-LIBFT_DIR			:= $(LIB_DIR)/libft
 SRC_DIR				:= src
 OBJ_DIR				:= obj
+TEST_DIR     		:= tests
+TEST_OBJ_DIR		:= obj_tests
 HEADERS_DIR 		:= include
+
+# === Libft Paths===
+LIBFT_DIR			:= $(LIB_DIR)/libft
 LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
+LIBFT 				:= $(LIBFT_DIR)/libft_bonus.a
+
+# === Unity ===
+UNITY_DIR   		:= unity/src
+UNITY_SRC   		:= $(UNITY_DIR)/unity.c
+UNITY_OBJ			:= $(TEST_OBJ_DIR)/unity.o
 
 # === Compiler ===
 CC		:= cc
@@ -38,17 +41,29 @@ CFLAGS	:= -Wall -Werror -Wextra -g \
 LDFLAGS := -L$(LIBFT_DIR)
 
 # === Sources ===
-SRCS 	:= $(SRC_DIR)/main.c
+SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
-LIBFT 	:= $(LIBFT_DIR)/libft_bonus.a
+SRCS 		:= \
+	$(SRC_DIR)/feature1/sum.c
 
-OBJS 	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+TEST_SRCS	:= \
+	$(TEST_DIR)/test0.c
+
+# Compile objects
+MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+NO_MAIN_OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS 			:= $(MAIN_OBJ) $(NO_MAIN_OBJS)
+
+# Compile test objects
+TEST_OBJS	:= $(TEST_SRCS:$(TEST_DIR)/%.c=$(TEST_OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
 
+# Main target
 all: $(NAME)
 	@echo "$(GREEN)---- Building of $(NAME) ----$(RESET)";
 
+# Link objects + library
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(CYAN)---- Linking target $@ ---- $(RESET)using $^"
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
@@ -57,30 +72,56 @@ $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
 	$(MAKE) bonus -C $(LIBFT_DIR) --quiet
 
+# Compile src files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# === Compile Unity object ===
+$(UNITY_OBJ): $(UNITY_SRC)
+	@echo "$(YELLOW)Compiling Unity $<$(RESET)"
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile test files
+$(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(TEST_OBJ_DIR)
+	@echo "$(YELLOW)Compiling test $<$(RESET)"
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Create object directory
 $(OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
 	mkdir -p $(OBJ_DIR)
 
-test: $(OBJ_DIR) $(OBJS) $(UNITY_SRC) $(TEST_SRCS)
-	@echo "---- Compiling & running tests ----"
-	$(CC) $(CFLAGS) $(UNITY_SRC) $(OBJS) $(TEST_SRCS) -o run_tests
-	./run_tests
+# Create test object directory
+$(TEST_OBJ_DIR):
+	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
+	mkdir -p $(TEST_OBJ_DIR)
+
+test: $(TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
+	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
+	@$(CC) $(CFLAGS) $(TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
+	@./run_tests
 
 # Remove only temporary files
 clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(TEST_OBJ_DIR)
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
 	@echo "$(RED)---- Running clean libft ----$(RESET)"
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
 endif
 
+# Clean test
+tclean:
+	@echo "$(RED)---- Clean tests ----$(RESET)"
+	@rm -f ./run_tests
+	@rm -rf $(TEST_OBJ_DIR)
+
 # Remove temporary files and executables
-fclean: clean 
+fclean: clean tclean
 	@if [ -n "$(NAME)" ] && [ -e "$(NAME)" ]; then \
 		echo "$(RED)---- Removing executable $(NAME)...$(RESET)"; \
 		rm -f $(NAME); \
