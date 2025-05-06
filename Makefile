@@ -70,35 +70,35 @@ $(NAME): $(OBJS) $(LIBFT)
 
 $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
-	$(MAKE) bonus -C $(LIBFT_DIR) --quiet
+	@$(MAKE) bonus -C $(LIBFT_DIR) --quiet
 
 # Compile src files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # === Compile Unity object ===
 $(UNITY_OBJ): $(UNITY_SRC)
 	@echo "$(YELLOW)Compiling Unity $<$(RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Compile test files
 $(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(TEST_OBJ_DIR)
 	@echo "$(YELLOW)Compiling test $<$(RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Create object directory
 $(OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 # Create test object directory
 $(TEST_OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	mkdir -p $(TEST_OBJ_DIR)
+	@mkdir -p $(TEST_OBJ_DIR)
 
 test: $(TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
