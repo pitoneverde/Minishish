@@ -1,5 +1,6 @@
 # Minishish
 mini shell bash
+(bash is kept as a reference in is core fucntion in dev)
 
 ### Run minishell
 make
