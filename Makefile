@@ -44,6 +44,7 @@ LDFLAGS := -L$(LIBFT_DIR) -lft_bonus -lreadline
 SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
+	$(SRC_DIR)/parser/tokenize.c \
 	$(SRC_DIR)/feature1/sum.c \
 	$(SRC_DIR)/utils/utils.c
 	

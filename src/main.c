@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 19:53:16 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:02:31 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ extern char ** environ;
 // crea processo con fork
 // esegue con execvp
 
-void	tokenize(char *s)
-{
-	(void) s;
-	return ;
-}
+// void	tokenize(char *s)
+// {
+// 	(void) s;
+// 	return ;
+// }
 
 // segnale freccia su history
 // segnale freccia giu' history
