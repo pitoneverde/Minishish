@@ -9,8 +9,6 @@ make
 ### Run tests
 make test
 
-
-
 ## History
 si appoggia a history.h
 typedef struct _hist_entry {

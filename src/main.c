@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 19:53:16 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:30:42 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	main(int argc, const char *argv[], const char *envp[])
 		free(line);
 		line = readline("> ");
 	}
-	rl_clear_history();
+	// rl_clear_history();
 	// if (fork() == 0)
 	//     execvp(argv[1], argv + 1);
 	// wait(&status);
-	
 	return (0);
 }

@@ -18,7 +18,10 @@ LIB_DIR				:= libs
 SRC_DIR				:= src
 OBJ_DIR				:= obj
 TEST_DIR     		:= tests
-TEST_OBJ_DIR		:= obj_tests
+UNIT_TEST_DIR     	:= $(TEST_DIR)/unit
+INT_TEST_DIR     	:= $(TEST_DIR)/integration
+UNIT_TEST_OBJ_DIR	:= unit_obj_tests
+INT_TEST_OBJ_DIR	:= int_obj_tests
 HEADERS_DIR 		:= include
 
 # === Libft Paths===
@@ -29,7 +32,7 @@ LIBFT 				:= $(LIBFT_DIR)/libft_bonus.a
 # === Unity ===
 UNITY_DIR   		:= unity/src
 UNITY_SRC   		:= $(UNITY_DIR)/unity.c
-UNITY_OBJ			:= $(TEST_OBJ_DIR)/unity.o
+UNITY_OBJ			:= $(UNIT_TEST_OBJ_DIR)/unity.o
 
 # === Compiler ===
 CC		:= cc
@@ -47,16 +50,20 @@ SRCS 		:= \
 	$(SRC_DIR)/feature1/sum.c \
 	$(SRC_DIR)/utils/utils.c
 	
-TEST_SRCS	:= \
-	$(TEST_DIR)/test0.c
-
+UNIT_TEST_SRCS	:= \
+	$(UNIT_TEST_DIR)/test0.c
+	
+INT_TEST_SRCS	:= \
+	$(INT_TEST_DIR)/test_integration.c
+	
 # Compile objects
 MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 NO_MAIN_OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 OBJS 			:= $(MAIN_OBJ) $(NO_MAIN_OBJS)
 
 # Compile test objects
-TEST_OBJS	:= $(TEST_SRCS:$(TEST_DIR)/%.c=$(TEST_OBJ_DIR)/%.o)
+UNIT_TEST_OBJS	:= $(UNIT_TEST_SRCS:$(UNIT_TEST_DIR)/%.c=$(UNIT_TEST_OBJ_DIR)/%.o)
+INT_TEST_OBJS	:= $(INT_TEST_SRCS:$(INT_TEST_DIR)/%.c=$(INT_TEST_OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
 
@@ -86,7 +93,13 @@ $(UNITY_OBJ): $(UNITY_SRC)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Compile test files
-$(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(TEST_OBJ_DIR)
+$(UNIT_TEST_OBJ_DIR)/%.o: $(UNIT_TEST_DIR)/%.c | $(UNIT_TEST_OBJ_DIR)
+	@echo "$(YELLOW)Compiling test $<$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile test files
+$(INT_TEST_OBJ_DIR)/%.o: $(INT_TEST_DIR)/%.c | $(INT_TEST_OBJ_DIR)
 	@echo "$(YELLOW)Compiling test $<$(RESET)"
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -97,19 +110,30 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 # Create test object directory
-$(TEST_OBJ_DIR):
+$(UNIT_TEST_OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	@mkdir -p $(TEST_OBJ_DIR)
+	@mkdir -p $(UNIT_TEST_OBJ_DIR)
 
-test: $(TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
+$(INT_TEST_OBJ_DIR):
+	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
+	@mkdir -p $(INT_TEST_OBJ_DIR)
+
+unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
+	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
 	@./run_tests
+
+int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
+	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
+	@./run_tests
+
+test: unit_test int_test
 
 # Remove only temporary files
 clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
-	@rm -rf $(OBJ_DIR) $(TEST_OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(UNIT_TEST_OBJ_DIR)
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
 	@echo "$(RED)---- Running clean libft ----$(RESET)"
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
@@ -119,7 +143,7 @@ endif
 tclean:
 	@echo "$(RED)---- Clean tests ----$(RESET)"
 	@rm -f ./run_tests
-	@rm -rf $(TEST_OBJ_DIR)
+	@rm -rf $(UNIT_TEST_OBJ_DIR)
 
 # Remove temporary files and executables
 fclean: clean tclean
@@ -132,5 +156,5 @@ fclean: clean tclean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
 
 re: fclean all
- 
-.PHONY: all test clean fclean tclean re
+
+.PHONY: all test test2 clean fclean tclean re
