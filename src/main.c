@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 18:17:26 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:21:39 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	tokenize(char *s)
 	return ;
 }
 
+// segnale freccia su history
+// segnale freccia giu' history
 
 int	main(int argc, const char *argv[], const char *envp[])
 {

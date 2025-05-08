@@ -38,7 +38,7 @@ CFLAGS	:= -Wall -Werror -Wextra -g \
 			-I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR) \
 			-I$(UNITY_DIR)
 
-LDFLAGS := -L$(LIBFT_DIR) -lreadline
+LDFLAGS := -L$(LIBFT_DIR) -lft_bonus -lreadline
 
 # === Sources ===
 SRCS_MAIN 	:= $(SRC_DIR)/main.c
@@ -133,4 +133,4 @@ fclean: clean tclean
 
 re: fclean all
  
-.PHONY: all test clean fclean re
+.PHONY: all test clean fclean tclean re
