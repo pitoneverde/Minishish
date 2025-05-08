@@ -38,14 +38,15 @@ CFLAGS	:= -Wall -Werror -Wextra -g \
 			-I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR) \
 			-I$(UNITY_DIR)
 
-LDFLAGS := -L$(LIBFT_DIR)
+LDFLAGS := -L$(LIBFT_DIR) -lreadline
 
 # === Sources ===
 SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
-	$(SRC_DIR)/feature1/sum.c
-
+	$(SRC_DIR)/feature1/sum.c \
+	$(SRC_DIR)/utils/utils.c
+	
 TEST_SRCS	:= \
 	$(TEST_DIR)/test0.c
 
@@ -61,7 +62,7 @@ LIBFT_CLEAN_ENABLED ?= 1
 
 # Main target
 all: $(NAME)
-	@echo "$(GREEN)---- Building of $(NAME) ----$(RESET)";
+	@echo "$(GREEN)---- ✅ Building of $(NAME) ----$(RESET)";
 
 # Link objects + library
 $(NAME): $(OBJS) $(LIBFT)

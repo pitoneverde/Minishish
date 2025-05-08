@@ -6,22 +6,67 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/06 20:59:10 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:17:26 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, const char *argv[], const char *envp[])
-{
-    (void)argc;
-    (void)argv;
-    (void)envp;
-    printf("home: \e[0;32m%s\e[0m\n", getenv("HOME"));
-    printf("path: \e[0;32m%s\e[0m\n", getenv("PATH"));
-    printf("unexistent: \e[0;32m%s\e[0m\n", getenv("UNDEFINED"));
-    printf("term: \e[0;32m%s\e[0m\n", getenv("TERM"));
-    printf("sum %d\n", sum(1, 6));
+extern char ** environ;
 
-    return (0);
+// IN LOOP:
+// legge riga da stdin
+// crea processo con fork
+// esegue con execvp
+
+void	tokenize(char *s)
+{
+	(void) s;
+	return ;
+}
+
+
+int	main(int argc, const char *argv[], const char *envp[])
+{
+	(void)	argc;
+	(void)	argv;
+	(void)	envp;
+	char	*line;
+
+	if (argc != 1)
+		return (print_error("Wrong numbers of arguments"), 0);
+
+	// printf("home: \e[0;32m%s\e[0m\n", getenv("HOME"));
+	// printf("path: \e[0;32m%s\e[0m\n", getenv("PATH"));
+	// printf("unexistent: \e[0;32m%s\e[0m\n", getenv("UNDEFINED"));
+	// printf("term: \e[0;32m%s\e[0m\n", getenv("TERM"));
+	// printf("sum %d\n", sum(1, 6));
+	// const char ** curr = envp;
+	// char ** curr = environ;
+	// while (*curr != NULL)
+	// {
+	//     printf(" %s\n", *curr);
+	//     curr++;
+	// }
+	line = readline("> ");
+	while (line != NULL)
+	{
+		if (!line)
+			return (print_error("Wrong line"), 0);
+		if (ft_strncmp(line, "history", ft_strlen(line)) == 0)
+		{
+			printf("historyyyy\n");
+		}
+		tokenize(line);
+		printf("%s\n", line);
+		add_history(line);
+		free(line);
+		line = readline("> ");
+	}
+
+	// if (fork() == 0)
+	//     execvp(argv[1], argv + 1);
+	// wait(&status);
+	
+	return (0);
 }

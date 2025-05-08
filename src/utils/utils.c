@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 18:11:26 by plichota         ###   ########.fr       */
+/*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
+/*   Updated: 2025/05/08 18:09:55 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# ifndef TILE
-#  define TILE 64
-# endif
-
-# include "libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-int sum(int a, int b);
-
-// Utils
-void	print_error(char *s);
-
-#endif
+void	print_error(char *s)
+{
+	if (!s)
+		return ;
+	// do to modificare stdout
+	printf("%s\n", s);
+}
