@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/14 14:53:52 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:55:55 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, const char *argv[], const char *envp[])
 				printf("historyyyy\n");
 			}
 			t_list *tokens = tokenize(line);
-			printf("%s\n", line);
+			print_tokens(tokens);
 			add_history(line);
 		}
 		free(line);

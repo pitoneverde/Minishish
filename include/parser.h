@@ -34,6 +34,7 @@ typedef struct s_token
 
 // tokenizer
 t_list *tokenize(const char *line);	//element type char*
+void print_tokens(t_list *tokens);
 void free_raw_tokens(t_list **raw_tokens);
 char *read_next_token(const char *line, const char **p);
 
