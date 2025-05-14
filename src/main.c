@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 20:30:42 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:53:52 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ extern char ** environ;
 // legge riga da stdin
 // crea processo con fork
 // esegue con execvp
-
-void	tokenize(char *s)
-{
-	(void) s;
-	return ;
-}
 
 // segnale freccia su history
 // segnale freccia giu' history
@@ -61,7 +55,7 @@ int	main(int argc, const char *argv[], const char *envp[])
 			{
 				printf("historyyyy\n");
 			}
-			tokenize(line);
+			t_list *tokens = tokenize(line);
 			printf("%s\n", line);
 			add_history(line);
 		}
@@ -74,3 +68,58 @@ int	main(int argc, const char *argv[], const char *envp[])
 	// wait(&status);
 	return (0);
 }
+
+
+// int main(void)
+// {
+// 	const char *input = "echo hello world";
+// 	t_list *tokens = tokenize(input);
+// 	t_list *tmp = tokens;
+
+// 	while (tmp)
+// 	{
+// 		printf("token: [%s]\n", (char *)tmp->content);
+// 		tmp = tmp->next;
+// 	}
+// 	free_raw_tokens(&tokens);
+// 	return 0;
+// }
+
+// int main(int argc, char **argv)
+// {
+// 	if (argc != 2)
+// 	{
+// 		fprintf(stderr, "Usage: %s \"command line string\"\n", argv[0]);
+// 		return (1);
+// 	}
+
+// 	const char *input = argv[1];
+
+// 	// Step 1: Tokenizer
+// 	t_list *raw_tokens = tokenize(input);
+// 	if (!raw_tokens)
+// 	{
+// 		fprintf(stderr, "Tokenizer failed.\n");
+// 		return (1);
+// 	}
+
+// 	printf("=== Raw Tokens ===\n");
+// 	print_raw_tokens(raw_tokens);
+
+// 	// Step 2: Lexer
+// 	t_list *lexed = lex(raw_tokens);
+// 	if (!lexed)
+// 	{
+// 		fprintf(stderr, "Lexer failed.\n");
+// 		free_raw_tokens(&raw_tokens);
+// 		return (1);
+// 	}
+
+// 	printf("\n=== Lexed Tokens ===\n");
+// 	print_lexed_tokens(lexed);
+
+// 	// Cleanup
+// 	free_raw_tokens(&raw_tokens);
+// 	free_token_list(&lexed);
+// 	return (0);
+// }
