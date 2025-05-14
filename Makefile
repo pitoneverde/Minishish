@@ -45,8 +45,13 @@ SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
+	$(SRC_DIR)/parser/parse.c \
+	$(SRC_DIR)/parser/lex.c \
 	$(SRC_DIR)/feature1/sum.c \
-	$(SRC_DIR)/utils/utils.c
+	$(SRC_DIR)/utils/utils.c \
+	$(SRC_DIR)/utils/tokenizer_utils.c \
+	$(SRC_DIR)/utils/lexer_utils.c \
+	$(SRC_DIR)/debug.c \
 	
 TEST_SRCS	:= \
 	$(TEST_DIR)/test0.c
