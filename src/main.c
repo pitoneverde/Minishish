@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/14 16:01:16 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:24:10 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ extern char ** environ;
 // segnale freccia su history
 // segnale freccia giu' history
 
+/*
 int	main(int argc, const char *argv[], const char *envp[])
 {
 	(void)	argc;
@@ -68,7 +69,13 @@ int	main(int argc, const char *argv[], const char *envp[])
 	// wait(&status);
 	return (0);
 }
+*/
 
+int main(void)
+{
+	printf("ciao\n");
+	return (0);
+}
 
 // int main(void)
 // {

@@ -57,10 +57,10 @@ SRCS 		:= \
 	$(SRC_DIR)/debug.c \
 	
 UNIT_TEST_SRCS	:= \
-	$(UNIT_TEST_DIR)/test0.c
+	$(UNIT_TEST_DIR)/test_0.c
 	
 INT_TEST_SRCS	:= \
-	$(INT_TEST_DIR)/test_integration.c
+	$(INT_TEST_DIR)/test_1.c
 	
 # Compile objects
 MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -126,7 +126,7 @@ $(INT_TEST_OBJ_DIR):
 
 unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -o run_tests
+	@$(CC) $(CFLAGS) -Wno-extra $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -o run_tests
 	@./run_tests
 
 int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
@@ -134,7 +134,7 @@ int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -o run_tests
 	@./run_tests
 
-test: unit_test
+test: unit_test int_test
 
 # Remove only temporary files
 clean:
