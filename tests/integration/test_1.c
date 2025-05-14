@@ -3,6 +3,8 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define main real_main
 #include "../../src/main.c"
@@ -26,14 +28,13 @@ void tearDown(void)
     close(stdout_backup);
     fclose(tmp_fp);                       // chiude & elimina temp
 }
-
+/*
 void test_main_stampa_ciao(void)
 {
     int ret = real_main();
     TEST_ASSERT_EQUAL_INT(0, ret); // testa return main 0
     fflush(stdout);
 
-    /* Leggi ciò che real_main ha scritto nel temporaneo. */
     fflush(tmp_fp);
     rewind(tmp_fp);
 
@@ -45,16 +46,45 @@ void test_main_stampa_ciao(void)
         fprintf(stderr, " %02X", (unsigned char)buffer[i]);
     fprintf(stderr, "  STRINGA:[%s]\n", buffer);
 
-    /* Accetta sia "ciao\n" sia "ciao\r\n" */
     TEST_ASSERT_TRUE_MESSAGE(
         strcmp(buffer, "ciao\n")  == 0,
         "Output diverso da 'ciao\\n'"
     );
+}*/
+
+void test_main_argc_diverso_da_1(void)
+{
+    /* 1. prepara argv fittizio con 2 argomenti */
+    const char *argv[] = { "./minishell", "ciao", NULL };
+    const char *envp[] = { NULL };
+
+    /* 2. cattura stderr in un file temporaneo */
+    int saved_stderr = dup(STDERR_FILENO);
+    FILE *tmp = tmpfile();
+    dup2(fileno(tmp), STDERR_FILENO);
+
+    /* 3. esegui la main “reale” */
+    int ret = real_main(2, argv, envp);
+
+    /* 4. ripristina stderr PRIMA di leggere il file, così Unity scrive a video */
+    fflush(stderr);
+    dup2(saved_stderr, STDERR_FILENO);
+    close(saved_stderr);
+
+    /* 5. leggi ciò che è stato stampato da print_error */
+    rewind(tmp);
+    char buf[64] = {0};
+    fgets(buf, sizeof(buf), tmp);
+    fclose(tmp);
+
+    /* 6. asserzioni */
+    TEST_ASSERT_EQUAL_INT(0, ret);
+    TEST_ASSERT_EQUAL_STRING("Wrong number of arguments\n", buf);
 }
 
 int main(void)
 {
     UNITY_BEGIN();
-    RUN_TEST(test_main_stampa_ciao);
+    RUN_TEST(test_main_argc_diverso_da_1);
     return UNITY_END();
 }

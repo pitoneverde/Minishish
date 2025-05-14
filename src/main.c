@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/14 17:24:10 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:38:57 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ extern char ** environ;
 // segnale freccia su history
 // segnale freccia giu' history
 
-/*
 int	main(int argc, const char *argv[], const char *envp[])
 {
 	(void)	argc;
@@ -31,7 +30,7 @@ int	main(int argc, const char *argv[], const char *envp[])
 	char	*line;
 
 	if (argc != 1)
-		return (print_error("Wrong numbers of arguments"), 0);
+		return (print_error("Wrong number of arguments"), 0);
 
 	// printf("home: \e[0;32m%s\e[0m\n", getenv("HOME"));
 	// printf("path: \e[0;32m%s\e[0m\n", getenv("PATH"));
@@ -49,16 +48,17 @@ int	main(int argc, const char *argv[], const char *envp[])
 	while (line != NULL)
 	{
 		if (!line)
-			return (print_error("Wrong line"), 0);
+			return (print_error("No line"), 0);
 		if (ft_strlen(line) > 0)
 		{			
-			if (ft_strncmp(line, "history", ft_strlen(line)) == 0)
-			{
-				printf("historyyyy\n");
-			}
-			t_list *tokens = tokenize(line);
-			print_tokens(tokens);
+			// if (ft_strncmp(line, "history", ft_strlen(line)) == 0)
+			// {
+			// 	printf("historyyyy\n");
+			// }
+			// t_list *tokens = tokenize(line);
+			// print_tokens(tokens);
 			add_history(line);
+			printf("line: %s\n", line);
 		}
 		free(line);
 		line = readline("> ");
@@ -67,13 +67,6 @@ int	main(int argc, const char *argv[], const char *envp[])
 	// if (fork() == 0)
 	//     execvp(argv[1], argv + 1);
 	// wait(&status);
-	return (0);
-}
-*/
-
-int main(void)
-{
-	printf("ciao\n");
 	return (0);
 }
 
