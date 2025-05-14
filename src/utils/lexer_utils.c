@@ -15,9 +15,9 @@ t_token_type classify_token(const char *raw_token)
 	if (len == 1 && raw_token[0] == '|')
 		return TKN_PIPE;
 	if (len == 1 && raw_token[0] == '>')
-		return TKN_REDIRECT_OUT;
+		return TKN_REDIR_OUT;
 	if (len == 1 && raw_token[0] == '<')
-		return TKN_REDIRECT_IN;
+		return TKN_REDIR_IN;
 	if (is_malformed(raw_token, len))
 		return TKN_ERROR;
 	if (len >= 2 && is_quoted(raw_token, len, '\''))

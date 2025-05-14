@@ -29,8 +29,8 @@ typedef enum e_token_type
 {
 	TKN_WORD,	// done
 	TKN_PIPE,
-	TKN_REDIRECT_OUT,
-	TKN_REDIRECT_IN,
+	TKN_REDIR_OUT,
+	TKN_REDIR_IN,
 	TKN_APPEND,
 	TKN_HEREDOC,
 	TKN_S_QUOTED,

@@ -28,5 +28,4 @@ int sum(int a, int b);
 
 // Utils
 void	print_error(char *s);
-
 #endif

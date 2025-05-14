@@ -54,6 +54,7 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/utils.c \
 	$(SRC_DIR)/utils/tokenizer_utils.c \
 	$(SRC_DIR)/utils/lexer_utils.c \
+	$(SRC_DIR)/ast/ast.c \
 	$(SRC_DIR)/debug.c \
 	
 UNIT_TEST_SRCS	:= \

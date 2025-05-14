@@ -1,13 +1,23 @@
 #include "minishell.h"
+
+void print_raw_tokens(t_list *tokens)
+{
+	while (tokens)
+	{
+		printf("Raw token: \"%s\"\n", (char *)tokens->content);
+		tokens = tokens->next;
+	}
+}
+
 const char *token_type_name(t_token_type type)
 {
 	if (type == TKN_WORD)
 		return "WORD";
 	if (type == TKN_PIPE)
 		return "PIPE";
-	if (type == TKN_REDIRECT_IN)
+	if (type == TKN_REDIR_IN)
 		return "REDIRECT_IN";
-	if (type == TKN_REDIRECT_OUT)
+	if (type == TKN_REDIR_OUT)
 		return "REDIRECT_OUT";
 	if (type == TKN_APPEND)
 		return "APPEND";
@@ -34,22 +44,62 @@ void print_lexed_tokens(t_list *tokens)
 	}
 }
 
-void print_token_errors(t_list *lexemes)
+// void print_token_errors(t_list *lexemes)
+// {
+// 	while (lexemes)
+// 	{
+// 		t_token *tok = lexemes->content;
+// 		if (tok->error)
+// 			fprintf(stderr, "minishell: %s\n", tok->error);
+// 		lexemes = lexemes->next;
+// 	}
+// }
+
+const char *node_type_name(t_ast_type type)
 {
-	while (lexemes)
-	{
-		t_token *tok = lexemes->content;
-		if (tok->error)
-			fprintf(stderr, "minishell: %s\n", tok->error);
-		lexemes = lexemes->next;
-	}
+	if (type == AST_COMMAND)
+		return ("COMMAND");
+	if (type == AST_PIPE)
+		return ("PIPE");
+	if (type == AST_REDIR_IN)
+		return ("REDIRECT IN");
+	if (type == AST_REDIR_OUT)
+		return ("REDIRECT OUT");
+	if (type == AST_APPEND)
+		return ("APPEND");
+	if (type == AST_HEREDOC)
+		return ("HEREDOC");
+	if (type == AST_ERROR)
+		return ("ERROR");
+	return ("UNKNOWN");
 }
 
-void print_raw_tokens(t_list *tokens)
+// recursively print the Absract Syntax Tree
+void print_ast(const t_ast *node, int depth)
 {
-	while (tokens)
+	int	i;
+	char *value;
+
+	if (!node)
+		return ;
+	i = 0;
+	while (i++ < depth)
+		printf("  ");
+	if (!node->value)
+		value = ft_strdup("NULL");
+	else
+		value = node->value;
+	printf("(%s: %s)\n", node_type_name(node->type), value);
+	if (node->error)
+		printf("->Error: %s\n", node->error);
+	if (node->argv)
 	{
-		printf("Raw token: \"%s\"\n", (char *)tokens->content);
-		tokens = tokens->next;
+		i = 0;
+		printf("->Argv: [");
+		while (node->argv[i])
+			printf("\"%s\", ", node->argv[i++]);
+		printf("]\n");
 	}
+	print_ast(node->left, depth + 1);
+	print_ast(node->right, depth + 1);
 }
