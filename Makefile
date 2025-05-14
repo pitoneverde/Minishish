@@ -124,17 +124,17 @@ $(INT_TEST_OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
 	@mkdir -p $(INT_TEST_OBJ_DIR)
 
-unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
+unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
+	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -o run_tests
 	@./run_tests
 
-int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ)
+int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) -o run_tests
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -o run_tests
 	@./run_tests
 
-test: unit_test int_test
+test: unit_test
 
 # Remove only temporary files
 clean:
@@ -149,7 +149,7 @@ endif
 tclean:
 	@echo "$(RED)---- Clean tests ----$(RESET)"
 	@rm -f ./run_tests
-	@rm -rf $(UNIT_TEST_OBJ_DIR)
+	@rm -rf $(UNIT_TEST_OBJ_DIR) $(INT_TEST_OBJ_DIR)
 
 # Remove temporary files and executables
 fclean: clean tclean

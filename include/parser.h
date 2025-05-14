@@ -1,5 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
+/*   Updated: 2025/05/14 16:11:54 by plichota         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "libft.h"
+# include "ast.h"
 
 /*
 GRAMMAR:
@@ -29,8 +44,6 @@ typedef struct s_token
 	char			*value;
 	char			*error;
 }	t_token;
-
-# ifdef LIBFT_H
 
 // tokenizer
 t_list *tokenize(const char *line);	//element type char*
@@ -63,13 +76,7 @@ const char *token_type_name(t_token_type type);
 void print_raw_tokens(t_list *tokens);
 void print_lexed_tokens(t_list *tokens);
 
-#  ifdef AST_H
-
 // parser
 t_ast *parse(t_list *tokens);
-
-#  endif
-
-# endif
 
 #endif // !PARSER_H
