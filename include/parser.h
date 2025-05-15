@@ -23,7 +23,12 @@ simple_command ::= WORD { WORD | redirection }
 pipeline     ::= command { '|' command }
 compound_command ::= command ('&&' | '||') command
 redirection  ::= '<' WORD | '>' WORD | '>>' WORD | '<<' WORD
+
+parse_command       -> simple command and args
+parse_pipeline      -> command | command
+parse_expression    -> full command with redirs, pipes, etc.
 */
+
 // tokens
 typedef enum e_token_type 
 {

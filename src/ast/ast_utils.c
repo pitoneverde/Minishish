@@ -9,6 +9,7 @@ void ast_replace_subtree(t_ast **target, t_ast *replace)
 	*target = replace;
 }
 
+// behaves like foreach
 void ast_map(t_ast *node, void (*f)(t_ast *))
 {
 	if (!node || !f)
