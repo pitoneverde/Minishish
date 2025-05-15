@@ -47,7 +47,6 @@ typedef struct s_token
 
 // tokenizer
 t_list *tokenize(const char *line);	//element type char*
-void print_tokens(t_list *tokens);
 void free_raw_tokens(t_list **raw_tokens);
 char *read_next_token(const char *line, const char **p);
 
@@ -57,7 +56,6 @@ int is_whitespace(char c);
 char *read_word(const char *line, const char **p);
 char *read_operator(const char *line, const char **p);
 char *read_quoted(const char *line, const char **p, char quote);
-// readquoted
 
 // lexer
 t_list *lex(t_list *raw_tokens);

@@ -78,20 +78,15 @@ const char *node_type_name(t_ast_type type)
 void print_ast(const t_ast *node, int depth)
 {
 	int	i;
-	char *value;
 
 	if (!node)
 		return ;
 	i = 0;
 	while (i++ < depth)
 		printf("  ");
-	if (!node->value)
-		value = ft_strdup("NULL");
-	else
-		value = node->value;
-	printf("(%s: %s)\n", node_type_name(node->type), value);
-	if (node->error)
-		printf("->Error: %s\n", node->error);
+	printf("(%s", node_type_name(node->type));
+	if (node->value)
+		printf(", value: \"%s\"", node->value);
 	if (node->argv)
 	{
 		i = 0;
@@ -100,6 +95,9 @@ void print_ast(const t_ast *node, int depth)
 			printf("\"%s\", ", node->argv[i++]);
 		printf("]\n");
 	}
+	if (node->error)
+		printf("->Error: %s\n", node->error);
+	printf(")\n");
 	print_ast(node->left, depth + 1);
 	print_ast(node->right, depth + 1);
 }

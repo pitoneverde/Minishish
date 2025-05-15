@@ -48,15 +48,16 @@ char *read_quoted(const char *line, const char **p, char quote)
 	return (ft_substr(line, start - line, *p - start));
 }
 
-void print_tokens(t_list* tokens)
-{
-	if (!tokens)
-		print_error("no tokens");
-	printf("==== print tokens ====\n");
-	while (tokens != NULL)
-	{
-		printf("%s\n", (char *)tokens->content);
-		tokens = tokens->next;
-	}
-	printf("==== end of tokens ====\n");
-}
+// OBSOLETE: use print_raw_tokens
+// void print_tokens(t_list* tokens)
+// {
+// 	if (!tokens)
+// 		print_error("no tokens");
+// 	printf("==== print tokens ====\n");
+// 	while (tokens != NULL)
+// 	{
+// 		printf("%s\n", (char *)tokens->content);
+// 		tokens = tokens->next;
+// 	}
+// 	printf("==== end of tokens ====\n");
+// }
