@@ -16,9 +16,9 @@ static FILE *tmp_fp;         // FILE* associato (per fgets)
 void setUp(void)
 {
     // Salva e reindirizza stdout SOLO per main
-    stdout_backup = dup(STDOUT_FILENO);   // 1. salva stdout
+    stdout_backup = dup(STDOUT_FILENO);   // 1. salva fd fi stdout
     tmp_fp = tmpfile();                   // 2. crea file temporaneo
-    dup2(fileno(tmp_fp), STDOUT_FILENO);  // 3. rimpiazza stdout
+    dup2(fileno(tmp_fp), STDOUT_FILENO);  // 3. tutto cio' che verrebbe stampato in stdout finische nel file
 }
 void tearDown(void)
 {
@@ -78,7 +78,7 @@ void test_main_argc_diverso_da_1(void)
 
     /* 6. asserzioni */
     TEST_ASSERT_EQUAL_INT(0, ret);
-    TEST_ASSERT_EQUAL_STRING("Wrong number of arguments\n", buf);
+    TEST_ASSERT_EQUAL_STRING("Wrong number of arguments", buf);
 }
 
 int main(void)
