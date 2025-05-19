@@ -77,8 +77,8 @@ void test_main_argc_diverso_da_1(void)
     fclose(tmp);
 
     /* 6. asserzioni */
+    TEST_ASSERT_EQUAL_STRING("Wrong number of arguments\n", buf);
     TEST_ASSERT_EQUAL_INT(0, ret);
-    TEST_ASSERT_EQUAL_STRING("Wrong number of arguments", buf);
 }
 
 int main(void)
