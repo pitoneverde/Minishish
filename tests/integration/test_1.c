@@ -17,7 +17,6 @@ void setUp(void)
 {
     // Salva e reindirizza stdout SOLO per main
     stdout_backup = dup(STDOUT_FILENO);   // 1. salva stdout
-
     tmp_fp = tmpfile();                   // 2. crea file temporaneo
     dup2(fileno(tmp_fp), STDOUT_FILENO);  // 3. rimpiazza stdout
 }

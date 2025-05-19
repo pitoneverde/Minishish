@@ -59,7 +59,7 @@ SRCS 		:= \
 	$(SRC_DIR)/ast/ast_core.c \
 	$(SRC_DIR)/ast/ast_utils.c \
 	$(SRC_DIR)/ast/ast_types.c \
-	$(SRC_DIR)/debug.c \
+	$(SRC_DIR)/debug.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/test_0.c
