@@ -62,10 +62,10 @@ SRCS 		:= \
 	$(SRC_DIR)/debug.c
 	
 UNIT_TEST_SRCS	:= \
-	$(UNIT_TEST_DIR)/test_0.c
+	$(UNIT_TEST_DIR)/test_main.c
 	
 INT_TEST_SRCS	:= \
-	$(INT_TEST_DIR)/test_1.c
+	$(INT_TEST_DIR)/test_main.c
 	
 # Compile objects
 MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -136,7 +136,7 @@ unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 
 int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LDFLAGS) -o run_tests
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -L$(LIBFT_DIR) -lft_bonus -o run_tests
 	@./run_tests
 
 test: unit_test int_test
