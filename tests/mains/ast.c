@@ -31,9 +31,9 @@ int main(void)
 	// size_t count;
 	argv = (char *[]){"ls", "-la", NULL};
 	// ls -l | grep .c > out.txt
-	t_ast *cmd1 = ast_cmd((char **)mtxdup((void **)argv, 2, copy_string, free_string));
+	t_ast *cmd1 = ast_cmd(argv);
 	argv = (char *[]){"grep", ".c", NULL};
-	t_ast *cmd2 = ast_cmd((char **)mtxdup((void **)argv, 2, copy_string, free_string));
+	t_ast *cmd2 = ast_cmd(argv);
 	t_ast *pipe = ast_binary_op(AST_PIPE, "|", cmd1, cmd2);
 	t_ast *redir = ast_binary_op(AST_REDIR_OUT, ">", pipe, ast_new(AST_LITERAL, "out.txt"));
 	print_ast(redir, 0);

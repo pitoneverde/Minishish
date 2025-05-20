@@ -32,6 +32,7 @@ typedef struct s_ast
 t_ast *ast_new(t_ast_type type, char *value);
 t_ast *ast_cmd(char **argv);
 t_ast *ast_binary_op(t_ast_type type, char *op, t_ast *left, t_ast *right);
+t_ast *ast_error(char *msg);
 
 // core
 void ast_attach_left(t_ast *parent, t_ast *child);

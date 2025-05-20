@@ -1,4 +1,5 @@
 #include "ast.h"
+#include "matrix_helpers.h"
 
 t_ast *ast_new(t_ast_type type, char *value)
 {
@@ -6,16 +7,15 @@ t_ast *ast_new(t_ast_type type, char *value)
 
 	node = (t_ast *)malloc(sizeof(t_ast));
 	if (!node)
-	{
-		fprintf(stderr, "ast_new: malloc failed\n"); // Debug print
-		return NULL;
-	}
-	node->value = ft_strdup(value);
+		return (NULL);
 	node->type = type;
+	node->value = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	node->error = NULL;
 	node->argv = NULL;
+	if (value)
+		node->value = ft_strdup(value);
 	return (node);
 }
 
@@ -25,10 +25,10 @@ t_ast *ast_cmd(char **argv)
 
 	if (!argv || !argv[0])
 		return (NULL);
-	cmd = ast_new(AST_COMMAND, ft_strdup(argv[0]));
+	cmd = ast_new(AST_COMMAND, argv[0]);
 	if (!cmd)
 		return (NULL);
-	cmd->argv = argv;
+	cmd->argv = mtxdup_str(argv);
 	return (cmd);
 }
 
@@ -39,7 +39,7 @@ t_ast *ast_error(char *msg)
 		return (NULL);
 	error_node->error = ft_strdup(msg);
 	if (!error_node->error)
-		return (free(error_node), NULL);
+		return (free_ast(error_node), NULL);
 	return (error_node);
 }
 

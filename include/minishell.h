@@ -18,6 +18,7 @@
 # endif
 
 # include "libft.h"
+# include "matrix_helpers.h"
 # include "ast.h"
 # include "parser.h"
 # include <stdio.h>
