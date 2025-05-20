@@ -71,6 +71,8 @@ const char *node_type_name(t_ast_type type)
 		return ("HEREDOC");
 	if (type == AST_ERROR)
 		return ("ERROR");
+	if (type == AST_LITERAL)
+		return ("LITERAL");
 	return ("UNKNOWN");
 }
 
@@ -90,10 +92,10 @@ void print_ast(const t_ast *node, int depth)
 	if (node->argv)
 	{
 		i = 0;
-		printf("->Argv: [");
+		printf("\n->Argv: [");
 		while (node->argv[i])
 			printf("\"%s\", ", node->argv[i++]);
-		printf("]\n");
+		printf("]");
 	}
 	if (node->error)
 		printf("->Error: %s\n", node->error);

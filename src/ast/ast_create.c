@@ -6,8 +6,11 @@ t_ast *ast_new(t_ast_type type, char *value)
 
 	node = (t_ast *)malloc(sizeof(t_ast));
 	if (!node)
-		return (NULL);
-	node->value = value;
+	{
+		fprintf(stderr, "ast_new: malloc failed\n"); // Debug print
+		return NULL;
+	}
+	node->value = ft_strdup(value);
 	node->type = type;
 	node->left = NULL;
 	node->right = NULL;

@@ -23,7 +23,7 @@ INT_TEST_DIR     	:= $(TEST_DIR)/integration
 UNIT_TEST_OBJ_DIR	:= unit_obj_tests
 INT_TEST_OBJ_DIR	:= int_obj_tests
 HEADERS_DIR 		:= include
-
+TEST_MAINS			:= $(TEST_DIR)/mains
 # === Libft Paths===
 LIBFT_DIR			:= $(LIB_DIR)/libft
 LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
@@ -44,7 +44,7 @@ CFLAGS	:= -Wall -Werror -Wextra -g \
 LDFLAGS := -L$(LIBFT_DIR) -lft_bonus -lreadline
 
 # === Sources ===
-SRCS_MAIN 	:= $(SRC_DIR)/main.c
+# SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -54,11 +54,13 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/utils.c \
 	$(SRC_DIR)/utils/tokenizer_utils.c \
 	$(SRC_DIR)/utils/lexer_utils.c \
+	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/ast/ast_create.c \
 	$(SRC_DIR)/ast/ast_validate.c \
 	$(SRC_DIR)/ast/ast_core.c \
 	$(SRC_DIR)/ast/ast_utils.c \
 	$(SRC_DIR)/ast/ast_types.c \
+	$(TEST_MAINS)/ast.c \
 	$(SRC_DIR)/debug.c \
 	
 UNIT_TEST_SRCS	:= \

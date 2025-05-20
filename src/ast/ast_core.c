@@ -18,20 +18,12 @@ void	free_ast(t_ast *tree)
 		return ;
 	free_ast(tree->left);
 	free_ast(tree->right);
-	free(tree->value);
-	free(tree->error);
-	free_char_matrix(tree->argv);
+	if (tree->value)
+		free(tree->value);
+	if (tree->error)
+		free(tree->error);
+	if (tree->argv)
+		mtxfree((void **)tree->argv,
+			count_matrix((void **)tree->argv), free_string);
 	free(tree);
-}
-
-void free_char_matrix(char **matrix)
-{
-	int i;
-
-	if (!matrix)
-		return ;
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free(matrix);
 }
