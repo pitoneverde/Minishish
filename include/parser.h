@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/14 16:11:54 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:56:44 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void print_raw_tokens(t_list *tokens);
 void print_lexed_tokens(t_list *tokens);
 
 // parser
+t_ast *parse_expression(t_list **tokens);
 t_ast *parse(t_list *tokens);
 
 #endif // !PARSER_H

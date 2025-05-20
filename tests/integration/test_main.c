@@ -13,13 +13,24 @@
 static int  stdout_backup;   // fd originale di STDOUT
 static FILE *tmp_fp;         // FILE* associato (per fgets)
 
+char *readline(const char *prompt)
+{
+    static int call_no = 0;
+
+    write(STDOUT_FILENO, prompt, strlen(prompt));   /* stampa prompt */
+
+    if (call_no++ == 0)
+        return strdup("");      /* simuliamo Invio senza comando */
+    return NULL;                /* simuliamo Ctrl-D --> minishell termina */
+}
+void add_history(const char *s) { (void)s; }
+
 void setUp(void)
 {
     // Salva e reindirizza stdout SOLO per main
-    stdout_backup = dup(STDOUT_FILENO);   // 1. salva stdout
-
+    stdout_backup = dup(STDOUT_FILENO);   // 1. salva fd fi stdout
     tmp_fp = tmpfile();                   // 2. crea file temporaneo
-    dup2(fileno(tmp_fp), STDOUT_FILENO);  // 3. rimpiazza stdout
+    dup2(fileno(tmp_fp), STDOUT_FILENO);  // 3. tutto cio' che verrebbe stampato in stdout finische nel file
 }
 void tearDown(void)
 {
@@ -78,13 +89,57 @@ void test_main_argc_diverso_da_1(void)
     fclose(tmp);
 
     /* 6. asserzioni */
-    TEST_ASSERT_EQUAL_INT(0, ret);
     TEST_ASSERT_EQUAL_STRING("Wrong number of arguments\n", buf);
+    TEST_ASSERT_EQUAL_INT(0, ret);
+}
+
+void test_prompt_then_ctrl_d(void)
+{
+    const char *argv[] = { "./minishell", NULL };
+    const char *envp[] = { NULL };
+
+    /* Lancia la shell (una sola iterazione) */
+    int ret = real_main(1, argv, envp);
+
+    /* Leggi tutto ciò che è stato scritto su stdout */
+    fflush(tmp_fp);
+    rewind(tmp_fp);
+
+    char buf[64] = {0};
+    size_t n = fread(buf, 1, sizeof(buf)-1, tmp_fp);
+    buf[n] = '\0';
+
+    /* Ci aspettiamo esattamente "> > " (prompt mostrato due volte)     *
+     *    1) all’avvio, 2) prima di ricevere NULL e uscire.            */
+    TEST_ASSERT_EQUAL_STRING("> > ", buf);
+
+    /* Il programma deve essere uscito con 0 */
+    TEST_ASSERT_EQUAL_INT(0, ret);
+}
+
+void test_prompt_e_exit(void)
+{
+    const char *argv[] = { "./minishell", NULL };
+    const char *envp[] = { NULL };
+
+    int ret = real_main(1, argv, envp);
+
+    /* Leggi tutto l’output */
+    fflush(tmp_fp);
+    rewind(tmp_fp);
+    char buf[64] = {0};
+    fread(buf, 1, sizeof(buf)-1, tmp_fp);
+
+    /* Bash mostra:  "> "  (prompt)  poi  "exit\n" */
+    TEST_ASSERT_EQUAL_STRING("> exit\n", buf);
+    TEST_ASSERT_EQUAL_INT(0, ret);
 }
 
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_main_argc_diverso_da_1);
+    RUN_TEST(test_prompt_then_ctrl_d);
+    RUN_TEST(test_prompt_e_exit);
     return UNITY_END();
 }

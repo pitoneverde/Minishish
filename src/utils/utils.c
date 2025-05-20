@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/08 18:09:55 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:37:02 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@ void	print_error(char *s)
 {
 	if (!s)
 		return ;
-	// do to modificare stdout
-	printf("%s\n", s);
+	ft_putendl_fd(s, 2);
 }
