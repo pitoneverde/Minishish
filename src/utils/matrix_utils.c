@@ -99,6 +99,6 @@ void print_string_matrix(char **matrix)
 
 void free_string(void *row)
 {
-	printf("Freeing string at %p: \"%s\"\n", row, (char *)row);
+	// printf("Freeing string at %p: \"%s\"\n", row, (char *)row);
 	free(row);
 }
