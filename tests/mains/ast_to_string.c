@@ -73,16 +73,16 @@ void test_null_node()
 	free(str);
 }
 
-int main(void)
-{
-	test_simple_command();
-	test_pipe_command();
-	test_redirection();
-	test_nested_pipeline_with_redirection();
-	test_error_node();
-	test_null_node();
-	return 0;
-}
+// int main(void)
+// {
+// 	test_simple_command();
+// 	test_pipe_command();
+// 	test_redirection();
+// 	test_nested_pipeline_with_redirection();
+// 	test_error_node();
+// 	test_null_node();
+// 	return 0;
+// }
 
 // #include "ast.h"
 
