@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/21 18:03:31 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:08:35 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	main(int argc, const char *argv[], const char *envp[])
 	while (1)
 	{
 		line = readline("> ");
+		// handle EOF (Ctrl + D)
 		if (!line)
-			break ;	
-			//return (print_error("exit"), 0);
+			break ;
 		if (ft_strlen(line) > 0)
 		{			
 			// if (ft_strncmp(line, "history", ft_strlen(line)) == 0)
@@ -76,7 +76,7 @@ int	main(int argc, const char *argv[], const char *envp[])
 		}
 		free(line);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 	// if (fork() == 0)
 	//     execvp(argv[1], argv + 1);
 	// wait(&status);
