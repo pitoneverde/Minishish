@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/21 18:08:35 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:41:18 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ extern char ** environ;
 // segnale freccia giu' history
 
 
-// gestisci CTRL + D
+// gestisci CTRL + D (EOF)
 // 1 - buffer vuoto: stampa "exit\n" ed esce
 // 2 - buffer non vuoto: non fa nulla
 
@@ -34,13 +34,18 @@ extern char ** environ;
 // 1 - buffer vuoto: vai a capo
 // 2 - buffer non vuoto: parsing comandi ecc.
 
-
 int	main(int argc, const char *argv[], const char *envp[])
 {
 	(void)	argc;
 	(void)	argv;
 	(void)	envp;
 	char	*line;
+	struct sigaction	sa;
+
+    sa.sa_handler = handler_sigaction;
+    sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
 
 	if (argc != 1)
 		return (print_error("Wrong number of arguments"), 0);

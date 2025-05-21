@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/21 18:39:19 by plichota         ###   ########.fr       */
+/*   Created: 2025/05/21 18:28:31 by plichota          #+#    #+#             */
+/*   Updated: 2025/05/21 18:40:39 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# ifndef TILE
-#  define TILE 64
-# endif
+void	handler_sigaction(int sig)
+{
+	(void)sig;
 
-# include "libft.h"
-# include "matrix_helpers.h"
-# include "ast.h"
-# include "parser.h"
-
-# include <stdio.h>
-# include <signal.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-int sum(int a, int b);
-
-// Utils
-void	print_error(char *s);
-
-// Signals
-void	handler_sigaction(int sig);
-
-#endif
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
