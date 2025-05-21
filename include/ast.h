@@ -38,7 +38,7 @@ t_ast *ast_error(char *msg);
 void ast_attach_left(t_ast *parent, t_ast *child);
 void ast_attach_right(t_ast *parent, t_ast *child);
 void free_ast(t_ast *tree);
-t_ast *ast_dup(const t_ast *node);
+t_ast *astdup(const t_ast *node);
 
 // utils
 int ast_find(t_ast *node, const char *value);
@@ -64,11 +64,11 @@ const char *node_type_name(t_ast_type type);
 void print_ast(const t_ast *node, int depth);
 
 // matrix utils (to move into libft) -> THEY ARE THERE TO TEST
-size_t count_matrix(void **matrix);
-void free_matrix(void **mtx, void(f)(void *));
-void **copy_matrix(void **mtx, void *(c)(void *), void(f)(void *));
-void mtxfree(void **mtx, size_t dim, void (*f)(void *));
-void **mtxdup(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
+size_t mtx_count(void **matrix);
+void mtxfree(void **mtx, void(f)(void *));
+void mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
+void **mtxdup(void **mtx, void *(c)(void *), void(f)(void *));
+void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
 
 // required to use libft utils for matrix
 void *copy_string(void *ptr);
@@ -76,16 +76,14 @@ void print_string_matrix(char **matrix);
 void free_string(void *row);
 
 // TODO:
-// void ast_traverse_pre(t_ast *node, void (*visit)(t_ast *));
-// void ast_traverse_post(t_ast *node, void (*visit)(t_ast *));
-// void ast_traverse_level(t_ast *node, void (*visit)(t_ast *));
+void ast_traverse_pre(t_ast *node, void (*visit)(t_ast *));
+void ast_traverse_post(t_ast *node, void (*visit)(t_ast *));
+// t_ast **ast_filter(t_ast *root, int (*predicate)(const t_ast *), size_t *count);
+// t_ast **ast_leaf_nodes(t_ast *root, size_t *out_count);
 // t_ast **ast_flatten_pre(t_ast *root, size_t *out_count);
 // t_ast **ast_flatten_post(t_ast *root, size_t *out_count);
-// t_ast **ast_leaf_nodes(t_ast *root, size_t *out_count);
-// t_ast **ast_filter(t_ast *root, int (*predicate)(const t_ast *), size_t *count);
-// char *ast_to_string(const t_ast *node); // serialize AST into a string
+void ast_traverse_level(t_ast *node, void (*visit)(t_ast *));
 
-// ast_to_string
 // ast_filter
 // level_trasversal
 // pre/post-order trasversal

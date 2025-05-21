@@ -28,7 +28,7 @@ void	free_ast(t_ast *tree)
 	free(tree);
 }
 
-t_ast *ast_dup(const t_ast *node)
+t_ast *astdup(const t_ast *node)
 {
 	t_ast *clone;
 
@@ -42,7 +42,7 @@ t_ast *ast_dup(const t_ast *node)
 		clone->argv = mtxdup_str(node->argv);
 	if (node->error)
 		clone->error = ft_strdup(node->error);
-	clone->left = ast_dup(node->left);
-	clone->right = ast_dup(node->right);
+	clone->left = astdup(node->left);
+	clone->right = astdup(node->right);
 	return (clone);
 }

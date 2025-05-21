@@ -60,7 +60,7 @@ SRCS 		:= \
 	$(SRC_DIR)/ast/ast_core.c \
 	$(SRC_DIR)/ast/ast_utils.c \
 	$(SRC_DIR)/ast/ast_types.c \
-	$(SRC_DIR)/ast/ast_extension.c \
+	$(SRC_DIR)/ast/ast_traversal.c \
 	$(SRC_DIR)/ast/ast_strings.c \
 	$(TEST_MAINS)/ast_to_string.c \
 	$(SRC_DIR)/debug.c \

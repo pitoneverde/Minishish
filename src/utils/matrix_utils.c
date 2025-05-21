@@ -4,7 +4,7 @@
 
 // frees a matrix of any type (given dim)
 // 'f' is to free one row
-void mtxfree(void **matrix, size_t dim, void (*f)(void *))
+void mtxfree_n(void **matrix, size_t dim, void (*f)(void *))
 {
 	size_t	i;
 
@@ -20,7 +20,7 @@ void mtxfree(void **matrix, size_t dim, void (*f)(void *))
 // copies a matrix of any type (given dim)
 // 'c' is to copy one row
 // 'f' is to free one row
-void **mtxdup(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
+void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
 {
 	size_t i;
 	void **copy;
@@ -35,7 +35,7 @@ void **mtxdup(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
 	{
 		copy[i] = c(mtx[i]);
 		if (!copy[i])
-			return (mtxfree(copy, i, f), NULL);
+			return (mtxfree_n(copy, i, f), NULL);
 		i++;
 	}
 	copy[dim] = NULL;
@@ -43,7 +43,7 @@ void **mtxdup(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
 }
 
 // NULL-terminated matrix only
-size_t count_matrix(void **matrix)
+size_t mtx_count(void **matrix)
 {
 	size_t n;
 
@@ -54,25 +54,25 @@ size_t count_matrix(void **matrix)
 }
 
 // NULL-terminated matrix only
-void **copy_matrix(void **mtx, void *(c)(void *), void (f)(void *))
+void **mtxdup(void **mtx, void *(c)(void *), void (f)(void *))
 {
 	size_t dim;
 
 	if (!mtx)
 		return (NULL);
-	dim = count_matrix(mtx);
-	return (mtxdup(mtx, dim, c, f));
+	dim = mtx_count(mtx);
+	return (mtxdup_n(mtx, dim, c, f));
 }
 
 // NULL-terminated matrix only
-void free_matrix(void ** mtx, void (f)(void *))
+void mtxfree(void ** mtx, void (f)(void *))
 {
 	size_t dim;
 
 	if (!mtx)
 		return ;
-	dim = count_matrix(mtx);
-	return (mtxfree(mtx, dim, f));
+	dim = mtx_count(mtx);
+	return (mtxfree_n(mtx, dim, f));
 }
 
 // ---------- END OF LIBFT FUNCTIONS -----------

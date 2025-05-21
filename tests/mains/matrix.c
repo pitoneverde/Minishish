@@ -13,16 +13,16 @@ int main(void)
 	}
 
 	// Count elements
-	size_t count = count_matrix((void **)words);
+	size_t count = mtx_count((void **)words);
 	printf("\nCount of original matrix: %zu\n", count);
 
 	// Deep copy
 	printf("\nStarting deep copy of matrix...\n");
-	char **copy = (char **)mtxdup((void **)words, count, copy_string, free_string);
+	char **copy = (char **)mtxdup_n((void **)words, count, copy_string, free_string);
 
 	if (!copy)
 	{
-		printf("ERROR: mtxdup returned NULL.\n");
+		printf("ERROR: mtxdup_n returned NULL.\n");
 		return 1;
 	}
 
@@ -32,7 +32,7 @@ int main(void)
 
 	// Free copied matrix
 	printf("\nFreeing copied matrix...\n");
-	mtxfree((void **)copy, count, free);
+	mtxfree_n((void **)copy, count, free);
 	printf("Freeing matrix pointer itself: %p\n", (void *)copy);
 	copy = NULL;
 

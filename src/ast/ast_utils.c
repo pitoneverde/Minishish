@@ -34,7 +34,7 @@ char *ast_to_string(const t_ast *node)
 	t_ast *clone;
 	char *res;
 
-	clone = ast_dup(node);
+	clone = astdup(node);
 	if (!clone)
 		return (NULL);
 	ast_stringify(clone);
