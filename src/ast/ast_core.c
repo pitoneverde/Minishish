@@ -1,4 +1,5 @@
 #include "ast.h"
+#include "matrix_helpers.h"
 
 void	ast_attach_left(t_ast *parent, t_ast *child)
 {
@@ -23,7 +24,25 @@ void	free_ast(t_ast *tree)
 	if (tree->error)
 		free(tree->error);
 	if (tree->argv)
-		mtxfree((void **)tree->argv,
-			count_matrix((void **)tree->argv), free_string);
+		mtxfree_str(tree->argv);
 	free(tree);
+}
+
+t_ast *ast_dup(const t_ast *node)
+{
+	t_ast *clone;
+
+	if (!node)
+		return (NULL);
+	if (node->value)
+		clone = ast_new(node->type, node->value);
+	else
+		clone = ast_new(node->type, NULL);
+	if (node->argv)
+		clone->argv = mtxdup_str(node->argv);
+	if (node->error)
+		clone->error = ft_strdup(node->error);
+	clone->left = ast_dup(node->left);
+	clone->right = ast_dup(node->right);
+	return (clone);
 }

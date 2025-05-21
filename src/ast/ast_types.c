@@ -30,4 +30,3 @@ int ast_is_redirection_chain(const t_ast *node)
 		return (ast_is_redirection_chain(node->right));
 	return (0);
 }
-// 2: how do i traverse the tree
