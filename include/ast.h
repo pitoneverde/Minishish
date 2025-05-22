@@ -81,9 +81,6 @@ const char *node_type_name(t_ast_type type);
 void print_ast(const t_ast *node, int depth);
 
 // required to use libft utils
-void *copy_string(void *ptr);
-void print_string_matrix(char **matrix);
-void free_string(void *row);
 t_ast **ast_lst_to_array(t_list *lst);
 t_ast **ast_lst_to_array_n(t_list *lst, size_t *dim);
 
