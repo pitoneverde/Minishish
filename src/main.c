@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 11:58:29 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:05:05 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ extern char ** environ;
 // Enter
 // 1 - buffer vuoto: vai a capo
 // 2 - buffer non vuoto: parsing comandi ecc.
+
+void	parse_and_execute(char *line)
+{
+	t_list *tokens;
+	t_list *lexed;
+
+	if (ft_strlen(line) > 0)
+	{
+		tokens = tokenize(line);
+		if (!tokens)
+			return ; // error status code??
+		print_raw_tokens(tokens);
+		lexed = lex(tokens);
+		if (!lexed)
+			return ; // error status code??
+		print_lexed_tokens(lexed);
+		
+		free_raw_tokens(&tokens);
+		free_token_list(&lexed);
+		add_history(line);
+	}
+}
 
 int	main(int argc, const char *argv[], const char *envp[])
 {
@@ -55,19 +77,10 @@ int	main(int argc, const char *argv[], const char *envp[])
 	while (1)
 	{
 		line = readline("> ");
-		// handle EOF (Ctrl + D)
+		// handle End Of transmission (Ctrl + D)
 		if (!line)
 			break ;
-		if (ft_strlen(line) > 0)
-		{			
-			// if (ft_strncmp(line, "history", ft_strlen(line)) == 0)
-			// {
-			// 	printf("historyyyy\n");
-			// }
-			t_list *tokens = tokenize(line);
-			print_raw_tokens(tokens);
-			add_history(line);
-		}
+		parse_and_execute(line);
 		free(line);
 	}
 	rl_clear_history();
