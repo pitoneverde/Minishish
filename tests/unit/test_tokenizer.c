@@ -57,6 +57,14 @@ void test_tokenize_empty_string(void)
     TEST_ASSERT_NULL(tokens); // Nessun token atteso
 }
 
+void test_tokenize_only_spaces(void)
+{
+    const char *input = "     ";
+    t_list *tokens = tokenize(input);
+    TEST_ASSERT_NULL(tokens);  // Nessun token
+}
+
+
 void test_tokenize_null_input(void)
 {
     t_list *tokens = tokenize(NULL);
@@ -119,6 +127,72 @@ void test_tokenize_special_symbols(void)
     TEST_ASSERT_EQUAL_STRING(">", tokens->content);
     tokens = tokens->next;
     TEST_ASSERT_EQUAL_STRING("out.txt", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}
+
+void test_tokenize_attached_symbols(void)
+{
+    const char *input = "ls|grep";
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_EQUAL_STRING("ls", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("|", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("grep", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}
+
+// echo \"ciao mondo (tratta \" come carattere)
+void test_tokenize_unclosed_escaped_double_quote(void)
+{
+    const char *input = "echo \\\"ciao mondo";
+    printf("input: %s\n", input);
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_EQUAL_STRING("echo", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("\"ciao mondo", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}
+
+//  echo "ciao mondo (" apre una stringa, input multilinea)
+void test_tokenize_unclosed_double_quote_should_error(void)
+{
+    const char *input = "echo \"ciao mondo";
+    printf("input: %s\n", input);
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}
+
+void test_tokenize_multiline_string_with_closing_quote(void)
+{
+    const char *input = "echo \"ciao mondo\ncontinua qui\ne finisce qui\"";
+    t_list *tokens = tokenize(input);
+
+    // Primo token: echo
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("echo", tokens->content);
+    tokens = tokens->next;
+
+    // Secondo token: tutta la stringa tra virgolette, inclusi \n
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ciao mondo\ncontinua qui\ne finisce qui", tokens->content);
     tokens = tokens->next;
 
     TEST_ASSERT_NULL(tokens);
