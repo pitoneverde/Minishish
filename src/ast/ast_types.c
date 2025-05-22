@@ -1,10 +1,10 @@
 #include "ast.h"
 
-int ast_is_operator(t_ast_type type)
+int ast_is_operator(const t_ast *node)
 {
-	return (type == AST_APPEND || type == AST_HEREDOC
-		|| type == AST_PIPE || type == AST_REDIR_IN
-		|| type == AST_REDIR_OUT);
+	return (node && (node->type == AST_APPEND || node->type == AST_HEREDOC
+		|| node->type == AST_PIPE || node->type == AST_REDIR_IN
+		|| node->type == AST_REDIR_OUT));
 }
 
 int ast_is_command(const t_ast *node)

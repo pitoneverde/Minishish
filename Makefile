@@ -60,8 +60,10 @@ SRCS 		:= \
 	$(SRC_DIR)/ast/ast_core.c \
 	$(SRC_DIR)/ast/ast_utils.c \
 	$(SRC_DIR)/ast/ast_types.c \
-	$(SRC_DIR)/ast/ast_extension.c \
+	$(SRC_DIR)/ast/ast_traverse.c \
+	$(SRC_DIR)/ast/ast_filter.c \
 	$(SRC_DIR)/ast/ast_strings.c \
+	$(SRC_DIR)/ast/lst_to_array.c \
 	$(TEST_MAINS)/ast_to_string.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c
