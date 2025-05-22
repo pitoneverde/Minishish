@@ -180,3 +180,38 @@ void test_tokenize_unclosed_double_quote_should_error(void)
 
     free_raw_tokens(&tokens);
 }
+
+void test_tokenize_pipeline_no_spaces(void)
+{
+    const char *input = "echo ciao|grep ciao";
+    t_list *tokens = tokenize(input);
+
+    // 1. echo
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("echo", tokens->content);
+    tokens = tokens->next;
+
+    // 2. ciao
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ciao", tokens->content);
+    tokens = tokens->next;
+
+    // 3. |
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("|", tokens->content);
+    tokens = tokens->next;
+
+    // 4. grep
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("grep", tokens->content);
+    tokens = tokens->next;
+
+    // 5. ciao
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ciao", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}
