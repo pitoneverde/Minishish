@@ -44,7 +44,7 @@ CFLAGS	:= -Wall -Werror -Wextra -g \
 LDFLAGS := -L$(LIBFT_DIR) -lft_bonus -lreadline
 
 # === Sources ===
-SRCS_MAIN 	:= $(SRC_DIR)/main.c
+# SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -64,7 +64,7 @@ SRCS 		:= \
 	$(SRC_DIR)/ast/ast_filter.c \
 	$(SRC_DIR)/ast/ast_strings.c \
 	$(SRC_DIR)/ast/lst_to_array.c \
-	$(TEST_MAINS)/ast_to_string.c \
+	$(TEST_MAINS)/ast_filtering.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c
 	
