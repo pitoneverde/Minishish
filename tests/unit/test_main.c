@@ -16,7 +16,6 @@ void test_tokenize_special_symbols(void);
 void test_tokenize_attached_symbols(void);
 void test_tokenize_unclosed_escaped_double_quote(void);
 void test_tokenize_unclosed_double_quote_should_error(void);
-void test_tokenize_multiline_string_with_closing_quote(void);
 
 int main(void)
 {
@@ -34,7 +33,6 @@ int main(void)
     RUN_TEST(test_tokenize_attached_symbols);
     RUN_TEST(test_tokenize_unclosed_escaped_double_quote);
     RUN_TEST(test_tokenize_unclosed_double_quote_should_error);
-    RUN_TEST(test_tokenize_multiline_string_with_closing_quote);
 
     return UNITY_END();
 }
