@@ -18,7 +18,6 @@ void test_tokenize_unclosed_escaped_double_quote(void);
 void test_tokenize_unclosed_double_quote_should_error(void);
 void test_tokenize_pipeline_no_spaces(void);
 
-
 int main(void)
 {
     UNITY_BEGIN();
@@ -36,6 +35,9 @@ int main(void)
     RUN_TEST(test_tokenize_unclosed_escaped_double_quote);
     RUN_TEST(test_tokenize_unclosed_double_quote_should_error);
     RUN_TEST(test_tokenize_pipeline_no_spaces);
+
+    /* Lexer */
+
 
     return UNITY_END();
 }

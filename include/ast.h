@@ -34,10 +34,20 @@ typedef struct s_ast_filter_ctx
 	t_list *matches;
 } t_ast_filter_ctx;
 
-// create
+// create generic
 t_ast *ast_new(t_ast_type type, char *value);
+
+// create type command
 t_ast *ast_cmd(char **argv);
+
+// 	create 	
+// 	AST_PIPE,
+// 	AST_REDIR_IN,
+// 	AST_REDIR_OUT,
+// 	AST_APPEND,
+// 	AST_HEREDOC,
 t_ast *ast_binary_op(t_ast_type type, char *op, t_ast *left, t_ast *right);
+
 t_ast *ast_error(char *msg);
 
 // core

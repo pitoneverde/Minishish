@@ -64,7 +64,6 @@ void test_tokenize_only_spaces(void)
     TEST_ASSERT_NULL(tokens);  // Nessun token
 }
 
-
 void test_tokenize_null_input(void)
 {
     t_list *tokens = tokenize(NULL);

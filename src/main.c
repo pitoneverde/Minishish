@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 16:05:05 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:32:01 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ extern char ** environ;
 // Enter
 // 1 - buffer vuoto: vai a capo
 // 2 - buffer non vuoto: parsing comandi ecc.
+
+t_ast	*create_mock_ast(void)
+{
+    t_ast *left = ast_cmd((char *[]){"echo", "ciaoleft", NULL});
+    t_ast *right = ast_cmd((char *[]){"echo", "ciaoright", NULL});
+    t_ast *root = ast_binary_op(AST_PIPE, "|", left, right);
+	return (root);
+}
 
 void	parse_and_execute(char *line)
 {
@@ -39,6 +47,10 @@ void	parse_and_execute(char *line)
 			return ; // error status code??
 		print_lexed_tokens(lexed);
 		
+		// parser (albero) ->flatten (lista) oppure filtrare
+		t_ast *list = create_mock_ast();
+		print_ast(list, 1);
+
 		free_raw_tokens(&tokens);
 		free_token_list(&lexed);
 		add_history(line);

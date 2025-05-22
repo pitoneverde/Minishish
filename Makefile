@@ -67,17 +67,18 @@ SRCS 		:= \
 	$(TEST_MAINS)/ast_to_string.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c
-	
+
 UNIT_TEST_SRCS	:= \
-	$(UNIT_TEST_DIR)/test_main.c \
-	$(UNIT_TEST_DIR)/test_tokenizer.c
+	$(UNIT_TEST_DIR)/all_tests.c \
+	$(UNIT_TEST_DIR)/test_tokenizer.c \
+	$(UNIT_TEST_DIR)/test_lexer.c
 	
 INT_TEST_SRCS	:= \
 	$(INT_TEST_DIR)/all_tests.c \
 	$(INT_TEST_DIR)/helpers_setup.c \
 	$(INT_TEST_DIR)/test_args.c \
 	$(INT_TEST_DIR)/test_prompt.c
-	
+
 # Compile objects
 MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 NO_MAIN_OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
