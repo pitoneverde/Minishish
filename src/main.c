@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 10:27:35 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:58:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, const char *argv[], const char *envp[])
     sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
     sigemptyset(&sa.sa_mask);
     sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 
 	if (argc != 1)
 		return (print_error("Wrong number of arguments"), 0);
@@ -66,11 +67,10 @@ int	main(int argc, const char *argv[], const char *envp[])
 			t_list *tokens = tokenize(line);
 			print_raw_tokens(tokens);
 			add_history(line);
-			// printf("line: %s\n", line);
 		}
 		free(line);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	// if (fork() == 0)
 	//     execvp(argv[1], argv + 1);
 	// wait(&status);
