@@ -27,6 +27,10 @@ void	free_ast(t_ast *tree)
 		mtxfree_str(tree->argv);
 	free(tree);
 }
+void	free_ast_void(void *tree)
+{
+	free_ast((t_ast *)tree);
+}
 
 t_ast *astdup(const t_ast *node)
 {
