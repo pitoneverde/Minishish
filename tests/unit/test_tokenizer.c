@@ -78,3 +78,50 @@ void test_tokenize_quoted_escaped_string(void)
 
     free_raw_tokens(&tokens);
 }
+
+void test_tokenize_mixed_quotes_concat(void)
+{
+    const char *input = "echo \"ciao'\"\"\"\"mondo\"";
+    t_list *tokens = tokenize(input);
+
+    // Primo token: echo
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("echo", tokens->content);
+    tokens = tokens->next;
+
+    // Secondo token: ciao'mondo
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ciao'mondo", tokens->content);
+    tokens = tokens->next;
+
+    // Nessun altro token
+    TEST_ASSERT_NULL(tokens);
+    
+    // Cleanup
+    free_raw_tokens(&tokens);
+}
+
+void test_tokenize_special_symbols(void)
+{
+    const char *input = "cat file.txt | grep keyword > out.txt";
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_EQUAL_STRING("cat", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("file.txt", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("|", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("grep", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("keyword", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING(">", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("out.txt", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}

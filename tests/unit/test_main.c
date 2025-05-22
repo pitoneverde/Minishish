@@ -10,6 +10,8 @@ void test_tokenizer_spaces(void);
 void test_tokenize_empty_string(void);
 void test_tokenize_null_input(void);
 void test_tokenize_quoted_escaped_string(void);
+void test_tokenize_mixed_quotes_concat(void);
+void test_tokenize_special_symbols(void);
 
 int main(void)
 {
@@ -21,6 +23,8 @@ int main(void)
     RUN_TEST(test_tokenize_empty_string);
     RUN_TEST(test_tokenize_null_input);
     RUN_TEST(test_tokenize_quoted_escaped_string);
+    RUN_TEST(test_tokenize_mixed_quotes_concat);
+    RUN_TEST(test_tokenize_special_symbols);
 
     return UNITY_END();
 }
