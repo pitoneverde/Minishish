@@ -28,6 +28,12 @@ typedef struct s_ast
 	char			*error;		// only used in AST_ERROR, default NULL
 }	t_ast;
 
+typedef struct s_ast_filter_ctx
+{
+	int (*predicate)(const t_ast *);
+	t_list *matches;
+} t_ast_filter_ctx;
+
 // create
 t_ast *ast_new(t_ast_type type, char *value);
 t_ast *ast_cmd(char **argv);
@@ -70,10 +76,10 @@ void mtxfree(void **mtx, void(f)(void *));
 void mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
 void **mtxdup(void **mtx, void *(c)(void *), void(f)(void *));
 void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
-// void *ft_realloc(void *p);
 void **lst_to_array(t_list *lst);
 void **lst_to_array_n(t_list *lst, size_t *dim);
 void **lst_to_array_ex(t_list *lst, size_t *dim, int nul);
+// void *ft_realloc(void *p);
 // # define LIST_TO_ARRAY_AS(type, lst, dim_ptr)
 // 	((type **)lst_to_array_n((lst), (dim_ptr)));
 
@@ -84,18 +90,23 @@ void free_string(void *row);
 t_ast **ast_lst_to_array(t_list *lst);
 t_ast **ast_lst_to_array_n(t_list *lst, size_t *dim);
 
-// extensions
+// traversal
 void ast_traverse_pre(t_ast *node, void (*visit)(t_ast *));
+void ast_traverse_pre_ctx(t_ast *node, void (*visit)(t_ast *, void *), void *data);
 void ast_traverse_post(t_ast *node, void (*visit)(t_ast *));
+void ast_traverse_post_ctx(t_ast *node, void (*visit)(t_ast *, void *), void *data);
+
+// filtering and flattening
 t_ast **ast_filter(t_ast *root, int (*predicate)(const t_ast *));
 t_ast **ast_filter_n(t_ast *root, int (*predicate)(const t_ast *), size_t *dim);
-void ast_filter_lst(t_ast *node, int (*predicate)(const t_ast *), t_list **out);
+
 // TODO:
 // t_ast **ast_leaf_nodes(t_ast *root, size_t *out_count);
 // t_ast **ast_flatten_pre(t_ast *root, size_t *out_count);
 // t_ast **ast_flatten_post(t_ast *root, size_t *out_count);
 // void ast_traverse_level(t_ast *node, void (*visit)(t_ast *));
 
+// in-order traversal (only for lib, not useful for minishish)
 // level_trasversal
 // flatten
 // leaf-nodes
