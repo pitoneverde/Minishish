@@ -70,19 +70,6 @@ int ast_is_valid(const t_ast *node);
 const char *node_type_name(t_ast_type type);
 void print_ast(const t_ast *node, int depth);
 
-// matrix utils (to move into libft) -> THEY ARE THERE TO TEST
-size_t mtx_count(void **matrix);
-void mtxfree(void **mtx, void(f)(void *));
-void mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
-void **mtxdup(void **mtx, void *(c)(void *), void(f)(void *));
-void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
-void **lst_to_array(t_list *lst);
-void **lst_to_array_n(t_list *lst, size_t *dim);
-void **lst_to_array_ex(t_list *lst, size_t *dim, int nul);
-// void *ft_realloc(void *p);
-// # define LIST_TO_ARRAY_AS(type, lst, dim_ptr)
-// 	((type **)lst_to_array_n((lst), (dim_ptr)));
-
 // required to use libft utils
 void *copy_string(void *ptr);
 void print_string_matrix(char **matrix);

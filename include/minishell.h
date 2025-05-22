@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 17:57:41 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/05/22 18:56:46 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # endif
 
 # include "libft.h"
-# include "matrix_helpers.h"
 # include "ast.h"
 # include "parser.h"
 
