@@ -7,6 +7,8 @@ t_list *tokenize(const char *line)
 	char		*word;
 	const char	*p = line;
 
+	if (!line)
+		return (NULL);
 	tokens = NULL;
 	while (*p)
 	{

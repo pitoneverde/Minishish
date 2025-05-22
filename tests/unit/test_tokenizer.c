@@ -1,0 +1,80 @@
+#include "unity.h"
+#include "minishell.h"
+
+// Suddividi stringa semplice
+void test_tokenizer_basic(void)
+{
+    const char *input = "echo ciao mondo";
+    t_list *tokens = tokenize(input);
+
+    // Verifica che la lista non sia NULL
+    TEST_ASSERT_NOT_NULL(tokens);
+    
+    // Primo token
+    TEST_ASSERT_NOT_NULL(tokens->content);
+    TEST_ASSERT_EQUAL_STRING("echo", (char *)tokens->content);
+    tokens = tokens->next;
+
+    // Secondo token
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ciao", (char *)tokens->content);
+    tokens = tokens->next;
+
+    // Terzo token
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("mondo", (char *)tokens->content);
+    tokens = tokens->next;
+
+    // Nessun altro token
+    TEST_ASSERT_NULL(tokens);
+    free_raw_tokens(&tokens);
+}
+
+void test_tokenizer_spaces(void)
+{
+    const char *input = "   ls    -la  ";
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("ls", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NOT_NULL(tokens);
+    TEST_ASSERT_EQUAL_STRING("-la", tokens->content);
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens); // Solo 2 token
+
+    // cleanup
+    free_raw_tokens(&tokens);
+}
+
+void test_tokenize_empty_string(void)
+{
+    const char *input = "";
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_NULL(tokens); // Nessun token atteso
+}
+
+void test_tokenize_null_input(void)
+{
+    t_list *tokens = tokenize(NULL);
+
+    TEST_ASSERT_NULL(tokens); // Protezione da input NULL (se gestita)
+}
+
+void test_tokenize_quoted_escaped_string(void)
+{
+    const char *input = "echo \"ciao mondo\"";
+    t_list *tokens = tokenize(input);
+
+    TEST_ASSERT_EQUAL_STRING("echo", tokens->content);
+    tokens = tokens->next;
+    TEST_ASSERT_EQUAL_STRING("ciao mondo", tokens->content); // Le virgolette fanno un token unico
+    tokens = tokens->next;
+
+    TEST_ASSERT_NULL(tokens);
+
+    free_raw_tokens(&tokens);
+}

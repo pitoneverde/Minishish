@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/21 18:41:18 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:27:35 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@ extern char ** environ;
 // legge riga da stdin
 // crea processo con fork
 // esegue con execvp
-
-// segnale freccia su history
-// segnale freccia giu' history
-
-
-// gestisci CTRL + D (EOF)
-// 1 - buffer vuoto: stampa "exit\n" ed esce
-// 2 - buffer non vuoto: non fa nulla
-
-// CTRL + C
-// stampa "^C" dopo l'input e vai a capo
 
 // Enter
 // 1 - buffer vuoto: vai a capo
@@ -74,8 +63,8 @@ int	main(int argc, const char *argv[], const char *envp[])
 			// {
 			// 	printf("historyyyy\n");
 			// }
-			// t_list *tokens = tokenize(line);
-			// print_tokens(tokens);
+			t_list *tokens = tokenize(line);
+			print_raw_tokens(tokens);
 			add_history(line);
 			// printf("line: %s\n", line);
 		}

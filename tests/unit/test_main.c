@@ -4,16 +4,23 @@
 void setUp(void) { /* eseguito prima di ogni test */ }
 void tearDown(void) { /* eseguito dopo ogni test  */ }
 
-// Un test di esempio: verifica che somma(2,2) == 4
-void test_sum(void)
-{
-    TEST_ASSERT_EQUAL_INT(4, sum(2, 2));
-    // TEST_ASSERT_EQUAL_INT(4, sum(3, 2));
-}
+/* prototipi definiti nei file di test */
+void test_tokenizer_basic(void);
+void test_tokenizer_spaces(void);
+void test_tokenize_empty_string(void);
+void test_tokenize_null_input(void);
+void test_tokenize_quoted_escaped_string(void);
 
 int main(void)
 {
     UNITY_BEGIN();
-    RUN_TEST(test_sum);
+
+    /* Tokenizer */
+    RUN_TEST(test_tokenizer_basic);
+    RUN_TEST(test_tokenizer_spaces);
+    RUN_TEST(test_tokenize_empty_string);
+    RUN_TEST(test_tokenize_null_input);
+    RUN_TEST(test_tokenize_quoted_escaped_string);
+
     return UNITY_END();
 }
