@@ -24,6 +24,7 @@ UNIT_TEST_OBJ_DIR	:= unit_obj_tests
 INT_TEST_OBJ_DIR	:= int_obj_tests
 HEADERS_DIR 		:= include
 TEST_MAINS			:= $(TEST_DIR)/mains
+
 # === Libft Paths===
 LIBFT_DIR			:= $(LIB_DIR)/libft
 LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include

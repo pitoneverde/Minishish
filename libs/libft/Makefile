@@ -17,7 +17,8 @@ HEADERS_DIR		= include
 SRC_DIR			= src
 OBJ_DIR			= obj
 
-SRCS = 	$(SRC_DIR)/chars/ft_isalpha.c \
+SRCS = 	\
+		$(SRC_DIR)/chars/ft_isalpha.c \
 		$(SRC_DIR)/chars/ft_isdigit.c \
 		$(SRC_DIR)/chars/ft_isalnum.c \
 		$(SRC_DIR)/chars/ft_isascii.c \
@@ -51,20 +52,21 @@ SRCS = 	$(SRC_DIR)/chars/ft_isalpha.c \
 		$(SRC_DIR)/strings/ft_striteri.c \
 		$(SRC_DIR)/ft_itoa.c \
 		$(SRC_DIR)/ft_atoi.c \
-		$(SRC_DIR)/get_next_line.c \
+		$(SRC_DIR)/get_next_line.c
 
-SRCS_BONUS = 	$(SRC_DIR)/list/ft_lstnew.c \
-				$(SRC_DIR)/list/ft_lstadd_front.c \
-				$(SRC_DIR)/list/ft_lstsize.c \
-				$(SRC_DIR)/list/ft_lstlast.c \
-				$(SRC_DIR)/list/ft_lstadd_back.c \
-				$(SRC_DIR)/list/ft_lstdelone.c \
-				$(SRC_DIR)/list/ft_lstclear.c \
-				$(SRC_DIR)/list/ft_lstiter.c \
-				$(SRC_DIR)/list/ft_lstmap.c \
-				$(SRC_DIR)/list/lst_to_array.c \
-				$(SRC_DIR)/list/lst_to_array_n.c \
-				$(SRC_DIR)/list/lst_to_array_ex.c
+SRCS_BONUS = 	\
+		$(SRC_DIR)/list/ft_lstnew.c \
+		$(SRC_DIR)/list/ft_lstadd_front.c \
+		$(SRC_DIR)/list/ft_lstsize.c \
+		$(SRC_DIR)/list/ft_lstlast.c \
+		$(SRC_DIR)/list/ft_lstadd_back.c \
+		$(SRC_DIR)/list/ft_lstdelone.c \
+		$(SRC_DIR)/list/ft_lstclear.c \
+		$(SRC_DIR)/list/ft_lstiter.c \
+		$(SRC_DIR)/list/ft_lstmap.c \
+		$(SRC_DIR)/list/lst_to_array.c \
+		$(SRC_DIR)/list/lst_to_array_n.c \
+		$(SRC_DIR)/list/lst_to_array_ex.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 OBJS_BONUS = $(SRCS_BONUS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -81,6 +83,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) into $@ ----"
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 19:32:01 by plichota         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:57:02 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ t_ast	*create_mock_ast(void)
 	return (root);
 }
 
+void    executor(t_ast *ast)
+{
+    print_ast(ast, 1);
+}
+
 void	parse_and_execute(char *line)
 {
 	t_list *tokens;
@@ -48,8 +53,8 @@ void	parse_and_execute(char *line)
 		print_lexed_tokens(lexed);
 		
 		// parser (albero) ->flatten (lista) oppure filtrare
-		t_ast *list = create_mock_ast();
-		print_ast(list, 1);
+		t_ast *ast = create_mock_ast();
+        executor(ast);
 
 		free_raw_tokens(&tokens);
 		free_token_list(&lexed);
