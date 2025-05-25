@@ -127,9 +127,13 @@ void test_ast_filter_n() {
     free(result);
 }
 
+/*
+samu sei fantastico ma per favore pusha i main commentati se li lasci nei srcs principali pls ç.ç
+
 int main() {
     test_ast_filter();
     test_ast_filter_n();
     printf("All tests passed!\n");
     return 0;
 }
+*/

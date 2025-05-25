@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42.fr>            +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 18:56:46 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/05/25 21:48:15 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 
 int sum(int a, int b);
 
