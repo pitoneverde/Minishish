@@ -52,7 +52,7 @@ int main(void) {
 	assert(visited_index == 0);
 
 	// Cleanup
-	free_ast(pipe);
+	ast_free(pipe);
 
 	return 0;
 }

@@ -21,7 +21,7 @@
 
 // 	print_ast(pipe, 0);
 
-// 	free_ast(pipe); // Frees everything
+// 	ast_free(pipe); // Frees everything
 // 	return (0);
 // }
 
@@ -37,5 +37,5 @@ int main(void)
 	t_ast *pipe = ast_binary_op(AST_PIPE, "|", cmd1, cmd2);
 	t_ast *redir = ast_binary_op(AST_REDIR_OUT, ">", pipe, ast_new(AST_LITERAL, "out.txt"));
 	print_ast(redir, 0);
-	free_ast(redir);
+	ast_free(redir);
 }

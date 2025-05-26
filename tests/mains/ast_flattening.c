@@ -84,7 +84,7 @@ static void test_leaf_nodes(void)
 	assert(leaves[2]->argv && strcmp(leaves[2]->argv[0], "wc") == 0);
 
 	free(leaves);
-	free_ast(tree);
+	ast_free(tree);
 }
 
 // ---------------------------
@@ -122,7 +122,7 @@ static void test_flatten_ast(void)
 
 	free(pre);
 	free(post);
-	free_ast(tree);
+	ast_free(tree);
 }
 
 // ---------------------------
@@ -152,7 +152,7 @@ static void test_error_and_literal_tree(void)
 
 	free(leaves);
 	free(flat);
-	free_ast(tree);
+	ast_free(tree);
 }
 
 // ---------------------------

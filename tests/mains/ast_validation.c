@@ -4,7 +4,7 @@ void test_valid_ast(const char *label, t_ast *ast, int expected)
 {
 	int result = ast_is_valid(ast);
 	printf("[%s] Valid: %d (expected %d)\n", label, result, expected);
-	free_ast(ast);
+	ast_free(ast);
 }
 
 void test_null_ast()

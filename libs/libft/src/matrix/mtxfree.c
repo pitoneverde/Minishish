@@ -10,5 +10,3 @@ void mtxfree(void ** mtx, void (f)(void *))
 	dim = mtx_count(mtx);
 	return (mtxfree_n(mtx, dim, f));
 }
-
-// ---------- END OF LIBFT FUNCTIONS -----------

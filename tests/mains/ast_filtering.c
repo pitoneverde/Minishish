@@ -81,8 +81,8 @@ void test_ast_filter() {
     free(result);
 
     // Free all allocated memory
-    free_ast(root);
-    free_ast(root_complex);
+    ast_free(root);
+    ast_free(root_complex);
 }
 
 void test_ast_filter_n() {

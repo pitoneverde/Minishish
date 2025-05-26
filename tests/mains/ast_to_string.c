@@ -7,7 +7,7 @@ void test_simple_command()
 	char *str = ast_to_string(cmd);
 	printf("Simple command:\n%s\n\n", str);
 	free(str);
-	free_ast(cmd);
+	ast_free(cmd);
 }
 
 void test_pipe_command()
@@ -22,7 +22,7 @@ void test_pipe_command()
 	char *str = ast_to_string(pipe);
 	printf("Pipe command:\n%s\n\n", str);
 	free(str);
-	free_ast(pipe);
+	ast_free(pipe);
 }
 
 void test_redirection()
@@ -35,7 +35,7 @@ void test_redirection()
 	char *str = ast_to_string(redir);
 	printf("Redirection command:\n%s\n\n", str);
 	free(str);
-	free_ast(redir);
+	ast_free(redir);
 }
 
 void test_nested_pipeline_with_redirection()
@@ -54,7 +54,7 @@ void test_nested_pipeline_with_redirection()
 	char *str = ast_to_string(pipe2);
 	printf("Nested pipeline:\n%s\n\n", str);
 	free(str);
-	free_ast(pipe2);
+	ast_free(pipe2);
 }
 
 void test_error_node()
@@ -63,7 +63,7 @@ void test_error_node()
 	char *str = ast_to_string(err);
 	printf("Error node:\n%s\n\n", str);
 	free(str);
-	free_ast(err);
+	ast_free(err);
 }
 
 void test_null_node()
@@ -158,8 +158,8 @@ void test_null_node()
 // 	}
 
 // 	// 7. Clean up
-// 	free_ast(redir);
-// 	free_ast(err);
+// 	ast_free(redir);
+// 	ast_free(err);
 
 // 	return 0;
 // }

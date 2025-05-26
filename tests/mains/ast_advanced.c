@@ -16,8 +16,8 @@ void test_is_command(void) {
     printf("AST_COMMAND node: %d (expected 1)\n", ast_is_command(cmd));
     printf("AST_LITERAL node: %d (expected 0)\n", ast_is_command(not_cmd));
 
-    free_ast(cmd);
-    free_ast(not_cmd);
+    ast_free(cmd);
+    ast_free(not_cmd);
     printf("\n");
 }
 
@@ -29,8 +29,8 @@ void test_has_error(void) {
     printf("AST_ERROR node: %d (expected 1)\n", ast_has_error(err));
     printf("AST_COMMAND node: %d (expected 0)\n", ast_has_error(cmd));
 
-    free_ast(err);
-    free_ast(cmd);
+    ast_free(err);
+    ast_free(cmd);
     printf("\n");
 }
 
@@ -43,7 +43,7 @@ void test_is_valid(void) {
     printf("Valid AST: %d (expected 1)\n", ast_is_valid(good));
     printf("AST with error subtree: %d (expected 0)\n", ast_is_valid(bad));
 
-    free_ast(bad); // Frees both good and error
+    ast_free(bad); // Frees both good and error
     printf("\n");
 }
 
@@ -71,7 +71,7 @@ void test_ast_map_and_replace(void) {
     printf("Mapped AST:\n");
     ast_map(root, simple_mapper);
 
-    free_ast(root); // Frees all
+    ast_free(root); // Frees all
     printf("\n");
 }
 
