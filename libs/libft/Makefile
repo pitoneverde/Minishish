@@ -50,6 +50,11 @@ SRCS = 	\
 		$(SRC_DIR)/strings/ft_split.c \
 		$(SRC_DIR)/strings/ft_strmapi.c \
 		$(SRC_DIR)/strings/ft_striteri.c \
+		$(SRC_DIR)/matrix/mtx_count.c \
+		$(SRC_DIR)/matrix/mtxdup_n.c \
+		$(SRC_DIR)/matrix/mtxdup.c \
+		$(SRC_DIR)/matrix/mtxfree_n.c \
+		$(SRC_DIR)/matrix/mtxfree.c \
 		$(SRC_DIR)/ft_itoa.c \
 		$(SRC_DIR)/ft_atoi.c \
 		$(SRC_DIR)/get_next_line.c

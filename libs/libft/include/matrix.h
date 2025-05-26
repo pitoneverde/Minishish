@@ -1,6 +1,7 @@
 #ifndef MATRIX_H
 # define MATRIX_H
 
+# include <stdlib.h>
 // Core low-level matrix utilities
 size_t mtx_count(void **matrix);
 void mtxfree(void **mtx, void(f)(void *));
