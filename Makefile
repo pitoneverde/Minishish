@@ -64,10 +64,11 @@ SRCS 		:= \
 	$(SRC_DIR)/ast/ast_traverse.c \
 	$(SRC_DIR)/ast/ast_filter.c \
 	$(SRC_DIR)/ast/ast_strings.c \
+	$(SRC_DIR)/ast/ast_flatten.c \
 	$(SRC_DIR)/ast/lst_to_array.c \
-	$(TEST_MAINS)/ast_filtering.c \
 	$(SRC_DIR)/debug.c \
-	$(SRC_DIR)/signals/signals.c
+	$(SRC_DIR)/signals/signals.c \
+	# $(TEST_MAINS)/ast_flattening.c \
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

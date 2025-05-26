@@ -12,13 +12,14 @@ t_ast **ast_flatten_pre(t_ast *root, size_t *dim)
 	t_ast	**result;
 	size_t	len;
 
+	nodes = NULL;
 	if (dim)
 		*dim = 0;
 	if (!root)
 		return (NULL);
 	ast_traverse_pre_ctx(root, ast_flatten_visit, &nodes);
 	result = ast_lst_to_array_n(nodes, &len);
-	ft_lstclear(nodes, NULL);
+	ft_lstclear(&nodes, NULL);
 	if (dim)
 		*dim = len;
 	if (len == 0)
@@ -32,13 +33,14 @@ t_ast **ast_flatten_post(t_ast *root, size_t *dim)
 	t_ast **result;
 	size_t len;
 
+	nodes = NULL;
 	if (dim)
 		*dim = 0;
 	if (!root)
 		return (NULL);
 	ast_traverse_post_ctx(root, ast_flatten_visit, &nodes);
 	result = ast_lst_to_array_n(nodes, &len);
-	ft_lstclear(nodes, NULL);
+	ft_lstclear(&nodes, NULL);
 	if (dim)
 		*dim = len;
 	if (len == 0)
