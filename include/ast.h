@@ -97,14 +97,12 @@ t_ast **ast_filter_n(t_ast *root, int (*predicate)(const t_ast *), size_t *dim);
 t_ast **ast_leaf_nodes(t_ast *root);
 t_ast **ast_leaf_nodes_n(t_ast *root, size_t *dim);
 
+// flattening
+t_ast **ast_flatten_pre(t_ast *root, size_t *dim);
+t_ast **ast_flatten_post(t_ast *root, size_t *dim);
 
 // TODO:
-// t_ast **ast_flatten_pre(t_ast *root, size_t *out_count);
-// t_ast **ast_flatten_post(t_ast *root, size_t *out_count);
 // void ast_traverse_level(t_ast *node, void (*visit)(t_ast *));
-
 // in-order traversal (only for lib, not useful for minishish)
 // level_trasversal
-// flatten
-// leaf-nodes
 #endif

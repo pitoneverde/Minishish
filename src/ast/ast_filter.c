@@ -53,7 +53,7 @@ t_ast **ast_filter_n(t_ast *root, int (*predicate)(const t_ast *), size_t *dim)
 }
 
 // Equivalent below, without filter utility
-int is_leaf_node(const t_ast *node)
+int ast_is_leaf(const t_ast *node)
 {
 	return (!node->left && !node->right);
 }
