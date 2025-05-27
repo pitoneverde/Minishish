@@ -10,7 +10,7 @@ BOLD		= \033[1m
 UNDERLINE 	= \033[4;32m
 GREEN_BG 	= \033[42m
 
-NAME = ast.a
+NAME = libast.a
 
 HEADERS_DIR		:= include
 SRC_DIR			:= src

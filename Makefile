@@ -25,10 +25,15 @@ INT_TEST_OBJ_DIR	:= int_obj_tests
 HEADERS_DIR 		:= include
 TEST_MAINS			:= $(TEST_DIR)/mains
 
-# === Libft Paths===
+# === Libft Paths ===
 LIBFT_DIR			:= $(LIB_DIR)/libft
 LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
 LIBFT 				:= $(LIBFT_DIR)/libft_bonus.a
+
+# === Ast Paths ===
+LIBAST_DIR				:= $(LIB_DIR)/libast
+LIBAST_HEADERS_DIR 		:= $(LIBAST_DIR)/include
+LIBAST 					:= $(LIBAST_DIR)/libast.a
 
 # === Unity ===
 UNITY_DIR   		:= unity/src
@@ -37,12 +42,17 @@ UNITY_OBJ			:= $(UNIT_TEST_OBJ_DIR)/unity.o
 
 # === Compiler ===
 CC		:= cc
-CFLAGS	:= -Wall -Werror -Wextra -g \
-			-I$(HEADERS_DIR) -I$(SRC_DIR) \
-			-I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR) \
-			-I$(UNITY_DIR)
+CFLAGS	:= \
+	-Wall -Werror -Wextra -g \
+	-I$(HEADERS_DIR) -I$(SRC_DIR) \
+	-I$(LIBFT_HEADERS_DIR) \
+	-I$(LIBAST_HEADERS_DIR) \
+	-I$(UNITY_DIR)
 
-LDFLAGS := -L$(LIBFT_DIR) -lft_bonus -lreadline
+LDFLAGS := \
+	-L$(LIBFT_DIR) -lft_bonus \
+	-L$(LIBAST_DIR) -last \
+	-lreadline
 
 # === Sources ===
 SRCS_MAIN 	:= $(SRC_DIR)/main.c
@@ -56,19 +66,9 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/tokenizer_utils.c \
 	$(SRC_DIR)/utils/lexer_utils.c \
 	$(SRC_DIR)/utils/matrix_utils.c \
-	$(SRC_DIR)/ast/ast_create.c \
-	$(SRC_DIR)/ast/ast_validate.c \
-	$(SRC_DIR)/ast/ast_core.c \
-	$(SRC_DIR)/ast/ast_utils.c \
-	$(SRC_DIR)/ast/ast_types.c \
-	$(SRC_DIR)/ast/ast_traverse.c \
-	$(SRC_DIR)/ast/ast_filter.c \
-	$(SRC_DIR)/ast/ast_strings.c \
-	$(SRC_DIR)/ast/ast_flatten.c \
-	$(SRC_DIR)/ast/lst_to_array.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
-	# $(TEST_MAINS)/ast_flattening.c \
+	# $(TEST_MAINS)/ast_flattening.c
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \
@@ -91,19 +91,24 @@ UNIT_TEST_OBJS	:= $(UNIT_TEST_SRCS:$(UNIT_TEST_DIR)/%.c=$(UNIT_TEST_OBJ_DIR)/%.o
 INT_TEST_OBJS	:= $(INT_TEST_SRCS:$(INT_TEST_DIR)/%.c=$(INT_TEST_OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
+LIBAST_CLEAN_ENABLED ?= 1
 
 # Main target
 all: $(NAME)
 	@echo "$(GREEN)---- ✅ Building of $(NAME) ----$(RESET)";
 
 # Link objects + library
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(LIBAST)
 	@echo "$(CYAN)---- Linking target $@ ---- $(RESET)using $^"
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
 
 $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
 	@$(MAKE) bonus -C $(LIBFT_DIR) --quiet
+
+$(LIBAST):
+	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
+	@$(MAKE) -C $(LIBAST_DIR) --quiet
 
 # Compile src files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -143,14 +148,14 @@ $(INT_TEST_OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
 	@mkdir -p $(INT_TEST_OBJ_DIR)
 
-unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
+unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LDFLAGS) -o run_tests
+	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) $(LDFLAGS) -o run_tests
 	@./run_tests
 
 int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_tests
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_tests
 	@./run_tests
 
 test: unit_test int_test
@@ -162,6 +167,10 @@ clean:
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
 	@echo "$(RED)---- Running clean libft ----$(RESET)"
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
+endif
+ifeq ($(LIBAST_CLEAN_ENABLED),1)
+	@echo "$(RED)---- Running clean libft ----$(RESET)"
+	@$(MAKE) clean -C $(LIBAST_DIR) --silent
 endif
 
 # Clean test
@@ -179,6 +188,9 @@ fclean: clean tclean
 	@echo "$(RED)---- Running fclean libft ----$(RESET)"
 	@$(MAKE) --no-print-directory LIBFT_CLEAN_ENABLED=0 clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+	@echo "$(RED)---- Running fclean libast ----$(RESET)"
+	@$(MAKE) --no-print-directory LIBAST_CLEAN_ENABLED=0 clean
+	@$(MAKE) fclean -C $(LIBAST_DIR) --silent
 
 re: fclean all
 
