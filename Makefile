@@ -31,9 +31,9 @@ LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
 LIBFT 				:= $(LIBFT_DIR)/libft_bonus.a
 
 # === Ast Paths ===
-LIBAST_DIR				:= $(LIB_DIR)/libast
-LIBAST_HEADERS_DIR 		:= $(LIBAST_DIR)/include
-LIBAST 					:= $(LIBAST_DIR)/libast.a
+LIBAST_DIR			:= $(LIB_DIR)/libast
+LIBAST_HEADERS_DIR 	:= $(LIBAST_DIR)/include
+LIBAST 				:= $(LIBAST_DIR)/libast.a
 
 # === Unity ===
 UNITY_DIR   		:= unity/src
@@ -41,15 +41,15 @@ UNITY_SRC   		:= $(UNITY_DIR)/unity.c
 UNITY_OBJ			:= $(UNIT_TEST_OBJ_DIR)/unity.o
 
 # === Compiler ===
-CC		:= cc
-CFLAGS	:= \
+CC			:= cc
+CFLAGS		:= \
 	-Wall -Werror -Wextra -g \
 	-I$(HEADERS_DIR) -I$(SRC_DIR) \
 	-I$(LIBFT) -I$(LIBFT_HEADERS_DIR) \
 	-I$(LIBAST_HEADERS_DIR) \
 	-I$(UNITY_DIR)
 
-LDFLAGS := \
+LDFLAGS 	:= \
 	-L$(LIBFT_DIR) -lft_bonus \
 	-L$(LIBAST_DIR) -last \
 	-lreadline
@@ -100,7 +100,7 @@ all: $(NAME)
 # Link objects + library
 $(NAME): $(OBJS) $(LIBFT) $(LIBAST)
 	@echo "$(CYAN)---- Linking target $@ ---- $(RESET)using $^"
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBAST) $(LDFLAGS) -o $@
 
 $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
