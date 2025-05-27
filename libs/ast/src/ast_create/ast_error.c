@@ -7,6 +7,6 @@ t_ast *ast_error(char *msg)
 		return (NULL);
 	error_node->error = ft_strdup(msg);
 	if (!error_node->error)
-		return (free_ast(error_node), NULL);
+		return (ast_free(error_node), NULL);
 	return (error_node);
 }

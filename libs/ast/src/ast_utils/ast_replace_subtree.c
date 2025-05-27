@@ -5,6 +5,6 @@ void ast_replace_subtree(t_ast **target, t_ast *replace)
 {
 	if (!target || *target == replace)
 		return ;
-	free_ast(*target);
+	ast_free(*target);
 	*target = replace;
 }

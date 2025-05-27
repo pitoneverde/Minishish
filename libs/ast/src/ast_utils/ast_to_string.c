@@ -10,7 +10,7 @@ char *ast_to_string(const t_ast *node)
 		return (NULL);
 	ast_stringify(clone);
 	if (!clone->value)
-		return (free_ast(clone), NULL);
+		return (ast_free(clone), NULL);
 	res = ft_strdup(clone->value);
-	return (free_ast(clone), res);
+	return (ast_free(clone), res);
 }
