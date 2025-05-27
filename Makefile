@@ -45,7 +45,7 @@ CC		:= cc
 CFLAGS	:= \
 	-Wall -Werror -Wextra -g \
 	-I$(HEADERS_DIR) -I$(SRC_DIR) \
-	-I$(LIBFT_HEADERS_DIR) \
+	-I$(LIBFT) -I$(LIBFT_HEADERS_DIR) \
 	-I$(LIBAST_HEADERS_DIR) \
 	-I$(UNITY_DIR)
 

@@ -33,6 +33,9 @@ t_ast	*create_mock_ast(void)
 
 void	execute_command(t_ast *ast, int fd_in)
 {
+	(void) fd_in;
+	(void) ast;
+
 	if (!ast)
 		perror("Execvp failed");
 
@@ -42,9 +45,11 @@ void	execute_command(t_ast *ast, int fd_in)
 
 void	execute_pipeline(t_ast *ast, int fd_in)
 {
-	int	fd[2];
+	// int	fd[2];
 	int	pid;
 	int status;
+	(void) fd_in;
+	(void) ast;
 
 	pid = fork();
 	if (pid == 0)
