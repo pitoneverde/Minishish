@@ -65,10 +65,11 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/utils.c \
 	$(SRC_DIR)/utils/tokenizer_utils.c \
 	$(SRC_DIR)/utils/lexer_utils.c \
+	$(SRC_DIR)/utils/parser_utils.c \
 	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
-	# $(TEST_MAINS)/ast_flattening.c
+	# $(TEST_MAINS)/parser.c
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

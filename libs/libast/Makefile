@@ -49,6 +49,7 @@ SRCS = 	\
 	$(SRC_DIR)/ast_types/ast_is_command.c \
 	$(SRC_DIR)/ast_types/ast_is_leaf.c \
 	$(SRC_DIR)/ast_types/ast_is_operator.c \
+	$(SRC_DIR)/ast_types/ast_is_redirection.c \
 	$(SRC_DIR)/ast_types/ast_is_redirection_chain.c \
 	$(SRC_DIR)/ast_types/ast_is_simple_pipeline.c \
 	$(SRC_DIR)/ast_utils/ast_find.c \

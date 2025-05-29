@@ -50,6 +50,12 @@ typedef struct s_token
 	char			*error;
 }	t_token;
 
+typedef struct s_parser
+{
+	t_list	*tokens;		// current token node in list
+	t_token	*current;		// current token value
+}	t_parser;
+
 // tokenizer
 t_list *tokenize(const char *line);	//element type char*
 void free_raw_tokens(t_list **raw_tokens);
@@ -80,7 +86,15 @@ void print_raw_tokens(t_list *tokens);
 void print_lexed_tokens(t_list *tokens);
 
 // parser
-t_ast *parse_expression(t_list **tokens);
-t_ast *parse(t_list *tokens);
+t_ast *parse(t_list *lexemes);
+t_ast *parse_command(t_parser *p);
+t_ast *parse_simple_command(t_parser *p);
+t_ast *parse_pipeline(t_parser *p);
+
+// parser utils
+
+void	advance(t_parser *p);
+t_token *peek(t_parser *p);
+int		match(t_parser *p, t_token_type type);
 
 #endif // !PARSER_H
