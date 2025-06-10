@@ -28,7 +28,7 @@ t_ast *parse_pipeline(t_parser *p)
 		advance(p); // consume '|'
 		t_ast *right = parse_command(p);
 		if (!right)
-			return (free(left), ast_error("Missing command after pipe"));
+			return (ast_free(left), ast_error("Missing command after pipe"));
 		left = ast_binary_op(AST_PIPE, "|", left, right);
 	}
 	return left;
@@ -38,9 +38,9 @@ t_ast *parse_pipeline(t_parser *p)
 t_ast *parse_command(t_parser *p)
 {
 	t_ast *cmd = parse_simple_command(p);
+
 	if (!cmd)
 		return NULL;
-
 	while (p->current && (p->current->type == TKN_REDIR_IN ||
 						  p->current->type == TKN_REDIR_OUT ||
 						  p->current->type == TKN_APPEND ||
@@ -68,8 +68,9 @@ t_ast *parse_command(t_parser *p)
 		}
 
 		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
+		ast_free(cmd);
 		if (!redir_node)
-			return (NULL);
+			return (ast_free(file_node), NULL);
 		cmd = redir_node;
 
 		free(filename);
@@ -93,5 +94,7 @@ t_ast *parse_simple_command(t_parser *p)
 	}
 	char **argv = (char **)lst_to_array(argv_list);
 	ft_lstclear(&argv_list, NULL);
-	return ast_cmd(argv);
+	t_ast *cmd = ast_cmd(argv);
+	mtxfree_str(argv);
+	return (cmd);
 }

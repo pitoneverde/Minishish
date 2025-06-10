@@ -25,9 +25,9 @@ void run_test(const char *input)
 		printf("AST:\n");
 		print_ast(tree, 0);
 	}
-	ast_free(tree);
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
+	ast_free(tree);
 }
 
 int main(void)
