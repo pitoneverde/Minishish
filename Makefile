@@ -45,7 +45,7 @@ CC			:= cc
 CFLAGS		:= \
 	-Wall -Werror -Wextra -g \
 	-I$(HEADERS_DIR) -I$(SRC_DIR) \
-	-I$(LIBFT) -I$(LIBFT_HEADERS_DIR) \
+	-I$(LIBFT_HEADERS_DIR) \
 	-I$(LIBAST_HEADERS_DIR) \
 	-I$(UNITY_DIR)
 
@@ -55,7 +55,7 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-SRCS_MAIN 	:= $(SRC_DIR)/main.c
+# SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -69,7 +69,7 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
-	# $(TEST_MAINS)/parser.c
+	$(TEST_MAINS)/parser.c
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

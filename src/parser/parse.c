@@ -20,10 +20,15 @@ t_ast *parse(t_list *lexemes)
 t_ast *parse_pipeline(t_parser *p)
 {
 	t_ast *left = parse_command(p);
+	if (!left)
+		return NULL;
+
 	while (p->current && p->current->type == TKN_PIPE)
 	{
 		advance(p); // consume '|'
 		t_ast *right = parse_command(p);
+		if (!right)
+			return (free(left), ast_error("Missing command after pipe"));
 		left = ast_binary_op(AST_PIPE, "|", left, right);
 	}
 	return left;
@@ -62,7 +67,9 @@ t_ast *parse_command(t_parser *p)
 			default: return ast_error("Unknown redirection");
 		}
 
-		t_ast *redir_node = ast_binary_op(type, op, cmd, file_node);
+		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
+		if (!redir_node)
+			return (NULL);
 		cmd = redir_node;
 
 		free(filename);
@@ -70,7 +77,6 @@ t_ast *parse_command(t_parser *p)
 	}
 	return cmd;
 }
-
 
 // Parse a simple command: WORD+
 t_ast *parse_simple_command(t_parser *p)
@@ -86,39 +92,6 @@ t_ast *parse_simple_command(t_parser *p)
 		advance(p);
 	}
 	char **argv = (char **)lst_to_array(argv_list);
-	ft_lstclear(&argv_list, free);
+	ft_lstclear(&argv_list, NULL);
 	return ast_cmd(argv);
 }
-
-// // Parse redirection: ('<' | '>' | '>>' | '<<') WORD
-// t_ast *parse_redirection(t_parser *p) {
-// 	t_token *tok = p->current;
-// 	if (!tok || (tok->type != TKN_REDIR_IN && tok->type != TKN_REDIR_OUT
-// 			&& tok->type != TKN_APPEND && tok->type != TKN_HEREDOC)) {
-// 		return ast_error("Expected redirection");
-// 	}
-// 	t_ast_type type;
-// 	switch (tok->type) {
-// 		case TKN_REDIR_IN: type = AST_REDIR_IN; break;
-// 		case TKN_REDIR_OUT: type = AST_REDIR_OUT; break;
-// 		case TKN_APPEND: type = AST_APPEND; break;
-// 		case TKN_HEREDOC: type = AST_HEREDOC; break;
-// 		default: return ast_error("Unknown redirection");
-// 	}
-// 	char *op = strdup(tok->value);
-// 	advance(p);
-
-// 	if (!p->current || p->current->type != TKN_WORD) {
-// 		free(op);
-// 		return ast_error("Expected filename after redirection");
-// 	}
-// 	char *filename = strdup(p->current->value);
-// 	advance(p);
-
-// 	t_ast *file_node = ast_new(AST_LITERAL, filename);
-// 	free(filename);
-
-// 	t_ast *redir_node = ast_binary_op(type, op, NULL, file_node);
-// 	free(op);
-// 	return redir_node;
-// }
