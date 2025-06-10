@@ -50,7 +50,7 @@ t_ast *parse_command(t_parser *p)
 		advance(p);
 
 		if (!p->current || p->current->type != TKN_WORD)
-			return ast_error("Expected filename after redirection");
+			return (ast_free(cmd), ast_error("Expected filename after redirection"));
 
 		char *op = strdup(tok->value);
 		char *filename = strdup(p->current->value);
@@ -64,7 +64,8 @@ t_ast *parse_command(t_parser *p)
 			case TKN_REDIR_OUT: type = AST_REDIR_OUT; break;
 			case TKN_APPEND: type = AST_APPEND; break;
 			case TKN_HEREDOC: type = AST_HEREDOC; break;
-			default: return ast_error("Unknown redirection");
+			default: return (free(op), free(filename), ast_free(cmd), ast_free(file_node),
+								ast_error("Unknown redirection"));
 		}
 
 		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
