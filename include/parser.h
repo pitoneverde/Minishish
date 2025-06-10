@@ -32,15 +32,15 @@ parse_expression    -> full command with redirs, pipes, etc.
 // tokens
 typedef enum e_token_type 
 {
-	TKN_WORD,	// done
-	TKN_PIPE,
-	TKN_REDIR_OUT,
+	TKN_PIPE = 0,
 	TKN_REDIR_IN,
+	TKN_REDIR_OUT,
 	TKN_APPEND,
 	TKN_HEREDOC,
+	TKN_ERROR,
 	TKN_S_QUOTED,
 	TKN_D_QUOTED,
-	TKN_ERROR,
+	TKN_WORD,	// done
 }	t_token_type;
 
 typedef struct s_token
@@ -74,6 +74,7 @@ void free_token(void *ptr);
 void free_token_list(t_list **list);
 int strip_if_quoted(t_token *token);
 int check_for_errors(t_token *token);
+int	tkn_is_redirection(t_token *token);
 
 // lexer utils
 t_token_type classify_token(const char *raw_token);

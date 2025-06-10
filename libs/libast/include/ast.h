@@ -8,14 +8,14 @@
 
 typedef enum e_ast_type
 {
-	AST_COMMAND,	// TKN_WORD
-	AST_LITERAL,	// also TKN_WORD
-	AST_PIPE,
+	AST_PIPE = 0,
 	AST_REDIR_IN,
 	AST_REDIR_OUT,
 	AST_APPEND,
 	AST_HEREDOC,
-	AST_ERROR
+	AST_ERROR,
+	AST_LITERAL,	// also TKN_WORD
+	AST_COMMAND,	// TKN_WORD
 }	t_ast_type;
 
 typedef struct s_ast

@@ -1,9 +1,5 @@
 #include "minishell.h"
 
-t_ast *parse_command(t_parser *p);
-t_ast *parse_simple_command(t_parser *p);
-t_ast *parse_pipeline(t_parser *p);
-
 // driver
 t_ast *parse(t_list *lexemes)
 {
@@ -19,14 +15,17 @@ t_ast *parse(t_list *lexemes)
 // Parse a pipeline: command '|' command
 t_ast *parse_pipeline(t_parser *p)
 {
-	t_ast *left = parse_command(p);
+	t_ast	*left;
+	t_ast	*right;
+
+	left = parse_command(p);
 	if (!left)
 		return NULL;
-
+	right = NULL;
 	while (p->current && p->current->type == TKN_PIPE)
 	{
 		advance(p); // consume '|'
-		t_ast *right = parse_command(p);
+		right = parse_command(p);
 		if (!right)
 			return (ast_free(left), ast_error("Missing command after pipe"));
 		left = ast_binary_op(AST_PIPE, "|", left, right);
@@ -37,43 +36,40 @@ t_ast *parse_pipeline(t_parser *p)
 // Parse a command: simple_command redirection*
 t_ast *parse_command(t_parser *p)
 {
-	t_ast *cmd = parse_simple_command(p);
+	char *op;
+	char *filename;
+	t_ast *cmd;
+	t_ast *file_node;
+	t_ast *redir_node;
+	t_token *tok;
+	t_ast_type type;
 
+	cmd = parse_simple_command(p);
 	if (!cmd)
 		return NULL;
-	while (p->current && (p->current->type == TKN_REDIR_IN ||
-						  p->current->type == TKN_REDIR_OUT ||
-						  p->current->type == TKN_APPEND ||
-						  p->current->type == TKN_HEREDOC))
+	while (p->current && tkn_is_redirection(p->current))
 	{
-		t_token *tok = p->current;
+		tok = p->current;
 		advance(p);
 
 		if (!p->current || p->current->type != TKN_WORD)
 			return (ast_free(cmd), ast_error("Expected filename after redirection"));
+		op = strdup(tok->value);
+		filename = strdup(p->current->value);
+		file_node = ast_new(AST_LITERAL, filename);
 
-		char *op = strdup(tok->value);
-		char *filename = strdup(p->current->value);
 		advance(p);
+		if (tkn_is_redirection(tok))
+			type = (t_ast_type)tok->type;
+		else
+			return (free(op), free(filename), ast_free(cmd), ast_free(file_node),
+					ast_error("Unknown redirection"));
+		redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
 
-		t_ast *file_node = ast_new(AST_LITERAL, filename);
-		t_ast_type type;
-
-		switch (tok->type) {
-			case TKN_REDIR_IN: type = AST_REDIR_IN; break;
-			case TKN_REDIR_OUT: type = AST_REDIR_OUT; break;
-			case TKN_APPEND: type = AST_APPEND; break;
-			case TKN_HEREDOC: type = AST_HEREDOC; break;
-			default: return (free(op), free(filename), ast_free(cmd), ast_free(file_node),
-								ast_error("Unknown redirection"));
-		}
-
-		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
-		ast_free(cmd);
 		if (!redir_node)
 			return (ast_free(file_node), NULL);
 		cmd = redir_node;
-
+		ast_free(cmd);
 		free(filename);
 		free(op);
 	}
@@ -81,21 +77,23 @@ t_ast *parse_command(t_parser *p)
 }
 
 // Parse a simple command: WORD+
-t_ast *parse_simple_command(t_parser *p)
+t_ast	*parse_simple_command(t_parser *p)
 {
+	char	**argv;
+	t_ast	*cmd;
+	t_list	*argv_list;
+
 	if (!p->current || p->current->type != TKN_WORD)
-		return ast_error("Expected command");
-
-	t_list *argv_list = NULL;
-
+		return (ast_error("Expected command"));
+	argv_list = NULL;
 	while (p->current && p->current->type == TKN_WORD)
 	{
 		ft_lstadd_back(&argv_list, ft_lstnew(strdup(p->current->value)));
 		advance(p);
 	}
-	char **argv = (char **)lst_to_array(argv_list);
+	argv = (char **)lst_to_array(argv_list);
 	ft_lstclear(&argv_list, NULL);
-	t_ast *cmd = ast_cmd(argv);
+	cmd = ast_cmd(argv);
 	mtxfree_str(argv);
 	return (cmd);
 }

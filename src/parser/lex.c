@@ -80,3 +80,11 @@ void free_token_list(t_list **list)
 {
 	ft_lstclear(list, free_token);
 }
+
+int tkn_is_redirection(t_token *token)
+{
+	return (token->type == TKN_REDIR_IN ||
+			token->type == TKN_REDIR_OUT ||
+			token->type == TKN_APPEND ||
+			token->type == TKN_HEREDOC);
+}
