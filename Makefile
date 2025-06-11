@@ -1,71 +1,187 @@
 # === Colors ===
-RED     	= \033[0;31m
-GREEN   	= \033[0;32m
-YELLOW  	= \033[0;33m
-BLUE    	= \033[0;34m
-MAGENTA 	= \033[0;35m
-CYAN    	= \033[0;36m
-RESET   	= \033[0m
-BOLD		= \033[1m
-UNDERLINE 	= \033[4;32m
-GREEN_BG 	= \033[42m
+RED     			:= \033[0;31m
+GREEN   			:= \033[0;32m
+YELLOW  			:= \033[0;33m
+BLUE    			:= \033[0;34m
+MAGENTA 			:= \033[0;35m
+CYAN    			:= \033[0;36m
+RESET   			:= \033[0m
+BOLD				:= \033[1m
+UNDERLINE 			:= \033[4;32m
+GREEN_BG 			:= \033[42m
 
-NAME = minishell
+# === Name ===
+NAME		 		:= minishell
 
-# Paths
-LIB_DIR = libs
-LIBFT_DIR = $(LIB_DIR)/libft
-SRC_DIR = src
-OBJ_DIR = obj
-HEADERS_DIR = include
-LIBFT_HEADERS_DIR = $(LIBFT_DIR)/include
+# === Paths ===
+LIB_DIR				:= libs
+SRC_DIR				:= src
+OBJ_DIR				:= obj
+TEST_DIR     		:= tests
+UNIT_TEST_DIR     	:= $(TEST_DIR)/unit
+INT_TEST_DIR     	:= $(TEST_DIR)/integration
+UNIT_TEST_OBJ_DIR	:= unit_obj_tests
+INT_TEST_OBJ_DIR	:= int_obj_tests
+HEADERS_DIR 		:= include
+TEST_MAINS			:= $(TEST_DIR)/mains
 
-# Compiler
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
+# === Libft Paths ===
+LIBFT_DIR			:= $(LIB_DIR)/libft
+LIBFT_HEADERS_DIR 	:= $(LIBFT_DIR)/include
+LIBFT 				:= $(LIBFT_DIR)/libft_bonus.a
 
-# Linker/Loader ld
-LDFLAGS = -L$(LIBFT_DIR)
+# === Ast Paths ===
+LIBAST_DIR			:= $(LIB_DIR)/libast
+LIBAST_HEADERS_DIR 	:= $(LIBAST_DIR)/include
+LIBAST 				:= $(LIBAST_DIR)/libast.a
 
-# Sources
-SRCS =	$(SRC_DIR)/main.c \
+# === Unity ===
+UNITY_DIR   		:= unity/src
+UNITY_SRC   		:= $(UNITY_DIR)/unity.c
+UNITY_OBJ			:= $(UNIT_TEST_OBJ_DIR)/unity.o
 
-LIBFT = $(LIBFT_DIR)/libft_bonus.a
+# === Compiler ===
+CC			:= cc
+CFLAGS		:= \
+	-Wall -Werror -Wextra -g \
+	-I$(HEADERS_DIR) -I$(SRC_DIR) \
+	-I$(LIBFT_HEADERS_DIR) \
+	-I$(LIBAST_HEADERS_DIR) \
+	-I$(UNITY_DIR)
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+LDFLAGS 	:= \
+	-L$(LIBFT_DIR) -lft_bonus \
+	-L$(LIBAST_DIR) -last \
+	-lreadline
+
+# === Sources ===
+# SRCS_MAIN 	:= $(SRC_DIR)/main.c
+
+SRCS 		:= \
+	$(SRC_DIR)/parser/tokenize.c \
+	$(SRC_DIR)/parser/parse.c \
+	$(SRC_DIR)/parser/lex.c \
+	$(SRC_DIR)/feature1/sum.c \
+	$(SRC_DIR)/utils/utils.c \
+	$(SRC_DIR)/utils/tokenizer_utils.c \
+	$(SRC_DIR)/utils/lexer_utils.c \
+	$(SRC_DIR)/utils/parser_utils.c \
+	$(SRC_DIR)/utils/matrix_utils.c \
+	$(SRC_DIR)/debug.c \
+	$(SRC_DIR)/signals/signals.c \
+	$(TEST_MAINS)/parser.c
+
+UNIT_TEST_SRCS	:= \
+	$(UNIT_TEST_DIR)/all_tests.c \
+	$(UNIT_TEST_DIR)/test_tokenizer.c \
+	$(UNIT_TEST_DIR)/test_lexer.c
+	
+INT_TEST_SRCS	:= \
+	$(INT_TEST_DIR)/all_tests.c \
+	$(INT_TEST_DIR)/helpers_setup.c \
+	$(INT_TEST_DIR)/test_args.c \
+	$(INT_TEST_DIR)/test_prompt.c
+
+# Compile objects
+MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+NO_MAIN_OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS 			:= $(MAIN_OBJ) $(NO_MAIN_OBJS)
+
+# Compile test objects
+UNIT_TEST_OBJS	:= $(UNIT_TEST_SRCS:$(UNIT_TEST_DIR)/%.c=$(UNIT_TEST_OBJ_DIR)/%.o)
+INT_TEST_OBJS	:= $(INT_TEST_SRCS:$(INT_TEST_DIR)/%.c=$(INT_TEST_OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
+LIBAST_CLEAN_ENABLED ?= 1
 
+# Main target
 all: $(NAME)
-	@echo "$(GREEN)---- Building of $(NAME) ----$(RESET)";
+	@echo "$(GREEN)---- ✅ Building of $(NAME) ----$(RESET)";
 
-$(NAME): $(OBJS) $(LIBFT)
+# Link objects + library
+$(NAME): $(OBJS) $(LIBFT) $(LIBAST)
 	@echo "$(CYAN)---- Linking target $@ ---- $(RESET)using $^"
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBAST) $(LDFLAGS) -o $@
 
 $(LIBFT):
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
-	$(MAKE) bonus -C $(LIBFT_DIR) --quiet
+	@$(MAKE) bonus -C $(LIBFT_DIR) --quiet
 
+$(LIBAST):
+	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
+	@$(MAKE) -C $(LIBAST_DIR) --quiet
+
+# Compile src files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
-	$(CC) $(CFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
+# === Compile Unity object ===
+$(UNITY_OBJ): $(UNITY_SRC)
+	@echo "$(YELLOW)Compiling Unity $<$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile test files
+$(UNIT_TEST_OBJ_DIR)/%.o: $(UNIT_TEST_DIR)/%.c | $(UNIT_TEST_OBJ_DIR)
+	@echo "$(YELLOW)Compiling test $<$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile test files
+$(INT_TEST_OBJ_DIR)/%.o: $(INT_TEST_DIR)/%.c | $(INT_TEST_OBJ_DIR)
+	@echo "$(YELLOW)Compiling test $<$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Create object directory
 $(OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
+
+# Create test object directory
+$(UNIT_TEST_OBJ_DIR):
+	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
+	@mkdir -p $(UNIT_TEST_OBJ_DIR)
+
+$(INT_TEST_OBJ_DIR):
+	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
+	@mkdir -p $(INT_TEST_OBJ_DIR)
+
+unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST)
+	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
+	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) $(LDFLAGS) -o run_tests
+	@./run_tests
+
+int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
+	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_tests
+	@./run_tests
+
+test: unit_test int_test
 
 # Remove only temporary files
 clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(UNIT_TEST_OBJ_DIR)
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
 	@echo "$(RED)---- Running clean libft ----$(RESET)"
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
 endif
+ifeq ($(LIBAST_CLEAN_ENABLED),1)
+	@echo "$(RED)---- Running clean libft ----$(RESET)"
+	@$(MAKE) clean -C $(LIBAST_DIR) --silent
+endif
+
+# Clean test
+tclean:
+	@echo "$(RED)---- Clean tests ----$(RESET)"
+	@rm -f ./run_tests
+	@rm -rf $(UNIT_TEST_OBJ_DIR) $(INT_TEST_OBJ_DIR)
 
 # Remove temporary files and executables
-fclean: clean 
+fclean: clean tclean
 	@if [ -n "$(NAME)" ] && [ -e "$(NAME)" ]; then \
 		echo "$(RED)---- Removing executable $(NAME)...$(RESET)"; \
 		rm -f $(NAME); \
@@ -73,7 +189,10 @@ fclean: clean
 	@echo "$(RED)---- Running fclean libft ----$(RESET)"
 	@$(MAKE) --no-print-directory LIBFT_CLEAN_ENABLED=0 clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+	@echo "$(RED)---- Running fclean libast ----$(RESET)"
+	@$(MAKE) --no-print-directory LIBAST_CLEAN_ENABLED=0 clean
+	@$(MAKE) fclean -C $(LIBAST_DIR) --silent
 
 re: fclean all
- 
-.PHONY: all clean fclean re
+
+.PHONY: all test test2 clean fclean tclean re
