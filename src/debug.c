@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+static void print_arg_node(void *content);
+
 void print_raw_tokens(t_list *tokens)
 {
 	while (tokens)
@@ -79,27 +81,45 @@ const char *node_type_name(t_ast_type type)
 // recursively print the Absract Syntax Tree
 void print_ast(const t_ast *node, int depth)
 {
-	int	i;
-
 	if (!node)
-		return ;
-	i = 0;
-	while (i++ < depth)
+		return;
+
+	for (int i = 0; i < depth; i++)
 		printf("  ");
+
 	printf("(%s", node_type_name(node->type));
+
 	if (node->value)
 		printf(", value: \"%s\"", node->value);
-	if (node->argv)
-	{
-		i = 0;
-		printf("\n->Argv: [");
-		while (node->argv[i])
-			printf("\"%s\", ", node->argv[i++]);
-		printf("]");
-	}
+
 	if (node->error)
-		printf("->Error: %s\n", node->error);
+		printf(" -> Error: %s", node->error);
+
 	printf(")\n");
+
+	// Print arguments if this is a command node
+	if (node->type == AST_COMMAND && node->args)
+	{
+		for (int i = 0; i < depth + 1; i++)
+			printf("  ");
+		printf("Args:\n");
+
+		ft_lstiter(node->args, print_arg_node);
+	}
+
+	// Recurse on children
 	print_ast(node->left, depth + 1);
 	print_ast(node->right, depth + 1);
+}
+
+static void print_arg_node(void *content)
+{
+	const t_ast *arg = (const t_ast *)content;
+
+	printf("    - \"%s\"", arg->value);
+	if (arg->quote == S_QUOTE)
+		printf(" (single quoted)");
+	else if (arg->quote == D_QUOTE)
+		printf(" (double quoted)");
+	printf("\n");
 }
