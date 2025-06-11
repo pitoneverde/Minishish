@@ -88,3 +88,10 @@ int tkn_is_redirection(t_token *token)
 			token->type == TKN_APPEND ||
 			token->type == TKN_HEREDOC);
 }
+
+int tkn_is_word(t_token *token)
+{
+	return (token->type == TKN_WORD ||
+			token->type == TKN_S_QUOTED ||
+			token->type == TKN_D_QUOTED);
+}

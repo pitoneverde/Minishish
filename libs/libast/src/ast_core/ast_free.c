@@ -12,5 +12,7 @@ void ast_free(t_ast *tree)
 		free(tree->error);
 	if (tree->argv)
 		mtxfree_str(tree->argv);
+	if (tree->args)
+		ft_lstclear(&tree->args, ast_free_void);
 	free(tree);
 }

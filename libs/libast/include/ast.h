@@ -18,13 +18,23 @@ typedef enum e_ast_type
 	AST_COMMAND,	// TKN_WORD
 }	t_ast_type;
 
+typedef enum e_quote_type
+{
+	N_QUOTE = 0,
+	S_QUOTE,
+	D_QUOTE,
+}	t_quote_type;
+
 typedef struct s_ast
 {
 	t_ast_type		type;
+	t_quote_type	quote;
+	char			*value;		// "echo", "<<", arguments
 	struct s_ast	*left;
 	struct s_ast	*right;
-	char			*value;		// "echo", "<<", arguments
-	char			**argv;		// only used in AST_COMMAND, default NULL
+	t_list			*args;		// of t_ast, only used in AST_COMMAND, before expansion, to maintain quote flag, default NULL
+	int				argc;		// only in AST_COMMAND, default 0
+	char			**argv;		// only used in AST_COMMAND, after expansion, default NULL
 	char			*error;		// only used in AST_ERROR, default NULL
 }	t_ast;
 
@@ -38,7 +48,7 @@ typedef struct s_ast_filter_ctx
 t_ast	*ast_new(t_ast_type type, char *value);
 
 // create type command
-t_ast	*ast_cmd(char **argv);
+t_ast	*ast_cmd(t_list *args);
 
 // 	create 	
 // 	AST_PIPE,

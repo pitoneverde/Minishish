@@ -75,6 +75,7 @@ void free_token_list(t_list **list);
 int strip_if_quoted(t_token *token);
 int check_for_errors(t_token *token);
 int	tkn_is_redirection(t_token *token);
+int tkn_is_word(t_token *token);
 
 // lexer utils
 t_token_type classify_token(const char *raw_token);

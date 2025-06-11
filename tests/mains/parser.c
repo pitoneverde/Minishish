@@ -3,6 +3,7 @@
 #include <string.h>
 
 // Run single test case
+// IF IT LEAKS: check if strdup'ed value arg in ast_new-> no need since it strdup'es again internally
 void run_test(const char *input)
 {
 	printf("\n=== Test: '%s' ===\n", input);

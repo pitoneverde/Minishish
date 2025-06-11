@@ -52,22 +52,28 @@ t_ast *parse_command(t_parser *p)
 // Parse a simple command: WORD+
 t_ast	*parse_simple_command(t_parser *p)
 {
-	char	**argv;
 	t_ast	*cmd;
-	t_list	*argv_list;
+	t_ast	*arg;
+	t_list	*args;
 
-	if (!p->current || p->current->type != TKN_WORD)
+	if (!p->current || !tkn_is_word(p->current))
 		return (ast_error("Expected command"));
-	argv_list = NULL;
-	while (p->current && p->current->type == TKN_WORD)
+	args = NULL;
+	while (p->current && tkn_is_word(p->current))
 	{
-		ft_lstadd_back(&argv_list, ft_lstnew(strdup(p->current->value)));
+		arg = ast_new(AST_LITERAL, p->current->value);
+		if (!arg)
+			return (ft_lstclear(&args, ast_free_void), ast_error("malloc"));
+		if (p->current->type == TKN_D_QUOTED)
+			arg->quote = D_QUOTE;
+		else if (p->current->type == TKN_S_QUOTED)
+			arg->quote = S_QUOTE;
+		else
+			arg->quote = N_QUOTE;
+		ft_lstadd_back(&args, ft_lstnew(arg));
 		advance(p);
 	}
-	argv = (char **)lst_to_array(argv_list);
-	ft_lstclear(&argv_list, NULL);
-	cmd = ast_cmd(argv);
-	mtxfree_str(argv);
+	cmd = ast_cmd(args);
 	return (cmd);
 }
 
@@ -82,7 +88,7 @@ static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
 
 	redir = p->current;
 	advance(p);
-	if (!p->current || p->current->type != TKN_WORD)
+	if (!p->current || !tkn_is_word(p->current))
 		return (ast_free(cmd), ast_error("Expected filename"));
 	op = ft_strdup(redir->value);
 	filename = ft_strdup(p->current->value);
