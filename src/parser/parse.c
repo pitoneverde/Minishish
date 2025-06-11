@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+static t_ast *parse_redirection(t_parser *p, t_ast *cmd);
+
 // driver
 t_ast *parse(t_list *lexemes)
 {
@@ -33,40 +35,18 @@ t_ast *parse_pipeline(t_parser *p)
 // Parse a command: simple_command redirection*
 t_ast *parse_command(t_parser *p)
 {
-	t_ast *cmd = parse_simple_command(p);
+	t_ast *cmd;
 
+	cmd = parse_simple_command(p);
 	if (!cmd)
-		return NULL;
+		return (NULL);
 	while (p->current && tkn_is_redirection(p->current))
 	{
-		t_token *tok = p->current;
-		advance(p);
-
-		if (!p->current || p->current->type != TKN_WORD)
-			return (ast_free(cmd), ast_error("Expected filename after redirection"));
-
-		char *op = strdup(tok->value);
-		char *filename = strdup(p->current->value);
-		advance(p);
-
-		t_ast *file_node = ast_new(AST_LITERAL, filename);
-		t_ast_type type;
-
-		if (tkn_is_redirection(tok))
-			type = (t_ast_type)tok->type;
-		else
-			return (free(op), free(filename), ast_free(cmd), ast_free(file_node),
-					ast_error("Unknown redirection"));
-
-		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
-		ast_free(cmd);
-		if (!redir_node)
-			return (ast_free(file_node), NULL);
-		cmd = redir_node;
-		free(filename);
-		free(op);
+		cmd = parse_redirection(p, cmd);
+		if (!cmd)
+			return (NULL);
 	}
-	return cmd;
+	return (cmd);
 }
 
 // Parse a simple command: WORD+
@@ -89,4 +69,32 @@ t_ast	*parse_simple_command(t_parser *p)
 	cmd = ast_cmd(argv);
 	mtxfree_str(argv);
 	return (cmd);
+}
+
+// Helper to parse a single redirection and return the updated command node
+static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
+{
+	char *op;
+	char *filename;
+	t_ast *f_node;
+	t_ast *r_node;
+	t_token *redir;
+
+	redir = p->current;
+	advance(p);
+	if (!p->current || p->current->type != TKN_WORD)
+		return (ast_free(cmd), ast_error("Expected filename"));
+	op = ft_strdup(redir->value);
+	filename = ft_strdup(p->current->value);
+	f_node = ast_new(AST_LITERAL, filename);
+	free(filename);
+	advance(p);
+	if (!f_node || !tkn_is_redirection(redir))
+		return (free(op), ast_free(cmd), ast_free(f_node), ast_error("Error"));
+	r_node = ast_binary_op((t_ast_type)redir->type, op, astdup(cmd), f_node);
+	ast_free(cmd);
+	free(op);
+	if (!r_node) // = NULL
+		ast_free(f_node);
+	return (r_node);
 }
