@@ -53,5 +53,7 @@ int main(void)
 	run_test("sort < unsorted.txt > sorted.txt >> log.txt"); // Read, write, and append
 	run_test("tr -d 'a-z' < input | sort | uniq > result");
 	run_test("command < in | mid > out | tail"); // Nested redirection in a pipeline
+	run_test("cat|ls");
+	run_test("$$$$$HOME$.$");
 	return 0;
 }

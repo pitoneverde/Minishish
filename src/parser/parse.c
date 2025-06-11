@@ -15,17 +15,14 @@ t_ast *parse(t_list *lexemes)
 // Parse a pipeline: command '|' command
 t_ast *parse_pipeline(t_parser *p)
 {
-	t_ast	*left;
-	t_ast	*right;
-
-	left = parse_command(p);
+	t_ast *left = parse_command(p);
 	if (!left)
 		return NULL;
-	right = NULL;
+
 	while (p->current && p->current->type == TKN_PIPE)
 	{
 		advance(p); // consume '|'
-		right = parse_command(p);
+		t_ast *right = parse_command(p);
 		if (!right)
 			return (ast_free(left), ast_error("Missing command after pipe"));
 		left = ast_binary_op(AST_PIPE, "|", left, right);
@@ -36,40 +33,36 @@ t_ast *parse_pipeline(t_parser *p)
 // Parse a command: simple_command redirection*
 t_ast *parse_command(t_parser *p)
 {
-	char *op;
-	char *filename;
-	t_ast *cmd;
-	t_ast *file_node;
-	t_ast *redir_node;
-	t_token *tok;
-	t_ast_type type;
+	t_ast *cmd = parse_simple_command(p);
 
-	cmd = parse_simple_command(p);
 	if (!cmd)
 		return NULL;
 	while (p->current && tkn_is_redirection(p->current))
 	{
-		tok = p->current;
+		t_token *tok = p->current;
 		advance(p);
 
 		if (!p->current || p->current->type != TKN_WORD)
 			return (ast_free(cmd), ast_error("Expected filename after redirection"));
-		op = strdup(tok->value);
-		filename = strdup(p->current->value);
-		file_node = ast_new(AST_LITERAL, filename);
 
+		char *op = strdup(tok->value);
+		char *filename = strdup(p->current->value);
 		advance(p);
+
+		t_ast *file_node = ast_new(AST_LITERAL, filename);
+		t_ast_type type;
+
 		if (tkn_is_redirection(tok))
 			type = (t_ast_type)tok->type;
 		else
 			return (free(op), free(filename), ast_free(cmd), ast_free(file_node),
 					ast_error("Unknown redirection"));
-		redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
 
+		t_ast *redir_node = ast_binary_op(type, op, astdup(cmd), file_node);
+		ast_free(cmd);
 		if (!redir_node)
 			return (ast_free(file_node), NULL);
 		cmd = redir_node;
-		ast_free(cmd);
 		free(filename);
 		free(op);
 	}
