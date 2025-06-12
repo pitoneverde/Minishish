@@ -34,7 +34,17 @@
 // must pass context as a struct (also for history)
 static volatile sig_atomic_t g_signal_status = 0;
 
+typedef struct s_sh
+{
+	t_list	*env;				// list of t_env
+	int		last_code;			// for $?
+	int		is_interactive;		// set if running interactively
+}	t_sh;
+
 int sum(int a, int b);
+
+// Parse line
+t_ast	*read_command_line(char *line);
 
 // Utils
 void	print_error(char *s);

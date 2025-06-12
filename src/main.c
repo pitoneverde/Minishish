@@ -121,10 +121,14 @@ int	main(int argc, const char *argv[], const char *envp[])
 {
 	(void)	argc;
 	(void)	argv;
-	(void)	envp;
 	char	*line;
+	t_sh	shell;
 	struct sigaction	sa;
 
+	shell.env = envp_to_env(envp);
+	shell.last_code = 0;
+	shell.is_interactive = isatty(STDIN_FILENO);
+	
     sa.sa_handler = handler_sigaction;
     sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
     sigemptyset(&sa.sa_mask);

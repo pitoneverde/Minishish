@@ -95,7 +95,6 @@ t_ast *parse_simple_command(t_parser *p);
 t_ast *parse_pipeline(t_parser *p);
 
 // parser utils
-
 void	advance(t_parser *p);
 t_token *peek(t_parser *p);
 int		match(t_parser *p, t_token_type type);
