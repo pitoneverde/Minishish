@@ -3,6 +3,7 @@
 # include <stdlib.h>
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 void	ft_striteri(const char *s, void (*f)(unsigned int, char *));
 char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *string, int c);

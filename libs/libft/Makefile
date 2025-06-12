@@ -42,6 +42,7 @@ SRCS = 	\
 		$(SRC_DIR)/strings/ft_strchr.c \
 		$(SRC_DIR)/strings/ft_strrchr.c \
 		$(SRC_DIR)/strings/ft_strncmp.c \
+		$(SRC_DIR)/strings/ft_strcmp.c \
 		$(SRC_DIR)/strings/ft_strnstr.c \
 		$(SRC_DIR)/strings/ft_strdup.c \
 		$(SRC_DIR)/strings/ft_substr.c \

@@ -1,4 +1,4 @@
-#ifndef ENV_H
+#if !defined(ENV_H)
 # define ENV_H
 
 # include "matrix.h"
@@ -17,8 +17,10 @@ typedef struct s_env
 t_list	*envp_to_env(char **envp);
 char	**env_to_envp(t_list *env);
 void	free_env(t_list *env);
+void	free_env_entry(void *entry);
 
 // utils
+void	*env_to_str(void *ptr);
 void	unset_env_var(t_list **env, const char *key);
 char	*get_env_value(const t_list *env, const char *key);
 void	set_env_var(t_list **env, const char *key, const char *val, int exp);
