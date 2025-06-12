@@ -19,14 +19,15 @@
 /*
 GRAMMAR:
 command      ::= simple_command | pipeline | compound_command
-simple_command ::= WORD { WORD | redirection }
+simple_command ::= WORD { WORD *}
 pipeline     ::= command { '|' command }
 compound_command ::= command ('&&' | '||') command
 redirection  ::= '<' WORD | '>' WORD | '>>' WORD | '<<' WORD
 
-parse_command       -> simple command and args
+parse_simple_command       -> simple command and args
+parse_command       -> command with redirection(s)
 parse_pipeline      -> command | command
-parse_expression    -> full command with redirs, pipes, etc.
+parse    -> full command with redirs, pipes, etc.
 */
 
 // tokens
