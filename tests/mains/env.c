@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include "env.h"
-#include "list.h"
-#include "matrix.h"
-#include "strings.h"
+#include "minishell.h"
 
 // Helper function to print t_env list
 void print_env(t_list *env)
@@ -63,6 +59,5 @@ int main(int argc, char **argv, char **envp)
 	// Cleanup
 	mtxfree_str(dup_envp);
 	free_env(env);
-
 	return (0);
 }
