@@ -71,7 +71,7 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
-	$(TEST_MAINS)/parser.c
+	$(TEST_MAINS)/env.c
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

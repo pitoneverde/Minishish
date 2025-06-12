@@ -23,13 +23,13 @@ extern char ** environ;
 // 1 - buffer vuoto: vai a capo
 // 2 - buffer non vuoto: parsing comandi ecc.
 
-t_ast	*create_mock_ast(void)
-{
-    t_ast *left = ast_cmd((char *[]){"echo", "ciaoleft", NULL});
-    t_ast *right = ast_cmd((char *[]){"echo", "ciaoright", NULL});
-    t_ast *root = ast_binary_op(AST_PIPE, "|", left, right);
-	return (root);
-}
+// t_ast	*create_mock_ast(void)
+// {
+//     t_ast *left = ast_cmd((char *[]){"echo", "ciaoleft", NULL});
+//     t_ast *right = ast_cmd((char *[]){"echo", "ciaoright", NULL});
+//     t_ast *root = ast_binary_op(AST_PIPE, "|", left, right);
+// 	return (root);
+// }
 
 void	execute_command(t_ast *ast, int fd_in)
 {
@@ -91,33 +91,33 @@ void    executor(t_ast *ast)
 	}
 }
 
-void	parse_and_execute(char *line)
-{
-	t_list *tokens;
-	t_list *lexed;
+// void	parse_and_execute(char *line)
+// {
+// 	t_list *tokens;
+// 	t_list *lexed;
 
-	if (ft_strlen(line) > 0)
-	{
-		tokens = tokenize(line);
-		if (!tokens)
-			return ; // error status code??
-		// print_raw_tokens(tokens);
-		lexed = lex(tokens);
-		if (!lexed)
-			return ; // error status code??
-		// print_lexed_tokens(lexed);
+// 	if (ft_strlen(line) > 0)
+// 	{
+// 		tokens = tokenize(line);
+// 		if (!tokens)
+// 			return ; // error status code??
+// 		// print_raw_tokens(tokens);
+// 		lexed = lex(tokens);
+// 		if (!lexed)
+// 			return ; // error status code??
+// 		// print_lexed_tokens(lexed);
 		
-		// parser (albero) ->flatten (lista) oppure filtrare
-		t_ast *ast = create_mock_ast();
-        executor(ast);
+// 		// parser (albero) ->flatten (lista) oppure filtrare
+// 		t_ast *ast = create_mock_ast();
+//         executor(ast);
 
-		free_raw_tokens(&tokens);
-		free_token_list(&lexed);
-		add_history(line);
-	}
-}
+// 		free_raw_tokens(&tokens);
+// 		free_token_list(&lexed);
+// 		add_history(line);
+// 	}
+// }
 
-int	main(int argc, const char *argv[], const char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	(void)	argc;
 	(void)	argv;
@@ -128,7 +128,7 @@ int	main(int argc, const char *argv[], const char *envp[])
 	shell.env = envp_to_env(envp);
 	shell.last_code = 0;
 	shell.is_interactive = isatty(STDIN_FILENO);
-	
+
     sa.sa_handler = handler_sigaction;
     sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
     sigemptyset(&sa.sa_mask);
@@ -154,15 +154,18 @@ int	main(int argc, const char *argv[], const char *envp[])
 	{
 		line = readline("> ");
 		// handle End Of transmission (Ctrl + D)
-		if (!line)
-			break ;
-		parse_and_execute(line);
-		free(line);
+		t_ast *tree = read_command_line(line);
+		// expand tree: transform args in argv and $var/$? in values
+		if (tree)
+			executor(tree);
+		if (line)
+			free(line);
 	}
 	rl_clear_history();
 	// if (fork() == 0)
 	//     execvp(argv[1], argv + 1);
 	// wait(&status);
+	(void)shell;
     printf("exit\n");
 	return (0);
 }

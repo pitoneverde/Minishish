@@ -44,7 +44,7 @@ typedef struct s_sh
 int sum(int a, int b);
 
 // Parse line
-t_ast	*read_command_line(char *line);
+t_ast	*read_command_line(const char *line);
 
 // Utils
 void	print_error(char *s);

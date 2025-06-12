@@ -19,13 +19,10 @@ t_list	*envp_to_env(char **envp)
 		val = ft_strdup(eq + 1);
 		if (!key || !val)
 		{
-			free(key);
-			free(val);
 			continue ;
 		}
 		set_env_var(&env, key, val, 1);
-		free(key);
-		free(val);
+		i++;
 	}
 	return (env);
 }
