@@ -36,6 +36,8 @@
 *.x86_64
 *.hex
 minishell
+run_unit_tests
+run_integration_tests
 
 # Debug files
 *.dSYM/
