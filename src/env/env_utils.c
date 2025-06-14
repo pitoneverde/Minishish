@@ -6,6 +6,8 @@ void unset_env_var(t_list **env, const char *key)
 	t_list	*curr;
 	t_env	*entry;
 
+	if (!env || !key || !*key)
+		return;
 	prev = NULL;
 	curr = *env;
 	while (curr)
@@ -34,6 +36,8 @@ char *get_env_value(const t_list *env, const char *key)
 {
 	t_env	*entry;
 
+	if (!env || !key || !*key)
+		return (NULL);
 	while (env)
 	{
 		entry = (t_env *)env->content;
@@ -49,6 +53,8 @@ void set_env_var(t_list **env, const char *key, const char *val, int exp)
 	t_list	*curr;
 	t_env	*entry;
 
+	if (!env || !key || !*key)
+		return ;
 	curr = *env;
 	while (curr)
 	{
@@ -56,7 +62,7 @@ void set_env_var(t_list **env, const char *key, const char *val, int exp)
 		if (!ft_strcmp(entry->key, key))
 		{
 			free(entry->value);
-			entry->value = ft_strdup(val);
+			entry->value = ft_strdup(val ? val : "");
 			if (exp)
 				entry->exported = 1;
 			return ;
@@ -65,8 +71,10 @@ void set_env_var(t_list **env, const char *key, const char *val, int exp)
 	}
 	// not found
 	entry = (t_env *)malloc(sizeof(t_env));
+	if (!entry)
+		return ;
 	entry->key = ft_strdup(key);
-	entry->value = ft_strdup(val);
+	entry->value = ft_strdup(val ? val : "");
 	entry->exported = exp;
 
 	ft_lstadd_back(env, ft_lstnew(entry));

@@ -21,13 +21,12 @@ t_list	*envp_to_env(char **envp)
 		{
 			free(key);
 			free(val);
-			free(eq);
+			i++;
 			continue ;
 		}
 		set_env_var(&env, key, val, 1);
 		free(key);
 		free(val);
-		free(eq);
 		i++;
 	}
 	return (env);
