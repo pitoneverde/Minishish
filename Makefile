@@ -55,7 +55,7 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-# SRCS_MAIN 	:= $(SRC_DIR)/main.c
+SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -71,12 +71,15 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
-	$(TEST_MAINS)/env.c
 
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \
-	$(UNIT_TEST_DIR)/test_tokenizer.c \
-	$(UNIT_TEST_DIR)/test_lexer.c
+	$(UNIT_TEST_DIR)/test_ast.c \
+	$(UNIT_TEST_DIR)/test_env.c \
+	$(UNIT_TEST_DIR)/test_matrix.c \
+	$(UNIT_TEST_DIR)/test_parser.c \
+	$(UNIT_TEST_DIR)/test_lexer.c \
+	$(UNIT_TEST_DIR)/test_tokenizer.c
 	
 INT_TEST_SRCS	:= \
 	$(INT_TEST_DIR)/all_tests.c \
@@ -153,13 +156,13 @@ $(INT_TEST_OBJ_DIR):
 
 unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) $(LDFLAGS) -o run_tests
-	@./run_tests
+	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) $(LDFLAGS) -o run_unit_tests
+	@./run_unit_tests
 
 int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
 	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_tests
-	@./run_tests
+	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_integration_tests
+	@./run_integration_tests
 
 test: unit_test int_test
 
