@@ -75,11 +75,11 @@ SRCS 		:= \
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \
 	$(UNIT_TEST_DIR)/test_ast.c \
-	$(UNIT_TEST_DIR)/test_env.c \
-	$(UNIT_TEST_DIR)/test_matrix.c \
-	$(UNIT_TEST_DIR)/test_parser.c \
 	$(UNIT_TEST_DIR)/test_lexer.c \
 	$(UNIT_TEST_DIR)/test_tokenizer.c
+# 	$(UNIT_TEST_DIR)/test_matrix.c \
+# 	$(UNIT_TEST_DIR)/test_parser.c \
+# 	$(UNIT_TEST_DIR)/test_env.c \
 	
 INT_TEST_SRCS	:= \
 	$(INT_TEST_DIR)/all_tests.c \

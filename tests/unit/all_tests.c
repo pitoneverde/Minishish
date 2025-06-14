@@ -5,6 +5,8 @@ void setUp(void) { /* eseguito prima di ogni test */ }
 void tearDown(void) { /* eseguito dopo ogni test  */ }
 
 /* prototipi definiti nei file di test */
+void test_sample_ast_building(void);
+
 void test_tokenizer_basic(void);
 void test_tokenizer_spaces(void);
 void test_tokenize_empty_string(void);
@@ -22,6 +24,8 @@ int main(void)
 {
     UNITY_BEGIN();
 
+	/* Core AST library*/
+	// RUN_TEST(test_sample_ast_building);
     /* Tokenizer */
     RUN_TEST(test_tokenizer_basic);
     RUN_TEST(test_tokenizer_spaces);
