@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/25 23:45:43 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:41:37 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern char ** environ;
 
 // IN LOOP:
 // legge riga da stdin
-// crea processo con fork
+// crea processo con fork	shell.env = envp_to_env(envp);
 // esegue con execvp
 
 // Enter
@@ -30,66 +30,6 @@ extern char ** environ;
 //     t_ast *root = ast_binary_op(AST_PIPE, "|", left, right);
 // 	return (root);
 // }
-
-void	execute_command(t_ast *ast, int fd_in)
-{
-	(void) fd_in;
-	(void) ast;
-
-	if (!ast)
-		perror("Execvp failed");
-
-	// controlla se e' comando o built-in
-	execvp(ast->argv[0], ast->argv);
-}
-
-void	execute_pipeline(t_ast *ast, int fd_in)
-{
-	// int	fd[2];
-	int	pid;
-	int status;
-	(void) fd_in;
-	(void) ast;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		printf("Figlio: esegui cmd\n");
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		printf("Processo figlio terminato.\n");
-	}
-	else
-	{
-		perror("fork");
-	}
-}
-
-void    executor(t_ast *ast)
-{
-    if (ast_is_command(ast))
-	{
-		execute_command(ast, -1);
-	}
-	else if (ast_is_operator(ast))
-	{
-		printf("operator\n");
-	}
-	else if (ast_is_simple_pipeline(ast))
-	{
-		execute_pipeline(ast, -1);
-	}
-	else if (ast_is_redirection_chain(ast))
-	{
-		printf("redirection\n");
-	}
-	else
-	{
-		print_error("Unknown node type");
-	}
-}
 
 // void	parse_and_execute(char *line)
 // {
@@ -123,21 +63,15 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)	argv;
 	char	*line;
 	t_sh	shell;
-	struct sigaction	sa;
+	t_list	*env;
 
 	shell.env = envp_to_env(envp);
 	shell.last_code = 0;
 	shell.is_interactive = isatty(STDIN_FILENO);
 
-    sa.sa_handler = handler_sigaction;
-    sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-
+	init_signals();
 	if (argc != 1)
 		return (print_error("Wrong number of arguments"), 0);
-
 	// printf("home: \e[0;32m%s\e[0m\n", getenv("HOME"));
 	// printf("path: \e[0;32m%s\e[0m\n", getenv("PATH"));
 	// printf("unexistent: \e[0;32m%s\e[0m\n", getenv("UNDEFINED"));
@@ -157,14 +91,12 @@ int	main(int argc, char *argv[], char *envp[])
 		t_ast *tree = read_command_line(line);
 		// expand tree: transform args in argv and $var/$? in values
 		if (tree)
-			executor(tree);
+			executor(tree, STDIN_FILENO, &shell); // restituisce status code
 		if (line)
 			free(line);
 	}
 	rl_clear_history();
-	// if (fork() == 0)
-	//     execvp(argv[1], argv + 1);
-	// wait(&status);
+	free_env(env);
 	(void)shell;
     printf("exit\n");
 	return (0);

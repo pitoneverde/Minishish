@@ -44,7 +44,7 @@ UNITY_OBJ			:= $(UNIT_TEST_OBJ_DIR)/unity.o
 CC			:= cc
 CFLAGS		:= \
 	-Wall -Werror -Wextra -g \
-	-I$(HEADERS_DIR) -I$(SRC_DIR) \
+	-I$(HEADERS_DIR) \
 	-I$(LIBFT_HEADERS_DIR) \
 	-I$(LIBAST_HEADERS_DIR) \
 	-I$(UNITY_DIR)
@@ -73,6 +73,7 @@ SRCS 		:= \
 	$(SRC_DIR)/expander/expander_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
+	$(SRC_DIR)/executor/executor.c \
 	# $(TEST_MAINS)/env_edge.c
 	
 UNIT_TEST_SRCS	:= \
