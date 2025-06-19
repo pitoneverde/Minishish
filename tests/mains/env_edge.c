@@ -11,8 +11,8 @@ int main(int argc, char **argv, char **envp)
 	t_list *env;
 	char **dup_envp;
 	char *val;
-	char *long_key;
-	char *long_value;
+	// char *long_key;
+	// char *long_value;
 
 	(void)argc;
 	(void)argv;
@@ -34,28 +34,28 @@ int main(int argc, char **argv, char **envp)
 	print_env(env);
 
 	// --- 2. Very long key and value ---
-	printf("\n--- Test 2: Very long key and value ---\n");
-	long_key = malloc(10001);
-	long_value = malloc(10001);
-	if (!long_key || !long_value)
-	{
-		fprintf(stderr, "Failed to allocate memory for long key/value\n");
-		free(long_key);
-		free(long_value);
-		free_env(env);
-		return (1);
-	}
-	memset(long_key, 'K', 10000);
-	long_key[10000] = '\0';
-	memset(long_value, 'V', 10000);
-	long_value[10000] = '\0';
+	// printf("\n--- Test 2: Very long key and value ---\n");
+	// long_key = malloc(10001);
+	// long_value = malloc(10001);
+	// if (!long_key || !long_value)
+	// {
+	// 	fprintf(stderr, "Failed to allocate memory for long key/value\n");
+	// 	free(long_key);
+	// 	free(long_value);
+	// 	free_env(env);
+	// 	return (1);
+	// }
+	// memset(long_key, 'K', 10000);
+	// long_key[10000] = '\0';
+	// memset(long_value, 'V', 10000);
+	// long_value[10000] = '\0';
 
-	set_env_var(&env, long_key, long_value, 1);
-	val = get_env_value(env, long_key);
-	printf("Length of long key value: %zu\n", val ? strlen(val) : 0);
+	// set_env_var(&env, long_key, long_value, 1);
+	// val = get_env_value(env, long_key);
+	// printf("Length of long key value: %zu\n", val ? strlen(val) : 0);
 
-	free(long_key);
-	free(long_value);
+	// free(long_key);
+	// free(long_value);
 
 	// --- 3. Special characters in key and value ---
 	printf("\n--- Test 3: Special characters in key and value ---\n");

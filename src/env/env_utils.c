@@ -96,3 +96,19 @@ void	*env_to_str(void *ptr)
 	free(temp);
 	return (joined);
 }
+
+// must be NULL-terminated
+int	is_valid_var_name(const char *name)
+{
+	if (!name || !*name)
+		return (0);
+	if (!ft_isalpha(*name) && *name != '_')
+		return (0);
+	while (*name)
+	{
+		if (!ft_isalnum(*name) && *name != '_')
+			return (0);
+		name++;
+	}
+	return (1);
+}

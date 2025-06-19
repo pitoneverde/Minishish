@@ -1,4 +1,4 @@
-#ifndef AST_H
+#if !defined(AST_H)
 # define AST_H
 
 # include "libft.h"

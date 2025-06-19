@@ -55,7 +55,7 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-# SRCS_MAIN 	:= $(SRC_DIR)/main.c
+SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -69,6 +69,8 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/lexer_utils.c \
 	$(SRC_DIR)/utils/parser_utils.c \
 	$(SRC_DIR)/utils/matrix_utils.c \
+	$(SRC_DIR)/expander/expand.c \
+	$(SRC_DIR)/expander/expander_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
 	# $(TEST_MAINS)/env_edge.c
