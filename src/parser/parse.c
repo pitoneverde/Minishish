@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "parser.h"
 
 static t_ast *parse_redirection(t_parser *p, t_ast *cmd);
 

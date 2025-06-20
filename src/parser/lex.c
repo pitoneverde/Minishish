@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "parser.h"
 
 // early returns are all malloc-related
 t_list *lex(t_list *raw_tokens)

@@ -10,18 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "executor.h"
 
 // To do
-int execute_builtin(ast)
+int execute_builtin(t_ast *ast)
 {
+	(void)ast;
     printf("exec builtin\n");
     return (0);
-
 }
 
 int	is_builtin(t_ast *ast)
 {
+	(void)ast;
 	// ◦ echo with option -n
 	// ◦ cd with only a relative or absolute path
 	// ◦ pwd with no options
@@ -59,7 +60,10 @@ int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 char	*search_path(char *cmd, t_sh *shell)
 {
 	// prendi path
+	(void)cmd;
 	char *path = get_env_value(shell->env, "PATH");
+	free(path);
+	return (NULL);
 	// strtok path
 	// scorrere path
 	// per ogni token controlla se path/cmd esiste
@@ -86,7 +90,7 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 		}
         close(fd_in);
     }
-	path = search_path(ast->argv[0], (*shell).env);
+	path = search_path(ast->argv[0], shell);
 	if (!path)
 	{
 		perror("path not found");
@@ -121,7 +125,7 @@ int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 		close(fd[1]);
 		exit(executor(ast->left, fd_in, shell));
 	}
-	else if (pid > 0)
+	else
 	{
 		close(fd[1]);
 		status = executor(ast->right, fd_in, shell);
@@ -133,6 +137,7 @@ int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 
 int    executor(t_ast *ast, int fd_in, t_sh *shell)
 {
+	(void)fd_in;
     if (!ast)
         return (127);
     if (ast_is_command(ast)) 

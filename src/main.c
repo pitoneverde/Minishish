@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "executor.h"
 
-extern char ** environ;
+// extern char ** environ;
 
 // IN LOOP:
 // legge riga da stdin

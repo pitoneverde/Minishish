@@ -18,6 +18,7 @@
 # endif
 
 # include "libft.h"
+# include "shell.h"
 # include "ast.h"
 # include "parser.h"
 # include "executor.h"
@@ -35,14 +36,7 @@
 // must pass context as a struct (also for history)
 static volatile sig_atomic_t g_signal_status = 0;
 
-typedef struct s_sh
-{
-	t_list	*env;				// list of t_env
-	int		last_code;			// for $?
-	int		is_interactive;		// set if running interactively
-}	t_sh;
-
-int sum(int a, int b);
+// int sum(int a, int b);
 
 // Parse line
 t_ast	*read_command_line(const char *line);
@@ -51,6 +45,7 @@ t_ast	*read_command_line(const char *line);
 void	print_error(char *s);
 
 // Signals
+void init_signals();
 void	handler_sigaction(int sig);
 
 #endif

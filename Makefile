@@ -70,6 +70,7 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/parser_utils.c \
 	$(SRC_DIR)/utils/matrix_utils.c \
 	$(SRC_DIR)/expander/expand.c \
+	$(SRC_DIR)/expander/expand_token.c \
 	$(SRC_DIR)/expander/expander_utils.c \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \

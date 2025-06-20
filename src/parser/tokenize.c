@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "parser.h"
 // TODO: now parses only words, and operators, add quotes
 t_list *tokenize(const char *line)
 {
