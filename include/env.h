@@ -20,7 +20,7 @@ char	**env_to_envp(t_list *env);
 void	free_env(t_list *env);
 void	free_env_entry(void *entry);
 
-// utils
+// utils, assume that key AKA variable name is valid, validate input into builtin
 int		is_valid_var_name(const char *name);
 void	*env_to_str(void *ptr);
 void	unset_env_var(t_list **env, const char *key);

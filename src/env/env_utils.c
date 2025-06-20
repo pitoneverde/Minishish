@@ -104,7 +104,7 @@ int	is_valid_var_name(const char *name)
 		return (0);
 	if (!ft_isalpha(*name) && *name != '_')
 		return (0);
-	while (*name)
+	while (*name && *name != ' ')
 	{
 		if (!ft_isalnum(*name) && *name != '_')
 			return (0);

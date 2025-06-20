@@ -22,10 +22,4 @@ char	*expand_token(const char *str, t_quote_type quote, t_sh *shell);
 // Handles heredoc input, expands lines only if delimiter is unquoted
 char	*read_heredoc(const char *delimiter, t_quote_type quote, t_sh *shell);
 
-// // Utility: convert a list of strings into a null-terminated char** array
-// char	**lst_to_str_array(t_list *lst);
-
-// // Optional: exit status used by $?
-// extern int g_exit_code;
-
 #endif // EXPANSION_H
