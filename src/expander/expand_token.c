@@ -1,11 +1,13 @@
 # include "expansion.h"
 
+static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh);
+static void handle_code(t_strbuilder *sb, t_sh *shell);
+static void handle_dollar(const char *str, size_t *i, t_strbuilder *sb);
+static void handle_var(const char *str, size_t *i, t_strbuilder *sb, t_sh *sh);
+
 // Expands a single token string (e.g., "hello$USER") according to quote type
 char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 {
-	size_t i;
-	char *val;
-	char *result;
 	t_strbuilder *sb;
 
 	if (!str)
@@ -15,8 +17,14 @@ char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 	sb = sb_create(64);
 	if (!sb)
 		return (NULL);
+	return (substitute_vars(str, sb, shell));
+}
 
-	// chunking and substitution
+static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh)
+{
+	size_t i;
+	char	*result;
+
 	i = 0;
 	while (str[i])
 	{
@@ -24,35 +32,53 @@ char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 		{
 			i++;
 			if (str[i] == '?')
-			{
-				val = ft_itoa(shell->last_code);
-				sb_append_str(sb, val);
-				free(val);
-			}
+				handle_code(sb, sh);
 			else if (ft_isalpha(str[i]) || str[i] == '_')
-			{
-				size_t start = i;
-				while (str[i] && ft_isalnum(str[i]))
-					i++;
-				char *var_name = ft_substr(str, start, i - start);
-				val = get_env_value(shell->env, var_name);
-				free(var_name);
-				if (val)
-					sb_append_str(sb, val);
-			}
+				handle_var(str, &i, sb, sh);
 			else
-			{
-				sb_append_char(sb, '$');
-				sb_append_char(sb, str[i]);
-				i++;
-			}
+				handle_dollar(str, &i, sb);
 		}
 		else
-		{
-			sb_append_char(sb, str[i]);
-			i++;
-		}
+			sb_append_char(sb, str[i++]);
 	}
 	result = sb_build(sb);
 	return (result);
+}
+
+static void handle_code(t_strbuilder *sb, t_sh *sh)
+{
+	char	*val;
+
+	val = ft_itoa(sh->last_code);
+	if (val)
+	{
+		sb_append_str(sb, val);
+		free(val);
+	}
+}
+
+static void handle_dollar(const char *str, size_t *i, t_strbuilder *sb)
+{
+	sb_append_char(sb, '$');
+	sb_append_char(sb, str[*i]);
+	(*i)++;
+}
+
+static void handle_var(const char *str, size_t *i, t_strbuilder *sb, t_sh *sh)
+{
+	size_t	start;
+	char	*key;
+	char	*val;
+
+	start = *i;
+	while (str[*i] && ft_isalnum(str[*i]))
+		(*i)++;
+	key = ft_substr(str, start, *i - start);
+	val = get_env_value(sh->env, key);
+	free(key);
+	if (val)
+	{
+		sb_append_str(sb, val);
+		free(val);
+	}
 }
