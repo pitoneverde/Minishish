@@ -18,11 +18,14 @@ SRC_DIR			= src
 OBJ_DIR			= obj
 
 SRCS = 	\
-		$(SRC_DIR)/chars/ft_isalpha.c \
-		$(SRC_DIR)/chars/ft_isdigit.c \
 		$(SRC_DIR)/chars/ft_isalnum.c \
+		$(SRC_DIR)/chars/ft_isalpha.c \
 		$(SRC_DIR)/chars/ft_isascii.c \
+		$(SRC_DIR)/chars/ft_isdigit.c \
+		$(SRC_DIR)/chars/ft_islower.c \
 		$(SRC_DIR)/chars/ft_isprint.c \
+		$(SRC_DIR)/chars/ft_ispunct.c \
+		$(SRC_DIR)/chars/ft_isupper.c \
 		$(SRC_DIR)/chars/ft_tolower.c \
 		$(SRC_DIR)/chars/ft_toupper.c \
 		$(SRC_DIR)/memory/ft_bzero.c \
@@ -72,7 +75,17 @@ SRCS_BONUS = 	\
 		$(SRC_DIR)/list/ft_lstmap.c \
 		$(SRC_DIR)/list/lst_to_array.c \
 		$(SRC_DIR)/list/lst_to_array_n.c \
-		$(SRC_DIR)/list/lst_to_array_ex.c
+		$(SRC_DIR)/list/lst_to_array_ex.c \
+		$(SRC_DIR)/strings/strbuilder/sb_append_char.c \
+		$(SRC_DIR)/strings/strbuilder/sb_append_n.c \
+		$(SRC_DIR)/strings/strbuilder/sb_append_str.c \
+		$(SRC_DIR)/strings/strbuilder/sb_build.c \
+		$(SRC_DIR)/strings/strbuilder/sb_capacity.c \
+		$(SRC_DIR)/strings/strbuilder/sb_create.c \
+		$(SRC_DIR)/strings/strbuilder/sb_clear.c \
+		$(SRC_DIR)/strings/strbuilder/sb_free.c \
+		$(SRC_DIR)/strings/strbuilder/sb_length.c \
+		$(SRC_DIR)/strings/strbuilder/sb_shrink_to_fit.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 OBJS_BONUS = $(SRCS_BONUS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

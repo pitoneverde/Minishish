@@ -26,6 +26,7 @@
 # include "output.h"
 # include "strings.h"
 # include "matrix.h"
+# include "strbuilder.h"
 
 // Bonus
 # include "list.h"

@@ -10,19 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "chars.h"
 
-int			ft_isprint(int c);
-static int	ft_ispunct(int c);
+int	ft_isprint(int c);
 
 int	ft_isprint(int c)
 {
 	return (ft_isalnum(c) || c == 0x20 || ft_ispunct(c));
-}
-
-static int	ft_ispunct(int c)
-{
-	if (c >= 0x21 && c <= 0x7E && !ft_isalnum(c))
-		return (c);
-	return (0);
 }

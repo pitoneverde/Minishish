@@ -10,21 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "chars.h"
 
-int			ft_tolower(int c);
-static int	ft_isupper(int c);
+int	ft_tolower(int c);
 
 int	ft_tolower(int c)
 {
 	if (ft_isupper(c))
 		return (c + 0x20);
 	return (c);
-}
-
-static int	ft_isupper(int c)
-{
-	if (c >= 0x41 && c <= 0x5A)
-		return (c);
-	return (0);
 }
