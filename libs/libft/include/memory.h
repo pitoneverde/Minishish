@@ -9,5 +9,6 @@ void	*ft_memset(void *block, int c, size_t size);
 void	*ft_memchr(const void *block, int c, size_t size);
 void	*ft_memcpy(void *to, const void *from, size_t size);
 void	*ft_memmove(void *to, const void *from, size_t size);
+void	*ft_realloc(void *old_ptr, size_t old_size, size_t new_size);
 
 #endif // MEMORY_H

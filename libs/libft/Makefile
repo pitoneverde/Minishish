@@ -35,6 +35,7 @@ SRCS = 	\
 		$(SRC_DIR)/memory/ft_memmove.c \
 		$(SRC_DIR)/memory/ft_memcmp.c \
 		$(SRC_DIR)/memory/ft_memchr.c \
+		$(SRC_DIR)/memory/ft_realloc.c \
 		$(SRC_DIR)/output/ft_putchar_fd.c \
 		$(SRC_DIR)/output/ft_putstr_fd.c \
 		$(SRC_DIR)/output/ft_putendl_fd.c \
@@ -81,8 +82,9 @@ SRCS_BONUS = 	\
 		$(SRC_DIR)/strings/strbuilder/sb_append_str.c \
 		$(SRC_DIR)/strings/strbuilder/sb_build.c \
 		$(SRC_DIR)/strings/strbuilder/sb_capacity.c \
-		$(SRC_DIR)/strings/strbuilder/sb_create.c \
 		$(SRC_DIR)/strings/strbuilder/sb_clear.c \
+		$(SRC_DIR)/strings/strbuilder/sb_create.c \
+		$(SRC_DIR)/strings/strbuilder/sb_ensure_capacity.c \
 		$(SRC_DIR)/strings/strbuilder/sb_free.c \
 		$(SRC_DIR)/strings/strbuilder/sb_length.c \
 		$(SRC_DIR)/strings/strbuilder/sb_shrink_to_fit.c

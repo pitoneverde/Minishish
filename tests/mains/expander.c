@@ -1,16 +1,16 @@
 #include "minishell.h"
 #include "expansion.h"
 
-// Mock shell and env lookup
-char *get_env_value(char **env, const char *key)
-{
-	size_t len = ft_strlen(key);
-	for (int i = 0; env && env[i]; i++) {
-		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
-			return env[i] + len + 1;
-	}
-	return NULL;
-}
+// // Mock shell and env lookup
+// char *get_env_value(char **env, const char *key)
+// {
+// 	size_t len = ft_strlen(key);
+// 	for (int i = 0; env && env[i]; i++) {
+// 		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
+// 			return env[i] + len + 1;
+// 	}
+// 	return NULL;
+// }
 
 // Recursive AST command printer
 void	print_ast_commands(t_ast *node)
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	// Setup shell context
-	shell.env = envp;
+	shell.env = envp_to_env(envp);
 	shell.last_code = 42;
 
 	while (1)
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 
 		expand_ast(ast, &shell);
 		print_ast_commands(ast);
-		free_ast(ast); // You should already have this
+		ast_free(ast); // You should already have this
 	}
 	return (0);
 }

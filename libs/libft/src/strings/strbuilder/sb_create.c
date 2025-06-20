@@ -1,11 +1,12 @@
 # include "strbuilder.h"
 
 // Creates a new string builder with an initial capacity.
-t_strbuilder	*sb_create(size_t initial_capacity)
+// `initial_capacity` must be > 0. Passing 0 results in undefined behavior.
+t_sb	*sb_create(size_t initial_capacity)
 {
-	t_strbuilder *sb;
+	t_sb *sb;
 
-	sb = malloc(sizeof(t_strbuilder));
+	sb = malloc(sizeof(t_sb));
 	if (!sb)
 		return (NULL);
 	sb->buf = malloc(initial_capacity);

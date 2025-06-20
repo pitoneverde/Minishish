@@ -1,14 +1,14 @@
 # include "expansion.h"
 
-static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh);
-static void handle_code(t_strbuilder *sb, t_sh *shell);
-static void handle_dollar(const char *str, size_t *i, t_strbuilder *sb);
-static void handle_var(const char *str, size_t *i, t_strbuilder *sb, t_sh *sh);
+static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh);
+static void handle_code(t_sb *sb, t_sh *shell);
+static void handle_dollar(const char *str, size_t *i, t_sb *sb);
+static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh);
 
 // Expands a single token string (e.g., "hello$USER") according to quote type
 char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 {
-	t_strbuilder *sb;
+	t_sb *sb;
 
 	if (!str)
 		return (NULL);
@@ -20,7 +20,7 @@ char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 	return (substitute_vars(str, sb, shell));
 }
 
-static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh)
+static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 {
 	size_t i;
 	char	*result;
@@ -31,7 +31,7 @@ static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh)
 		if (str[i] == '$' && str[i + 1])
 		{
 			i++;
-			if (str[i] == '?')
+			if (str[i++] == '?')
 				handle_code(sb, sh);
 			else if (ft_isalpha(str[i]) || str[i] == '_')
 				handle_var(str, &i, sb, sh);
@@ -45,7 +45,7 @@ static char *substitute_vars(const char *str, t_strbuilder *sb, t_sh *sh)
 	return (result);
 }
 
-static void handle_code(t_strbuilder *sb, t_sh *sh)
+static void handle_code(t_sb *sb, t_sh *sh)
 {
 	char	*val;
 
@@ -57,14 +57,14 @@ static void handle_code(t_strbuilder *sb, t_sh *sh)
 	}
 }
 
-static void handle_dollar(const char *str, size_t *i, t_strbuilder *sb)
+static void handle_dollar(const char *str, size_t *i, t_sb *sb)
 {
 	sb_append_char(sb, '$');
 	sb_append_char(sb, str[*i]);
 	(*i)++;
 }
 
-static void handle_var(const char *str, size_t *i, t_strbuilder *sb, t_sh *sh)
+static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh)
 {
 	size_t	start;
 	char	*key;

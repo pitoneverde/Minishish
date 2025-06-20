@@ -3,7 +3,7 @@
 
 int main(void)
 {
-	t_strbuilder *sb;
+	t_sb *sb;
 
 	printf("=== strbuilder tests ===\n");
 

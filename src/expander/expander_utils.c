@@ -29,10 +29,11 @@ void expand_command_args(t_ast *cmd, t_sh *shell)
 		else
 			ft_lstadd_back(&exp, ft_lstnew(ft_strdup(exp_str)));
 		free(exp_str);
+		curr = curr->next;
 	}
 	cmd->argc = ft_lstsize(exp);
 	cmd->argv = (char **)lst_to_array(exp);
-	ft_lstclear(&exp, free);
+	ft_lstclear(&exp, NULL);
 }
 
 void split_command_args(t_list **exp, char *exp_str)
