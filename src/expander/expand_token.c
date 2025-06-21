@@ -31,7 +31,7 @@ static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 		if (str[i] == '$' && str[i + 1])
 		{
 			i++;
-			if (str[i++] == '?')
+			if (str[i] == '?')
 				handle_code(sb, sh);
 			else if (ft_isalpha(str[i]) || str[i] == '_')
 				handle_var(str, &i, sb, sh);

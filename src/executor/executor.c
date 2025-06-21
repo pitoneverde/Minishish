@@ -57,21 +57,6 @@ int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 		return (1); // to do gestire errore
 }
 
-void	free_paths(char **split)
-{
-	int	i;
-
-	if (!split)
-		return;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
-
 char *find_command_path(char *cmd, char **paths)
 {
 	int i;
@@ -86,13 +71,13 @@ char *find_command_path(char *cmd, char **paths)
 		free(temp);
 		if (access(full_path, X_OK) == 0)
 		{
-			free_paths(paths);
+			mtxfree_str(paths);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	free_paths(paths);
+	mtxfree_str(paths);
 	return (temp);
 }
 
