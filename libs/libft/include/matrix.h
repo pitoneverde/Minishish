@@ -1,33 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 20:22:25 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 20:33:43 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MATRIX_H
 # define MATRIX_H
 
 # include <stdlib.h>
-// Core low-level matrix utilities
-size_t mtx_count(void **matrix);
-void mtxfree(void **mtx, void(f)(void *));
-void mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
-void **mtxdup(void **mtx, void *(c)(void *), void(f)(void *));
-void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
+# include "strings.h"
 
-// void *ft_realloc(void *p);
-// # define LIST_TO_ARRAY_AS(type, lst, dim_ptr)
-// 	((type **)lst_to_array_n((lst), (dim_ptr)));
+// Core low-level matrix utilities
+size_t	mtx_count(void **matrix);
+void	mtxfree(void **mtx, void (*f)(void *));
+void	mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
+void	**mtxdup(void **mtx, void *(c)(void *), void(*f)(void *));
+void	**mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
 
 // wrappers for project specific matrix handling
-void *copy_string(void *ptr);
-void print_string_matrix(char **matrix);
-void free_string(void *row);
+void	print_string_matrix(char **matrix);
 
-// TODO: Replace free_string with free once debugged (or keep a debug version commented)
-static inline char **mtxdup_str(char **matrix)
+static inline char	**mtxdup_str(char **matrix)
 {
-	return ((char **)mtxdup((void **)matrix, copy_string, free_string));
+	return ((char **)mtxdup((void **)matrix, ft_strdup, free));
 }
 
-// TODO: Replace free_string with free once debugged (or keep a debug version commented)
-static inline void mtxfree_str(char **matrix)
+static inline void	mtxfree_str(char **matrix)
 {
-	mtxfree((void **)matrix, free_string);
+	mtxfree((void **)matrix, free);
 }
 
 #endif // !MATRIX_HELPERS_H

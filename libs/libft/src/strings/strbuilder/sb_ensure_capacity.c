@@ -1,4 +1,16 @@
-# include "strbuilder.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sb_ensure_capacity.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 20:15:26 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 20:15:27 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "strbuilder.h"
 
 // Internal helper that reallocs the buffer if needed.
 int	sb_ensure_capacity(t_sb *sb, size_t required)

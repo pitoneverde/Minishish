@@ -18,7 +18,7 @@ int main(void)
 
 	// Deep copy
 	printf("\nStarting deep copy of matrix...\n");
-	char **copy = (char **)mtxdup_n((void **)words, count, copy_string, free_string);
+	char **copy = (char **)mtxdup_n((void **)words, count, ft_strdup, free);
 
 	if (!copy)
 	{

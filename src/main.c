@@ -76,7 +76,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!line)
 			break ;
 		t_ast *tree = read_command_line(line);
-		// expand tree: transform args in argv and $var/$? in values
+		expand_ast(tree, &shell);
 		if (tree)
 			executor(tree, STDIN_FILENO, &shell); // restituisce status code
 		if (line)

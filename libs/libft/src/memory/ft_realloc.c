@@ -1,8 +1,20 @@
-# include "memory.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 20:20:55 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 20:21:09 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "memory.h"
 
 static size_t	min(size_t a, size_t b);
 
-void *ft_realloc(void *old_ptr, size_t old_size, size_t new_size)
+void	*ft_realloc(void *old_ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
 	size_t	i;

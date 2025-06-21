@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mtxdup_n.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 20:18:43 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 20:18:52 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "matrix.h"
 
 // copies a matrix of any type (given dim)
 // 'c' is to copy one row
 // 'f' is to free one row
-void **mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
+void	**mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *))
 {
-	size_t i;
-	void **copy;
+	size_t	i;
+	void	**copy;
 
 	if (!mtx || !c)
 		return (NULL);

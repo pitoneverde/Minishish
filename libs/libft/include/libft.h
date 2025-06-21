@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:02:10 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/22 19:31:26 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 20:25:38 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 
 // Get Next Line
-char			*get_next_line(int fd);
+char	*get_next_line(int fd);
 
 #endif
