@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 20:03:36 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 20:04:29 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #if !defined(ENV_H)
 # define ENV_H
 
@@ -20,7 +32,8 @@ char	**env_to_envp(t_list *env);
 void	free_env(t_list *env);
 void	free_env_entry(void *entry);
 
-// utils, assume that key AKA variable name is valid, validate input into builtin
+// utils, assume that key AKA variable name is valid
+// validate input into builtin
 int		is_valid_var_name(const char *name);
 void	*env_to_str(void *ptr);
 void	unset_env_var(t_list **env, const char *key);
