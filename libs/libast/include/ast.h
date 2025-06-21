@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 21:57:19 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #if !defined(AST_H)
 # define AST_H
 
@@ -25,17 +37,26 @@ typedef enum e_quote_type
 	D_QUOTE,
 }	t_quote_type;
 
+/*
+ * value -> "echo", "<<", arguments
+ *
+ * args -> of t_ast, only in AST_COMMAND,
+ * before expansion, to maintain quote flag, default NULL
+ * argc -> only in AST_COMMAND, default 0, set when expanded
+ * argv -> only in AST_COMMAND, after expansion, default NULL
+ * error -> only in AST_ERROR or AST_COMMAND (after execution), default NULL
+ */
 typedef struct s_ast
 {
 	t_ast_type		type;
 	t_quote_type	quote;
-	char			*value;		// "echo", "<<", arguments
+	char			*value;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	t_list			*args;		// of t_ast, only used in AST_COMMAND, before expansion, to maintain quote flag, default NULL
-	int				argc;		// only in AST_COMMAND, default 0
-	char			**argv;		// only used in AST_COMMAND, after expansion, default NULL
-	char			*error;		// only used in AST_ERROR, default NULL
+	t_list			*args;
+	int				argc;
+	char			**argv;
+	char			*error;
 }	t_ast;
 
 typedef struct s_ast_filter_ctx
@@ -44,27 +65,18 @@ typedef struct s_ast_filter_ctx
 	t_list *matches;
 } t_ast_filter_ctx;
 
-// create generic
-t_ast	*ast_new(t_ast_type type, char *value);
-
-// create type command
-t_ast	*ast_cmd(t_list *args);
-
-// 	create 	
-// 	AST_PIPE,
-// 	AST_REDIR_IN,
-// 	AST_REDIR_OUT,
-// 	AST_APPEND,
-// 	AST_HEREDOC,
-t_ast	*ast_binary_op(t_ast_type type, char *op, t_ast *left, t_ast *right);
-t_ast	*ast_error(char *msg);
-
 // core
 void	ast_attach_left(t_ast *parent, t_ast *child);
 void	ast_attach_right(t_ast *parent, t_ast *child);
 void	ast_free(t_ast *tree);
 void	ast_free_void(void *tree);			// BAD need to create safe macros for ft_lst* where function arg
 t_ast	*astdup(const t_ast *node);
+
+// create
+t_ast	*ast_new(t_ast_type type, char *value);
+t_ast	*ast_cmd(t_list *args);
+t_ast	*ast_binary_op(t_ast_type type, char *op, t_ast *left, t_ast *right);
+t_ast	*ast_error(char *msg);
 
 // utils
 int		ast_find(t_ast *node, const char *value);
@@ -74,19 +86,19 @@ char	*ast_to_string(const t_ast *node);
 void	ast_stringify(t_ast *node);
 
 // types of nodes
-int	ast_is_operator(const t_ast *node);
-int	ast_is_command(const t_ast *node);
-int	ast_is_simple_pipeline(const t_ast *node);
-int ast_is_redirection(const t_ast *node);
-int	ast_is_redirection_chain(const t_ast *node);
-int	ast_is_leaf(const t_ast *node);
+int		ast_is_operator(const t_ast *node);
+int		ast_is_command(const t_ast *node);
+int		ast_is_simple_pipeline(const t_ast *node);
+int 	ast_is_redirection(const t_ast *node);
+int		ast_is_redirection_chain(const t_ast *node);
+int		ast_is_leaf(const t_ast *node);
 
 // errors and validation (also to move into parser)
-int	ast_has_error(const t_ast *node);
-int	ast_is_valid(const t_ast *node);
+int		ast_has_error(const t_ast *node);
+int		ast_is_valid(const t_ast *node);
 
 // debug
-const char	*node_type_name(t_ast_type type);
+char	*node_type_name(t_ast_type type);
 void	print_ast(const t_ast *node, int depth);
 
 // required to use libft utils

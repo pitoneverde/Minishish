@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:43 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 20:03:44 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:11:23 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXPANSION_H
 
 # include "shell.h"
+# include "matrix.h"
 # include "list.h"
 # include "ast.h"
 # include "env.h"

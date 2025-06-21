@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:47:23 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 21:47:23 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:07:27 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_striteri(const char *s, void (*f)(unsigned int, char *));
+void	*copy_string(void *str);
 char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *string, int c);
 char	*ft_strrchr(const char *string, int c);

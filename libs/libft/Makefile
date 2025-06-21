@@ -40,6 +40,7 @@ SRCS = 	\
 		$(SRC_DIR)/output/ft_putstr_fd.c \
 		$(SRC_DIR)/output/ft_putendl_fd.c \
 		$(SRC_DIR)/output/ft_putnbr_fd.c \
+		$(SRC_DIR)/strings/copy_string.c \
 		$(SRC_DIR)/strings/ft_strlen.c \
 		$(SRC_DIR)/strings/ft_strlcpy.c \
 		$(SRC_DIR)/strings/ft_strlcat.c \
@@ -57,8 +58,10 @@ SRCS = 	\
 		$(SRC_DIR)/strings/ft_striteri.c \
 		$(SRC_DIR)/matrix/mtx_count.c \
 		$(SRC_DIR)/matrix/mtxdup_n.c \
+		$(SRC_DIR)/matrix/mtxdup_str.c \
 		$(SRC_DIR)/matrix/mtxdup.c \
 		$(SRC_DIR)/matrix/mtxfree_n.c \
+		$(SRC_DIR)/matrix/mtxfree_str.c \
 		$(SRC_DIR)/matrix/mtxfree.c \
 		$(SRC_DIR)/ft_itoa.c \
 		$(SRC_DIR)/ft_atoi.c \

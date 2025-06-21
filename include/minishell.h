@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/21 20:05:04 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:03:18 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ t_ast	*read_command_line(const char *line);
 
 // Utils
 void	free_all(t_sh *shell);
+
+void print_string_matrix(char **matrix);
+void *copy_string(void *str);
 
 // Signals
 void	init_signals(void);

@@ -57,7 +57,7 @@ void print_lexed_tokens(t_list *tokens)
 // 	}
 // }
 
-const char *node_type_name(t_ast_type type)
+char *node_type_name(t_ast_type type)
 {
 	if (type == AST_COMMAND)
 		return ("COMMAND");

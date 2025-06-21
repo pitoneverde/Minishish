@@ -1,5 +1,6 @@
 #include "ast.h"
 
+// create generic node
 t_ast *ast_new(t_ast_type type, char *value)
 {
 	t_ast *node;

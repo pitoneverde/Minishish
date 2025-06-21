@@ -1,5 +1,6 @@
 #include "ast.h"
 
+// create command node
 // args must be a list of AST_LITERAL nodes
 t_ast *ast_cmd(t_list *args)
 {

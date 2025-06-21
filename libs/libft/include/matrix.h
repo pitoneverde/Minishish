@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:22:25 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 20:33:43 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:11:11 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,8 @@ void	mtxfree_n(void **mtx, size_t dim, void (*f)(void *));
 void	**mtxdup(void **mtx, void *(c)(void *), void(*f)(void *));
 void	**mtxdup_n(void **mtx, size_t dim, void *(c)(void *), void(f)(void *));
 
-// wrappers for project specific matrix handling
-void	print_string_matrix(char **matrix);
-
-static inline char	**mtxdup_str(char **matrix)
-{
-	return ((char **)mtxdup((void **)matrix, ft_strdup, free));
-}
-
-static inline void	mtxfree_str(char **matrix)
-{
-	mtxfree((void **)matrix, free);
-}
+// specialized helpers for strings
+char	**mtxdup_str(char **matrix);
+void	mtxfree_str(char **matrix);
 
 #endif // !MATRIX_HELPERS_H

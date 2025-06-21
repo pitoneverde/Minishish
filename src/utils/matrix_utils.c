@@ -1,5 +1,6 @@
 #include "ast.h"
 
+// wrapper for project specific matrix handling
 void print_string_matrix(char **matrix)
 {
 	if (!matrix)
