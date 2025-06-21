@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_lst_to_array.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:35:14 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:35:15 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
-t_ast **ast_lst_to_array(t_list *lst)
+t_ast	**ast_lst_to_array(t_list *lst)
 {
 	return ((t_ast **)lst_to_array(lst));
 }

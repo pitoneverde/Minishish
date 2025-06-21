@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:16 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 20:03:17 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/21 22:17:12 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // Core expansion entry point
 void	expand_ast(t_ast *root, t_sh *shell)
 {
-	ast_traverse_post_ctx(root, should_expand_token, shell);
+	astt_post_ctx(root, should_expand_token, shell);
 }
 
 void	should_expand_token(t_ast *node, void *ctx)

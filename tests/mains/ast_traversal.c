@@ -38,17 +38,17 @@ int main(void) {
 
 	// Test pre-order
 	reset_visited();
-	ast_traverse_pre(pipe, record_visit);
+	astt_pre(pipe, record_visit);
 	print_traversal("Pre");
 
 	// Test post-order
 	reset_visited();
-	ast_traverse_post(pipe, record_visit);
+	astt_post(pipe, record_visit);
 	print_traversal("Post");
 
 	// Edge case: NULL input
 	reset_visited();
-	ast_traverse_pre(NULL, record_visit);
+	astt_pre(NULL, record_visit);
 	assert(visited_index == 0);
 
 	// Cleanup

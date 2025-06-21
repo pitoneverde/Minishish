@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_is_leaf.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:44:56 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:44:57 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
-int ast_is_leaf(const t_ast *node)
+int	ast_is_leaf(const t_ast *node)
 {
 	return (!node->left && !node->right);
 }

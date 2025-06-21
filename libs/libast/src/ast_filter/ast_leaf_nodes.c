@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_leaf_nodes.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:21:41 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:21:51 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
-t_ast **ast_leaf_nodes(t_ast *root)
+t_ast	**ast_leaf_nodes(t_ast *root)
 {
-	return ast_filter(root, ast_is_leaf);
+	return (ast_filter(root, ast_is_leaf));
 }

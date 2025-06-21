@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_traverse_pre.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:36:42 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:36:43 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
-void ast_traverse_pre(t_ast *node, void (*visit)(t_ast *))
+// pre-traversal
+void	astt_pre(t_ast *node, void (*visit)(t_ast *))
 {
 	if (!node || !visit)
-		return;
+		return ;
 	visit(node);
-	ast_traverse_pre(node->left, visit);
-	ast_traverse_pre(node->right, visit);
+	astt_pre(node->left, visit);
+	astt_pre(node->right, visit);
 }

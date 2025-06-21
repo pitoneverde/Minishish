@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_stringify.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:49:00 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:49:00 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
-static void ast_cmd_to_string(t_ast *node);
-static void ast_redir_to_string(t_ast *node);
-static void ast_pipe_to_string(t_ast *node);
-static void ast_error_to_string(t_ast *node);
+static void	ast_cmd_to_string(t_ast *node);
+static void	ast_redir_to_string(t_ast *node);
+static void	ast_pipe_to_string(t_ast *node);
+static void	ast_error_to_string(t_ast *node);
 
 // uses bottom-up approch for recursion (first processes leaves)
-void ast_stringify(t_ast *node)
+void	ast_stringify(t_ast *node)
 {
 	if (!node)
 		return ;
@@ -23,7 +35,8 @@ void ast_stringify(t_ast *node)
 		ast_error_to_string(node);
 }
 
-static void ast_cmd_to_string(t_ast *node)
+// +1 for space between args
+static void	ast_cmd_to_string(t_ast *node)
 {
 	size_t	len;
 	char	*new_val;
@@ -34,7 +47,7 @@ static void ast_cmd_to_string(t_ast *node)
 	len = 0;
 	i = 0;
 	while (node->argv[i])
-		len += ft_strlen(node->argv[i++]) + 1;	// 1 for space between args
+		len += ft_strlen(node->argv[i++]) + 1;
 	new_val = (char *)malloc(len + 1);
 	if (!new_val)
 		return ;
@@ -51,19 +64,19 @@ static void ast_cmd_to_string(t_ast *node)
 	node->value = new_val;
 }
 
-static void ast_redir_to_string(t_ast *node)
+static void	ast_redir_to_string(t_ast *node)
 {
 	char	*new_val;
 	size_t	len;
 
-	if (!node || !node->left || !node->right 
+	if (!node || !node->left || !node->right
 		|| !node->right->value || !node->left->value)
 		return ;
 	if (!node->right || !node->right->value)
-		return ;	// malformed redirection
+		return ;
 	len = ft_strlen(node->left->value)
 		+ ft_strlen(node->value)
-		+ ft_strlen(node->right->value) + 3;	// 2 spaces
+		+ ft_strlen(node->right->value) + 3;
 	new_val = (char *)malloc(len + 1);
 	if (!new_val)
 		return ;
@@ -77,20 +90,21 @@ static void ast_redir_to_string(t_ast *node)
 	node->value = new_val;
 }
 
-static void ast_pipe_to_string(t_ast *node)
+// +3 cause " | "
+static void	ast_pipe_to_string(t_ast *node)
 {
 	size_t	len;
 	char	*new_val;
+
 	if (!node || node->type != AST_PIPE || !node->left || !node->right)
 		return ;
 	if (!node->left->value || !node->right->value)
 		return ;
-	len = ft_strlen(node->left->value) + ft_strlen(node->right->value) + 3;		//2 space 1 pipe
+	len = ft_strlen(node->left->value) + ft_strlen(node->right->value) + 3;
 	new_val = (char *)malloc(len + 1);
 	if (!new_val)
-		return;
+		return ;
 	new_val[0] = '\0';
-
 	ft_strlcat(new_val, node->left->value, len + 1);
 	ft_strlcat(new_val, " ", len + 1);
 	ft_strlcat(new_val, "|", len + 1);
@@ -100,7 +114,7 @@ static void ast_pipe_to_string(t_ast *node)
 	node->value = new_val;
 }
 
-static void ast_error_to_string(t_ast *node)
+static void	ast_error_to_string(t_ast *node)
 {
 	if (!node || node->type != AST_ERROR || !node->error)
 		return ;

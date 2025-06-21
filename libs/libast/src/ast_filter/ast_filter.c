@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_filter.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 22:20:29 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/21 22:21:22 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
 // Same as _n version but the array is NULL-terminated
 // Doesn't support NULL elements
-t_ast **ast_filter(t_ast *root, int (*predicate)(const t_ast *))
+// Avoids to free data but frees the list nodes (shared ownership)
+t_ast	**ast_filter(t_ast *root, int (*predicate)(const t_ast *))
 {
 	t_ast				**result;
 	size_t				len;
@@ -12,14 +25,13 @@ t_ast **ast_filter(t_ast *root, int (*predicate)(const t_ast *))
 		return (NULL);
 	ctx.predicate = predicate;
 	ctx.matches = NULL;
-	ast_traverse_pre_ctx(root, ast_filter_visit, &ctx);
+	astt_pre_ctx(root, ast_filter_visit, &ctx);
 	result = (t_ast **)lst_to_array_ex(ctx.matches, &len, 1);
-	ft_lstclear(&ctx.matches, NULL);		// very interesting, avoids to free data but frees the list nodes (shared ownership)
+	ft_lstclear(&ctx.matches, NULL);
 	if (len == 0)
 		return (free(result), NULL);
 	return (result);
 }
-
 
 // obsolete after filter util
 // // Callback for extracting a leaf node
