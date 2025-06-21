@@ -1,6 +1,8 @@
 #ifndef SHELL_H
 # define SHELL_H
 
+# include "list.h"
+
 typedef struct s_sh
 {
 	t_list *env;		// list of t_env

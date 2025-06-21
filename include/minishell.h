@@ -17,12 +17,12 @@
 #  define TILE 64
 # endif
 
-# include "libft.h"
 # include "shell.h"
+# include "libft.h"
 # include "ast.h"
 # include "parser.h"
+# include "expansion.h"
 # include "executor.h"
-# include "env.h"
 
 # include <stdio.h>
 # include <signal.h>

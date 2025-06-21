@@ -1,7 +1,10 @@
 #if !defined(EXPANSION_H)
 # define EXPANSION_H
 
-# include "minishell.h"
+# include "shell.h"
+# include "list.h"
+# include "ast.h"
+# include "env.h"
 
 // Core expansion entry point
 void	expand_ast(t_ast *root, t_sh *shell);
