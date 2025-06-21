@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:28:31 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/18 17:11:42 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:36:58 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void init_signals()
     sa.sa_flags = SA_RESTART; // evita che readline() fallisca con NULL dopo un Ctrl-C;
     sigemptyset(&sa.sa_mask);
     sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 }

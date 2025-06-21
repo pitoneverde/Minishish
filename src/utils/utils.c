@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/05/19 19:37:02 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:02:14 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ t_ast *read_command_line(const char *line)
 	return(tree);
 }
 
-void	print_error(char *s)
+void	free_all(t_sh *shell)
 {
-	if (!s)
-		return ;
-	ft_putendl_fd(s, 2);
+	if (shell)
+		free_env(shell->env);
 }

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/19 17:41:37 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:02:46 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,18 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)	argv;
 	char	*line;
 	t_sh	shell;
-	t_list	*env;
 
 	shell.env = envp_to_env(envp);
 	shell.last_code = 0;
 	shell.is_interactive = isatty(STDIN_FILENO);
-
 	init_signals();
 	if (argc != 1)
-		return (print_error("Wrong number of arguments"), 0);
-	// printf("home: \e[0;32m%s\e[0m\n", getenv("HOME"));
-	// printf("path: \e[0;32m%s\e[0m\n", getenv("PATH"));
-	// printf("unexistent: \e[0;32m%s\e[0m\n", getenv("UNDEFINED"));
-	// printf("term: \e[0;32m%s\e[0m\n", getenv("TERM"));
-	// printf("sum %d\n", sum(1, 6));
-	// const char ** curr = envp;
-	// char ** curr = environ;
-	// while (*curr != NULL)
-	// {
-	//     printf(" %s\n", *curr);
-	//     curr++;
-	// }
+		return (perror("Wrong number of arguments"), 0);
 	while (1)
 	{
 		line = readline("> ");
-		// handle End Of transmission (Ctrl + D)
+		if (!line)
+			break ;
 		t_ast *tree = read_command_line(line);
 		// expand tree: transform args in argv and $var/$? in values
 		if (tree)
@@ -96,8 +83,7 @@ int	main(int argc, char *argv[], char *envp[])
 			free(line);
 	}
 	rl_clear_history();
-	free_env(env);
-	(void)shell;
+	free_all(&shell);
     printf("exit\n");
 	return (0);
 }

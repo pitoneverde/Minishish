@@ -55,7 +55,7 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-# SRCS_MAIN 	:= $(SRC_DIR)/main.c
+SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \

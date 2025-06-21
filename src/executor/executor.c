@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/19 18:08:04 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:09:49 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 int execute_builtin(t_ast *ast)
 {
 	(void)ast;
-    printf("exec builtin\n");
-    return (0);
+	printf("exec builtin\n");
+	return (0);
 }
 
 int	is_builtin(t_ast *ast)
@@ -35,61 +35,107 @@ int	is_builtin(t_ast *ast)
 
 int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 {
-    pid_t pid;
-    int status;
+	pid_t pid;
+	int status;
 
-    if (is_builtin(ast))
-        return (execute_builtin(ast));
-    pid = fork(); 
-    if (pid < 0)
-        return (1); // to do gestire errore
-    if (pid == 0)
-    {
-        execute_command(ast, fd_in, shell);
-        exit(1);
-    }
-    waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    else if (WIFSIGNALED(status))
+	if (is_builtin(ast))
+		return (execute_builtin(ast));
+	pid = fork(); 
+	if (pid < 0)
+		return (1); // to do gestire errore
+	if (pid == 0)
+	{
+		execute_command(ast, fd_in, shell);
+		exit(1);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	else
-        return (1); // to do gestire errore
+		return (1); // to do gestire errore
 }
 
+void	free_paths(char **split)
+{
+	int	i;
+
+	if (!split)
+		return;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+char *find_command_path(char *cmd, char **paths)
+{
+	int i;
+	char *temp;
+	char *full_path;
+	
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(full_path, X_OK) == 0)
+		{
+			free_paths(paths);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	free_paths(paths);
+	return (temp);
+}
+
+// if cmd contains a '/' return
+// otherwise split all the paths and check them one by one
 char	*search_path(char *cmd, t_sh *shell)
 {
-	// prendi path
-	(void)cmd;
-	char *path = get_env_value(shell->env, "PATH");
-	free(path);
-	return (NULL);
-	// strtok path
-	// scorrere path
-	// per ogni token controlla se path/cmd esiste
-	// se esiste restituisci path 
-	// get path from shell.env
-	// Scorro t_list (ogni nodo contiene content e next)
+	char *paths;
+	char **split_paths;
+
+	if (!cmd || !shell)
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
+	paths = get_env_value(shell->env, "PATH");
+	if (!paths)
+		return (NULL);
+	split_paths = ft_split(paths, ':');
+	free(paths);
+	if (!split_paths)
+		return (NULL);
+	return (find_command_path(cmd, split_paths));
 }
 
 int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 {
 	char	*path;
 
+	print_ast(ast, 0);
 	if (!ast || !ast->argv || !ast->argv[0])
 	{
-        perror("Invalid node");
+		perror("Invalid node");
 		exit(1);
 	}
-    if (fd_in != STDIN_FILENO)
-    {
-        if (dup2(fd_in, STDIN_FILENO) == -1)
+	if (fd_in != STDIN_FILENO)
+	{
+		if (dup2(fd_in, STDIN_FILENO) == -1)
 		{
 			perror("dup2 failed");
 			return (1);
 		}
-        close(fd_in);
-    }
+		close(fd_in);
+	}
 	path = search_path(ast->argv[0], shell);
 	if (!path)
 	{
@@ -98,7 +144,7 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 	}
 	execve(path, ast->argv, env_to_envp((*shell).env));
 	free(path);
-    perror("execvp error");
+	perror("execvp error");
 	return (127); // to do controllare perche' fallisce (126 o 127)
 }
 
@@ -135,32 +181,53 @@ int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 	}
 }
 
-int    executor(t_ast *ast, int fd_in, t_sh *shell)
+int execute_operator(t_ast *ast, int fd_in, t_sh *shell)
 {
-	(void)fd_in;
-    if (!ast)
-        return (127);
-    if (ast_is_command(ast)) 
+	int left_status;
+	
+	left_status = executor(ast->left, fd_in, shell);
+
+	if (ft_strcmp(ast->value, "&&") == 0)
 	{
-        shell->last_code = spawn_command(ast, STDIN_FILENO, shell);
-        return (shell->last_code);
+		if (left_status == 0)
+			return executor(ast->right, fd_in, shell);
+		else
+			return left_status;
 	}
-    else if (ast_is_simple_pipeline(ast))
-    {
-        shell->last_code = execute_pipeline(ast, STDIN_FILENO, shell);
-        return (shell->last_code);
-    }
-	else if (ast_is_operator(ast))
+	else if (ft_strcmp(ast->value, "||") == 0)
 	{
-		printf("operator\n");
-	}
-	else if (ast_is_redirection_chain(ast))
-	{
-		printf("redirection\n");
+		if (left_status != 0)
+			return executor(ast->right, fd_in, shell);
+		else
+			return left_status;
 	}
 	else
 	{
-		print_error("Unknown node type");
+		perror("Unsupported operator");
+		return 127;
 	}
-    return (127);
+}
+
+
+int    executor(t_ast *ast, int fd_in, t_sh *shell)
+{
+	int status;
+	(void) fd_in;
+
+	status = 127;
+	if (!ast || !shell)
+		return (status);
+	if (ast_is_command(ast)) 
+		status = spawn_command(ast, STDIN_FILENO, shell);
+	else if (ast_is_simple_pipeline(ast))
+		status = execute_pipeline(ast, STDIN_FILENO, shell);
+	else if (ast_is_operator(ast))
+		printf("operator\n"); // status = execute_operator()
+	else if (ast_is_redirection_chain(ast))
+		printf("redirection\n"); // status = execute_redirection
+	else
+		perror("Unknown node type");
+
+	shell->last_code = status;
+	return (status);
 }

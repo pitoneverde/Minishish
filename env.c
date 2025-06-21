@@ -57,6 +57,8 @@ char	**env_to_envp(t_list *env)
 
 void	free_env(t_list *env)
 {
+	if (!env)
+		return ;
 	ft_lstclear(&env, free_env_entry);
 }
 

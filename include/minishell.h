@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/18 13:42:54 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:45:40 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static volatile sig_atomic_t g_signal_status = 0;
 t_ast	*read_command_line(const char *line);
 
 // Utils
-void	print_error(char *s);
+void	free_all(t_sh *shell);
 
 // Signals
 void init_signals();
