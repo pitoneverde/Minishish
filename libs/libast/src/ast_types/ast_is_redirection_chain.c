@@ -15,9 +15,9 @@
 // something like: "< file1 > file2 >> file3"
 int	ast_is_redirection_chain(const t_ast *node)
 {
-	if (!node || !ast_is_redirection(node) || !node->right)
+	if (!node || !ast_is_redirection(node) || !node->left)
 		return (0);
-	if (!ast_is_redirection(node->right))
+	if (!ast_is_redirection(node->left))
 		return (1);
-	return (ast_is_redirection_chain(node->right));
+	return (ast_is_redirection_chain(node->left));
 }
