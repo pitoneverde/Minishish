@@ -6,14 +6,15 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 16:05:39 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:25:40 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "minishell.h"
+# include "ast.h"
+# include "shell.h"
 
 // core
 int		executor(t_ast *ast, int fd_in, t_sh *shell);

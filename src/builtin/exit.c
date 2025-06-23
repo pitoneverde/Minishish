@@ -6,28 +6,11 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:17:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:11:15 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:20:40 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int is_numeric(const char *str)
-{
-	int i = 0;
-
-	if (!str)
-		return (0);
-	if (str[0] == '-' || str[0] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int execute_builtin_exit(t_ast *ast, t_sh *shell)
 {
@@ -44,7 +27,7 @@ int execute_builtin_exit(t_ast *ast, t_sh *shell)
 	}
 	if (argv[1] && argv[2])
 	{
-		perror("Too many arguments");
+		ft_putstr_fd("Too many arguments", 2);
 		shell->last_code = 1;
 		return (1);
 	}

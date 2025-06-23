@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 16:03:23 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:18:31 by plichota         ###   ########.fr       */
+/*   Created: 2025/06/23 18:12:47 by plichota          #+#    #+#             */
+/*   Updated: 2025/06/23 18:14:23 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(BUILTIN_H)
-# define BUILTIN_H
+#if !defined(SIGNALS_H)
+# define SIGNALS_H
 
-# include "ast.h"
-# include "shell.h"
+# include <signal.h>
 
-// echo
-int		is_valid_flag_n(const char *arg);
-int		execute_builtin_echo(t_ast *ast);
-// pwd
-int		execute_builtin_pwd(t_ast *ast);
-// exit
-int		execute_builtin_exit(t_ast *ast, t_sh *shell);
+void	init_signals(void);
+void	handler_sigaction(int sig);
 
 #endif
