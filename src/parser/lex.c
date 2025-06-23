@@ -45,8 +45,9 @@ int strip_if_quoted(t_token *token)
 		token->value = stripped;
 		if (!token->value)
 			return (0);
+  return(1);
 	}
-	return (1);
+	return (0);
 }
 
 // 1 if errors, 0 otherwise
