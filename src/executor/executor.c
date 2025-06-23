@@ -6,13 +6,12 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 16:09:45 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:17:14 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// To do
 int execute_builtin(t_ast *ast, t_sh *shell)
 {
 	(void) shell;
@@ -25,8 +24,8 @@ int execute_builtin(t_ast *ast, t_sh *shell)
 		return (execute_builtin_echo(ast));
 	// if (ft_strcmp(cmd, "cd") == 0)
 	// 	return execute_builtin_cd(ast, shell);
-	// if (ft_strcmp(cmd, "pwd") == 0)
-	// 	return execute_builtin_pwd();
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return execute_builtin_pwd(ast);
 	// if (ft_strcmp(cmd, "export") == 0)
 	// 	return execute_builtin_export(ast, shell);
 	// if (ft_strcmp(cmd, "unset") == 0)
