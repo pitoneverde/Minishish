@@ -75,7 +75,8 @@ SRCS 		:= \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
 	$(SRC_DIR)/executor/executor.c \
-	$(TEST_MAINS)/expander.c
+	$(SRC_DIR)/builtin/echo.c \
+	# $(TEST_MAINS)/expander.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

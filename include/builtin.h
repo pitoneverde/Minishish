@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_is_command.c                                   :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 22:37:40 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/23 13:44:10 by plichota         ###   ########.fr       */
+/*   Created: 2025/06/23 16:03:23 by plichota          #+#    #+#             */
+/*   Updated: 2025/06/23 16:09:07 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#if !defined(BUILTIN_H)
+# define BUILTIN_H
 
-int	ast_is_command(const t_ast *node)
-{
-	return (node && node->type == AST_COMMAND);
-}
+# include "ast.h"
+
+int is_valid_flag_n(const char *arg);
+int	execute_builtin_echo(t_ast *ast);
+
+
+#endif

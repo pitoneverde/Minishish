@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/21 19:02:46 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:09:40 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("> ");
 		if (!line)
 			break ;
+		add_history(line);
 		t_ast *tree = read_command_line(line);
 		expand_ast(tree, &shell);
 		if (tree)
 			executor(tree, STDIN_FILENO, &shell); // restituisce status code
-		if (line)
-			free(line);
+		free(line);
 	}
 	rl_clear_history();
 	free_all(&shell);
