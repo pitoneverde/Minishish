@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 16:17:14 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:11:19 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int execute_builtin(t_ast *ast, t_sh *shell)
 	// 	return execute_builtin_unset(ast, shell);
 	// if (ft_strcmp(cmd, "env") == 0)
 	// 	return execute_builtin_env(shell);
-	// if (ft_strcmp(cmd, "exit") == 0)
-	// 	return execute_builtin_exit(ast, shell);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return execute_builtin_exit(ast, shell);
 
 	return (1);
 }

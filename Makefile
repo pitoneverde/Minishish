@@ -77,6 +77,7 @@ SRCS 		:= \
 	$(SRC_DIR)/executor/executor.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \
+	$(SRC_DIR)/builtin/exit.c \
 	# $(TEST_MAINS)/expander.c
 	
 UNIT_TEST_SRCS	:= \

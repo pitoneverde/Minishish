@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:47:07 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 16:02:26 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:20:46 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_builtin_echo(t_ast *ast)
 	int newline;
 	
 	i = 1;
-	newline = 0;
+	newline = 1;
 	while (ast->argv[i] && is_valid_flag_n(ast->argv[i]))
 	{
 		newline = 0;
