@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/21 20:09:52 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:41:57 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ typedef enum e_token_type
 	TKN_APPEND,
 	TKN_HEREDOC,
 	TKN_ERROR,
-	TKN_S_QUOTED,
-	TKN_D_QUOTED,
 	TKN_WORD,	// done
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
+	t_quote_type	quote;
 	char			*value;
 	char			*error;
 }	t_token;
@@ -80,6 +79,7 @@ int				tkn_is_word(t_token *token);
 
 // lexer utils
 t_token_type	classify_token(const char *raw_token);
+t_quote_type	classify_quote(const char *raw_token);
 int				is_quoted(const char *raw_token, int len, char quote);
 int				is_malformed(const char *raw_token, int len);
 

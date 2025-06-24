@@ -8,8 +8,8 @@ static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh);
 // Expands a single token string (e.g., "hello$USER") according to quote type
 char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 {
-	t_sb *sb;
-
+	t_sb	*sb;
+	char	*res;
 	if (!str)
 		return (NULL);
 	if (quote == S_QUOTE)
@@ -17,7 +17,9 @@ char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 	sb = sb_create(64);
 	if (!sb)
 		return (NULL);
-	return (substitute_vars(str, sb, shell));
+	res = substitute_vars(str, sb, shell);
+	sb_free(sb);
+	return (res);
 }
 
 static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
@@ -32,8 +34,11 @@ static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 		{
 			i++;
 			if (str[i] == '?')
-				handle_code(sb, sh);
-			else if (ft_isalpha(str[i]) || str[i] == '_')
+				{
+					handle_code(sb, sh);
+					i++;
+				}
+			else if (str[i] == '_' || ft_isalpha(str[i]))
 				handle_var(str, &i, sb, sh);
 			else
 				handle_dollar(str, &i, sb);
@@ -70,15 +75,12 @@ static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh)
 	char	*key;
 	char	*val;
 
-	start = *i;
+	start = (*i)++;
 	while (str[*i] && ft_isalnum(str[*i]))
 		(*i)++;
 	key = ft_substr(str, start, *i - start);
 	val = get_env_value(sh->env, key);
 	free(key);
 	if (val)
-	{
 		sb_append_str(sb, val);
-		free(val);
-	}
 }

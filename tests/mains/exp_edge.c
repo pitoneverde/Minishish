@@ -1,23 +1,6 @@
 #include <stdio.h>
 #include "expansion.h"
 
-// Minimal shell struct + env
-char *get_env_value(char **env, const char *key)
-{
-	for (int i = 0; env && env[i]; i++)
-	{
-		if (!ft_strncmp(env[i], key, ft_strlen(key)) &&
-			env[i][ft_strlen(key)] == '=')
-			return env[i] + ft_strlen(key) + 1;
-	}
-	return NULL;
-}
-
-typedef struct s_sh {
-	int last_code;
-	char **env;
-} t_sh;
-
 int main(void)
 {
 	t_sh shell;
@@ -47,7 +30,7 @@ int main(void)
 		NULL
 	};
 
-	shell.env = mock_env;
+	shell.env = envp_to_env(mock_env);
 	shell.last_code = 42;
 
 	for (int i = 0; cases[i]; i++)
@@ -57,4 +40,5 @@ int main(void)
 		printf("expanded: [%s]\n\n", expanded);
 		free(expanded);
 	}
+	free_env(shell.env);
 }

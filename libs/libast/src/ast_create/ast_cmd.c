@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:33:02 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:33:09 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/24 22:10:17 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_ast	*ast_cmd(t_list *args)
 	cmd->args = args;
 	cmd->argc = ft_lstsize(args);
 	if (cmd->argc > 0)
+	{
 		cmd->value = ft_strdup(((t_ast *)args->content)->value);
+		cmd->quote = ((t_ast *)args->content)->quote;
+	}
 	return (cmd);
 }

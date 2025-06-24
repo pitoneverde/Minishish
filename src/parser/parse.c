@@ -64,12 +64,7 @@ t_ast	*parse_simple_command(t_parser *p)
 		arg = ast_new(AST_LITERAL, p->current->value);
 		if (!arg)
 			return (ft_lstclear(&args, ast_free_void), ast_error("malloc"));
-		if (p->current->type == TKN_D_QUOTED)
-			arg->quote = D_QUOTE;
-		else if (p->current->type == TKN_S_QUOTED)
-			arg->quote = S_QUOTE;
-		else
-			arg->quote = N_QUOTE;
+		arg->quote = p->current->quote;
 		ft_lstadd_back(&args, ft_lstnew(arg));
 		advance(p);
 	}
@@ -93,6 +88,7 @@ static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
 	op = ft_strdup(redir->value);
 	filename = ft_strdup(p->current->value);
 	f_node = ast_new(AST_LITERAL, filename);
+	if (f_node) f_node->quote = p->current->quote;
 	free(filename);
 	advance(p);
 	if (!f_node || !tkn_is_redirection(redir))

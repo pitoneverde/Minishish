@@ -18,8 +18,10 @@ t_list *lex(t_list *raw_tokens)
 		token->value = ft_strdup((char *)raw_tokens->content);
 		if (!token->value)
 			return (free(token), free_token_list(&lexemes), NULL);
-
 		token->type = classify_token(token->value);
+		if (token->type == TKN_ERROR)
+			return (free_token(token), free_token_list(&lexemes), NULL);
+		token->quote = classify_quote(token->value);
 		if (!strip_if_quoted(token))
 			return (free_token(token), free_token_list(&lexemes), NULL);
 		check_for_errors(token);
@@ -37,7 +39,7 @@ int strip_if_quoted(t_token *token)
 {
 	char	*stripped;
 
-	if ((token->type == TKN_S_QUOTED || token->type == TKN_D_QUOTED) &&
+	if ((token->quote == S_QUOTE || token->quote == D_QUOTE) &&
 		ft_strlen(token->value) >= 2)
 	{
 		stripped = ft_substr(token->value, 1, ft_strlen(token->value) - 2); // 1 for quote 1 for null
@@ -91,7 +93,5 @@ int tkn_is_redirection(t_token *token)
 
 int tkn_is_word(t_token *token)
 {
-	return (token->type == TKN_WORD ||
-			token->type == TKN_S_QUOTED ||
-			token->type == TKN_D_QUOTED);
+	return (token->type == TKN_WORD);
 }

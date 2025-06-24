@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:29:13 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:34:43 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[], char *envp[])
 		t_ast *tree = read_command_line(line);
 		expand_ast(tree, &shell);
 		if (tree)
-			executor(tree, STDIN_FILENO, &shell); // restituisce status code
+			shell.last_code = executor(tree, STDIN_FILENO, &shell); // restituisce status code
 		free(line);
 	}
 	rl_clear_history();

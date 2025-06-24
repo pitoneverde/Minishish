@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:24:19 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:37:23 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int execute_builtin(t_ast *ast, t_sh *shell)
 	if (!ast || !ast->argv || !ast->argv[0])
 		return (1);
 
-	const char *cmd = ast->argv[0];
+	const char *cmd = ast->argv[0]; // se è AST_COMMAND argv[0] == value
 
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (execute_builtin_echo(ast));
@@ -148,7 +148,7 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 		perror("path not found");
 		return (127);
 	}
-	execve(path, ast->argv, env_to_envp((*shell).env));
+	execve(path, ast->argv, env_to_envp(shell->env));
 	free(path);
 	perror("execve error");
 	return (127); // to do controllare perche' fallisce (126 o 127)
