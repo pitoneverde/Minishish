@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:20:40 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:03:21 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-
-// ONLY GLOBAL ALLOWED
-// NOTE: extern variables count as global defined elsewhere
-// must pass context as a struct (also for history)
-static volatile sig_atomic_t	g_signal_status = 0;
 
 // Parse line
 t_ast	*read_command_line(const char *line);

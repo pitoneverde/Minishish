@@ -6,20 +6,24 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:28:31 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/21 18:36:58 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:02:57 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+volatile sig_atomic_t g_signal_status = 0;
+
 void handler_sigaction(int sig)
 {
-	(void)sig;
-
-	write(STDOUT_FILENO, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_signal_status = 128 + SIGINT;
+	}
 }
 
 void init_signals()

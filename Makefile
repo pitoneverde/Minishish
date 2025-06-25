@@ -75,6 +75,8 @@ SRCS 		:= \
 	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
 	$(SRC_DIR)/executor/executor.c \
+	$(SRC_DIR)/executor/exec_cmd.c \
+	$(SRC_DIR)/executor/exec_all.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/exit.c \
