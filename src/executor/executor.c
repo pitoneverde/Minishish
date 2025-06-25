@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 17:02:59 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:29:46 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	executor(t_ast *ast, int fd_in, t_sh *shell)
 	status = 127;
 	if (!ast || !shell)
 		return (status);
-	if (ast_is_command(ast)) 
+	if (ast_is_command(ast))
 		status = spawn_command(ast, fd_in, shell);
 	else if (ast_is_simple_pipeline(ast))
 		status = execute_pipeline(ast, STDIN_FILENO, shell);
@@ -51,7 +51,7 @@ int	executor(t_ast *ast, int fd_in, t_sh *shell)
 		shell->last_code = g_signal_status;
 		g_signal_status = 0;
 	}
-	else
+	else if (status != -1) // prendere solo status ultimo figlio
 		shell->last_code = status;
 	return (shell->last_code);
 }

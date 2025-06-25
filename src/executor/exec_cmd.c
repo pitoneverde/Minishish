@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 17:42:37 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:47:34 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,17 @@ int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 	if (pid < 0)
 		return (1); // to do gestire errore
 	if (pid == 0)
-	{
-		execute_command(ast, fd_in, shell);
-		exit(1);
-	}
+		execute_command(ast, fd_in, shell); // esce da solo
+	// ferma il waitpid del padre assoluto
+	// if (!is_last_child(ast))
+	// 	return (-1);
+
+	// to do spostare dopo l'esecuzione di tutti i comandi 
+	// aspetta tutti i figli forkati (da solo si da' -1 quando i figli sono finiti)
+	// while (waitpid(-1, &status, 0) != -1) per l'ultimo figlio
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+		return (WEXITSTATUS(status)); 
 	else if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	else
@@ -95,7 +99,7 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 		{
 			perror("dup2 failed");
-			return (1);
+			exit (1);
 		}
 		close(fd_in);
 	}
@@ -103,10 +107,10 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 	if (!path)
 	{
 		perror("path not found");
-		return (127);
+		exit (127);
 	}
 	execve(path, ast->argv, env_to_envp(shell->env));
 	free(path);
 	perror("execve error");
-	return (127); // to do controllare perche' fallisce (126 o 127)
+	exit(127); // to do controllare perche' fallisce (126 o 127)
 }

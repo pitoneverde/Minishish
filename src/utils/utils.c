@@ -6,11 +6,18 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 18:29:42 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:02:18 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_shell(t_sh *shell, char *envp[])
+{
+	shell->env = envp_to_env(envp);
+	shell->last_code = 0;
+	shell->is_interactive = isatty(STDIN_FILENO);
+}
 
 t_ast *read_command_line(const char *line)
 {

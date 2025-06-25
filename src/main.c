@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 17:57:47 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:44:10 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*line;
 	t_sh	shell;
 
-	shell.env = envp_to_env(envp);
-	shell.last_code = 0;
-	shell.is_interactive = isatty(STDIN_FILENO);
+	init_shell(&shell, envp);
 	init_signals();
 	if (argc != 1)
 		return (perror("Wrong number of arguments"), 0);

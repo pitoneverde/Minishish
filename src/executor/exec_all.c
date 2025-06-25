@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 17:04:30 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:41:09 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 		close(fd[1]);
 		exit(executor(ast->left, fd_in, shell));
 	}
-	else
-	{
-		close(fd[1]);
-		status = executor(ast->right, fd[0], shell);
-		close(fd[0]);
-		waitpid(pid, &status, 0);
-		return (status);
-	}
+	close(fd[1]);
+	status = executor(ast->right, fd[0], shell);
+	close(fd[0]);
+	waitpid(pid, &status, 0);
+	return (status);
 }
 
 int execute_operator(t_ast *ast, int fd_in, t_sh *shell)
