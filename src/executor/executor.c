@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 18:29:46 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/26 01:00:27 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtin(t_ast *ast)
 	);
 }
 
-int	executor(t_ast *ast, int fd_in, t_sh *shell)
+int	executor(t_ast *ast, int fd_in, t_sh *shell, int is_fork)
 {
 	int status;
 	(void) fd_in;
@@ -37,7 +37,12 @@ int	executor(t_ast *ast, int fd_in, t_sh *shell)
 	if (!ast || !shell)
 		return (status);
 	if (ast_is_command(ast))
-		status = spawn_command(ast, fd_in, shell);
+	{
+		if (is_fork)
+			status = execute_command(ast, fd_in, shell);
+		else
+			status = spawn_command(ast, fd_in, shell);
+	}
 	else if (ast_is_simple_pipeline(ast))
 		status = execute_pipeline(ast, STDIN_FILENO, shell);
 	else if (ast_is_operator(ast))
@@ -51,7 +56,7 @@ int	executor(t_ast *ast, int fd_in, t_sh *shell)
 		shell->last_code = g_signal_status;
 		g_signal_status = 0;
 	}
-	else if (status != -1) // prendere solo status ultimo figlio
+	else if (!is_fork) // prendere solo status ultimo figlio (non forkato)
 		shell->last_code = status;
 	return (shell->last_code);
 }

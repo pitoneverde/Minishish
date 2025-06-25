@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 18:41:09 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/26 01:07:57 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,38 +60,38 @@ int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		exit(executor(ast->left, fd_in, shell));
+		exit(executor(ast->left, fd_in, shell, 1));
 	}
 	close(fd[1]);
-	status = executor(ast->right, fd[0], shell);
+	status = executor(ast->right, fd[0], shell, 1);
 	close(fd[0]);
 	waitpid(pid, &status, 0);
 	return (status);
 }
 
-int execute_operator(t_ast *ast, int fd_in, t_sh *shell)
-{
-	int left_status;
+// int execute_operator(t_ast *ast, int fd_in, t_sh *shell)
+// {
+// 	int left_status;
 	
-	left_status = executor(ast->left, fd_in, shell);
+// 	left_status = executor(ast->left, fd_in, shell);
 
-	if (ft_strcmp(ast->value, "&&") == 0)
-	{
-		if (left_status == 0)
-			return executor(ast->right, fd_in, shell);
-		else
-			return left_status;
-	}
-	else if (ft_strcmp(ast->value, "||") == 0)
-	{
-		if (left_status != 0)
-			return executor(ast->right, fd_in, shell);
-		else
-			return left_status;
-	}
-	else
-	{
-		perror("Unsupported operator");
-		return 127;
-	}
-}
+// 	if (ft_strcmp(ast->value, "&&") == 0)
+// 	{
+// 		if (left_status == 0)
+// 			return executor(ast->right, fd_in, shell);
+// 		else
+// 			return left_status;
+// 	}
+// 	else if (ft_strcmp(ast->value, "||") == 0)
+// 	{
+// 		if (left_status != 0)
+// 			return executor(ast->right, fd_in, shell);
+// 		else
+// 			return left_status;
+// 	}
+// 	else
+// 	{
+// 		perror("Unsupported operator");
+// 		return 127;
+// 	}
+// }
