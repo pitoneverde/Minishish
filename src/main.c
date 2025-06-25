@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 16:10:21 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:57:47 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal_status != 0)
+		{
+			shell.last_code = g_signal_status;
+			g_signal_status = 0;
+		}
 		if (!line)
 			break ;
 		add_history(line);

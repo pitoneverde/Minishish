@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 17:02:46 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:04:30 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int execute_builtin(t_ast *ast, t_sh *shell)
 
 	return (1);
 }
-
 
 int	execute_pipeline(t_ast *ast, int fd_in, t_sh *shell)
 {
