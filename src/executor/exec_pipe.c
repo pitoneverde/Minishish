@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 22:49:29 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 23:47:25 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 		return (perror("pipe failed"), 1);
 	left_pid = fork();
 	if (left_pid < 0)
-		return (perror("fork"), 1);
+	{
+		// to do chiudere fd pipe
+		return (perror("fork"), 127);
+	}
 	else if (left_pid == 0)
 	{
 		close(fd[0]);
@@ -46,6 +49,7 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 	close(fd[1]);
 	status = executor(ast->right, fd[0], fd_out, shell, 0);
 	close(fd[0]);
-	waitpid(left_pid, &status, 0);
+	// non ci interessa lo status dei nodi a sinistra
+	waitpid(left_pid, NULL, 0);
 	return (status);
 }

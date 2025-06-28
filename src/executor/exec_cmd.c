@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 22:22:54 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 23:48:27 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,11 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 	}
 	path = search_path(ast->argv[0], shell);
 	if (!path)
-	{
-		perror("path not found");
 		exit (127);
-	}
+	// metter envp in var a parte -> rischio leaks
 	execve(path, ast->argv, env_to_envp(shell->env));
-	free(path);
+	// free_envp()
+	free(path); // to do aggiustare
 	perror("execve error");
-	exit(127); // to do controllare perche' fallisce (126 o 127)
+	exit(127); // to do controllare EACCESS (126 o 127)
 }
