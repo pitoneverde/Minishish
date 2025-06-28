@@ -6,12 +6,15 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 17:47:57 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 22:26:10 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// crea una pipe che legge dal nodo sinistro e scrive nel destro
+// se e' una pipeline forkata esce col risultato di executor
+// TO DO trovare modo di gestire il wait per tutti nel root
 int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	int		fd[2];
@@ -20,7 +23,7 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 
 	if (!ast || !ast->left || !ast->right)
 		return (127);
-	if (pipe(fd) == -1)
+	if (pipe(fd) == -1)	
 		return (perror("pipe failed"), 1);
 	left_pid = fork();
 	if (left_pid < 0)

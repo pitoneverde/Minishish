@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 17:37:58 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 22:22:54 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			perror("dup2 failed");
 			exit (1);
 		}
-		close(fd_in);
+		close(fd_in); // Are we sure?
 	}
 	if (fd_out != STDOUT_FILENO)
 	{
@@ -110,7 +110,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			perror("dup2 failed");
 			exit (1);
 		}
-		close(fd_out);
+		close(fd_out); // Are we sure?
 	}
 	path = search_path(ast->argv[0], shell);
 	if (!path)

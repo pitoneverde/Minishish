@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 14:19:26 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 22:23:22 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	is_builtin(t_ast *ast)
 int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork)
 {
 	int status;
-	(void) fd_in;
 
 	status = 127;
 	if (!ast || !shell)
@@ -43,7 +42,7 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork)
 		else
 			status = spawn_command(ast, fd_in, fd_out, shell);
 	}
-	else if (ast_is_simple_pipeline(ast))
+	else if (ast_is_pipeline(ast))
 		status = execute_pipeline(ast, fd_in, fd_out, shell);
 	else if (ast_is_operator(ast))
 		printf("operator\n"); // status = execute_operator()

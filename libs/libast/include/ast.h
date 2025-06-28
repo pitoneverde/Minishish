@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:17:46 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 18:10:10 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ast_stringify(t_ast *node);
 int		ast_is_operator(const t_ast *node);
 int		ast_is_command(const t_ast *node);
 int		ast_is_simple_pipeline(const t_ast *node);
+int		ast_is_pipeline(const t_ast *node);
 int		ast_is_redirection(const t_ast *node);
 int		ast_is_redirection_chain(const t_ast *node);
 int		ast_is_leaf(const t_ast *node);
