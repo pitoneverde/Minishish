@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:43 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:11:23 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 03:51:39 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ char	*expand_token(const char *str, t_quote_type quote, t_sh *shell);
 
 // Handles heredoc input, expands lines only if delimiter is unquoted
 char	*read_heredoc(const char *delimiter, t_quote_type quote, t_sh *shell);
+char	*lst_join(t_list *lst);
 
 #endif // EXPANSION_H

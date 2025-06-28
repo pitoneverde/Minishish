@@ -80,7 +80,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/exit.c \
-	# $(TEST_MAINS)/expander.c
+	# $(TEST_MAINS)/heredoc.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

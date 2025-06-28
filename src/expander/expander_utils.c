@@ -50,3 +50,24 @@ void split_command_args(t_list **exp, char *exp_str)
 	}
 	mtxfree_str(words);
 }
+
+// creates a bunch of lines terminated with \n\0 from a t_list of char*
+char	*lst_join(t_list *lst)
+{
+	t_sb	*sb;
+	t_list	*node;
+
+	if (!lst)
+		return (ft_strdup(""));
+	node = lst;
+	sb = sb_create(64);
+	if (!sb)
+		return (NULL);
+	while (node)
+	{
+		sb_append_str(sb, (char *)node->content);
+		sb_append_char(sb, '\n');
+		node = node->next;
+	}
+	return (sb_build(sb));
+}
