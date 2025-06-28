@@ -1,4 +1,16 @@
-# include "env.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 04:28:57 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/28 04:37:09 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "env.h"
 
 t_list	*envp_to_env(char **envp)
 {
@@ -12,22 +24,18 @@ t_list	*envp_to_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		eq = ft_strchr(envp[i], '=');
+		eq = ft_strchr(envp[i++], '=');
 		if (!eq)
 			continue ;
 		key = ft_substr(envp[i], 0, eq - envp[i]);
 		val = ft_strdup(eq + 1);
 		if (!key || !val)
 		{
-			free(key);
-			free(val);
-			i++;
+			free_key_val_inc(key, val, &i);
 			continue ;
 		}
 		set_env_var(&env, key, val, 1);
-		free(key);
-		free(val);
-		i++;
+		free_key_val_inc(key, val, &i);
 	}
 	return (env);
 }

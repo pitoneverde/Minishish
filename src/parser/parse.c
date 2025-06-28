@@ -1,41 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/28 04:42:33 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-static t_ast *parse_redirection(t_parser *p, t_ast *cmd);
+static t_ast	*parse_redirection(t_parser *p, t_ast *cmd);
 
 // driver
-t_ast *parse(t_list *lexemes)
+t_ast	*parse(t_list *lexemes)
 {
-	t_parser parser;
+	t_parser	parser;
+
 	parser.tokens = lexemes;
 	if (lexemes)
 		parser.current = (t_token *)lexemes->content;
 	else
 		parser.current = NULL;
-	return parse_pipeline(&parser);
+	return (parse_pipeline(&parser));
 }
 
 // Parse a pipeline: command '|' command
-t_ast *parse_pipeline(t_parser *p)
+t_ast	*parse_pipeline(t_parser *p)
 {
-	t_ast *left = parse_command(p);
-	if (!left)
-		return NULL;
+	t_ast	*right;
+	t_ast	*left;
 
+	left = parse_command(p);
+	if (!left)
+		return (NULL);
 	while (p->current && p->current->type == TKN_PIPE)
 	{
-		advance(p); // consume '|'
-		t_ast *right = parse_command(p);
+		advance(p);
+		right = parse_command(p);
 		if (!right)
 			return (ast_free(left), ast_error("Missing command after pipe"));
 		left = ast_binary_op(AST_PIPE, "|", left, right);
 	}
-	return left;
+	return (left);
 }
 
 // Parse a command: simple_command redirection*
-t_ast *parse_command(t_parser *p)
+t_ast	*parse_command(t_parser *p)
 {
-	t_ast *cmd;
+	t_ast	*cmd;
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
@@ -73,13 +88,13 @@ t_ast	*parse_simple_command(t_parser *p)
 }
 
 // Helper to parse a single redirection and return the updated command node
-static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
+static t_ast	*parse_redirection(t_parser *p, t_ast *cmd)
 {
-	char *op;
-	char *filename;
-	t_ast *f_node;
-	t_ast *r_node;
-	t_token *redir;
+	char	*op;
+	char	*filename;
+	t_ast	*f_node;
+	t_ast	*r_node;
+	t_token	*redir;
 
 	redir = p->current;
 	advance(p);
@@ -88,7 +103,8 @@ static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
 	op = ft_strdup(redir->value);
 	filename = ft_strdup(p->current->value);
 	f_node = ast_new(AST_LITERAL, filename);
-	if (f_node) f_node->quote = p->current->quote;
+	if (f_node)
+		f_node->quote = p->current->quote;
 	free(filename);
 	advance(p);
 	if (!f_node || !tkn_is_redirection(redir))
@@ -96,7 +112,7 @@ static t_ast *parse_redirection(t_parser *p, t_ast *cmd)
 	r_node = ast_binary_op((t_ast_type)redir->type, op, astdup(cmd), f_node);
 	ast_free(cmd);
 	free(op);
-	if (!r_node) // = NULL
+	if (!r_node)
 		ast_free(f_node);
 	return (r_node);
 }

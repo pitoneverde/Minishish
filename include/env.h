@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:36 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 20:04:29 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 04:28:03 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ void	free_env_entry(void *entry);
 
 // utils, assume that key AKA variable name is valid
 // validate input into builtin
-int		is_valid_var_name(const char *name);
 void	*env_to_str(void *ptr);
 void	unset_env_var(t_list **env, const char *key);
 char	*get_env_value(const t_list *env, const char *key);
 void	set_env_var(t_list **env, const char *key, const char *val, int exp);
+
+// internal
+void	may_re_env_var(t_env *entry, const char *key, const char *val, int exp);
+int		is_valid_var_name(const char *name);
+char	*strdup_safe(const char *str);
 
 #endif // !ENV_H

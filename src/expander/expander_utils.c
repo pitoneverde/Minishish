@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 04:39:29 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/28 04:39:29 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expansion.h"
 
 // Expands any other token->value field (except commands)
-void expand_token_value(t_ast *node, t_sh *shell)
+void	expand_token_value(t_ast *node, t_sh *shell)
 {
-	char *exp;
+	char	*exp;
 
 	exp = expand_token(node->value, node->quote, shell);
 	free(node->value);
@@ -11,7 +23,7 @@ void expand_token_value(t_ast *node, t_sh *shell)
 }
 
 // Expands a command node's arguments and fills argv/argc
-void expand_command_args(t_ast *cmd, t_sh *shell)
+void	expand_command_args(t_ast *cmd, t_sh *shell)
 {
 	char	*exp_str;
 	t_ast	*arg;
@@ -36,10 +48,10 @@ void expand_command_args(t_ast *cmd, t_sh *shell)
 	ft_lstclear(&exp, NULL);
 }
 
-void split_command_args(t_list **exp, char *exp_str)
+void	split_command_args(t_list **exp, char *exp_str)
 {
-	int i;
-	char **words;
+	int		i;
+	char	**words;
 
 	words = ft_split(exp_str, ' ');
 	i = 0;

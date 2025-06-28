@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 04:15:39 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/28 04:28:51 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "env.h"
 
-void unset_env_var(t_list **env, const char *key)
+void	unset_env_var(t_list **env, const char *key)
 {
 	t_list	*prev;
 	t_list	*curr;
 	t_env	*entry;
 
 	if (!env || !key || !*key)
-		return;
+		return ;
 	prev = NULL;
 	curr = *env;
 	while (curr)
@@ -32,7 +44,7 @@ void unset_env_var(t_list **env, const char *key)
 /// @param env context, list of t_env
 /// @param key must be NULL-terminated 
 /// @return value of variable
-char *get_env_value(const t_list *env, const char *key)
+char	*get_env_value(const t_list *env, const char *key)
 {
 	t_env	*entry;
 
@@ -48,7 +60,7 @@ char *get_env_value(const t_list *env, const char *key)
 	return (NULL);
 }
 
-void set_env_var(t_list **env, const char *key, const char *val, int exp)
+void	set_env_var(t_list **env, const char *key, const char *val, int exp)
 {
 	t_list	*curr;
 	t_env	*entry;
@@ -59,24 +71,15 @@ void set_env_var(t_list **env, const char *key, const char *val, int exp)
 	while (curr)
 	{
 		entry = curr->content;
-		if (!ft_strcmp(entry->key, key))
-		{
-			free(entry->value);
-			entry->value = ft_strdup(val ? val : "");
-			if (exp)
-				entry->exported = 1;
-			return ;
-		}
+		may_re_env_var(entry, key, val, exp);
 		curr = curr->next;
 	}
-	// not found
 	entry = (t_env *)malloc(sizeof(t_env));
 	if (!entry)
 		return ;
 	entry->key = ft_strdup(key);
-	entry->value = ft_strdup(val ? val : "");
+	entry->value = strdup_safe(val);
 	entry->exported = exp;
-
 	ft_lstadd_back(env, ft_lstnew(entry));
 }
 
@@ -95,20 +98,4 @@ void	*env_to_str(void *ptr)
 	joined = ft_strjoin(temp, entry->value);
 	free(temp);
 	return (joined);
-}
-
-// must be NULL-terminated
-int	is_valid_var_name(const char *name)
-{
-	if (!name || !*name)
-		return (0);
-	if (!ft_isalpha(*name) && *name != '_')
-		return (0);
-	while (*name && *name != ' ')
-	{
-		if (!ft_isalnum(*name) && *name != '_')
-			return (0);
-		name++;
-	}
-	return (1);
 }

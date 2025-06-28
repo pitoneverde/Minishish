@@ -1,15 +1,28 @@
-# include "expansion.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_token.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/28 04:38:44 by sabruma           #+#    #+#             */
+/*   Updated: 2025/06/28 04:38:44 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh);
-static void handle_code(t_sb *sb, t_sh *shell);
-static void handle_dollar(const char *str, size_t *i, t_sb *sb);
-static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh);
+#include "expansion.h"
+
+static char	*substitute_vars(const char *str, t_sb *sb, t_sh *sh);
+static void	handle_code(t_sb *sb, t_sh *shell);
+static void	handle_dollar(const char *str, size_t *i, t_sb *sb);
+static void	handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh);
 
 // Expands a single token string (e.g., "hello$USER") according to quote type
-char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
+char	*expand_token(const char *str, t_quote_type quote, t_sh *shell)
 {
 	t_sb	*sb;
 	char	*res;
+
 	if (!str)
 		return (NULL);
 	if (quote == S_QUOTE)
@@ -22,9 +35,9 @@ char *expand_token(const char *str, t_quote_type quote, t_sh *shell)
 	return (res);
 }
 
-static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
+static char	*substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 {
-	size_t i;
+	size_t	i;
 	char	*result;
 
 	i = 0;
@@ -34,10 +47,10 @@ static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 		{
 			i++;
 			if (str[i] == '?')
-				{
-					handle_code(sb, sh);
-					i++;
-				}
+			{
+				handle_code(sb, sh);
+				i++;
+			}
 			else if (str[i] == '_' || ft_isalpha(str[i]))
 				handle_var(str, &i, sb, sh);
 			else
@@ -50,7 +63,7 @@ static char *substitute_vars(const char *str, t_sb *sb, t_sh *sh)
 	return (result);
 }
 
-static void handle_code(t_sb *sb, t_sh *sh)
+static void	handle_code(t_sb *sb, t_sh *sh)
 {
 	char	*val;
 
@@ -62,14 +75,14 @@ static void handle_code(t_sb *sb, t_sh *sh)
 	}
 }
 
-static void handle_dollar(const char *str, size_t *i, t_sb *sb)
+static void	handle_dollar(const char *str, size_t *i, t_sb *sb)
 {
 	sb_append_char(sb, '$');
 	sb_append_char(sb, str[*i]);
 	(*i)++;
 }
 
-static void handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh)
+static void	handle_var(const char *str, size_t *i, t_sb *sb, t_sh *sh)
 {
 	size_t	start;
 	char	*key;
