@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 22:26:10 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 22:49:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			close(fd[1]);
 		}
 		if (fd_in != STDIN_FILENO)
+		{
 			dup2(fd_in, STDIN_FILENO);
+			close(fd_in);
+		}
 		exit(executor(ast->left, fd_in, STDOUT_FILENO, shell, 1));
 	}
 	close(fd[1]);
