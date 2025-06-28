@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:37:49 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:43:56 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 04:05:44 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	ast_is_redirection_chain(const t_ast *node)
 {
 	if (!node || !ast_is_redirection(node) || !node->left)
 		return (0);
-	if (!ast_is_redirection(node->left))
+	if (ast_is_command(node->left))
 		return (1);
-	return (ast_is_redirection_chain(node->left));
+	if (ast_is_redirection(node->left))
+		return (ast_is_redirection_chain(node->left));
+	return (0);
 }
