@@ -27,7 +27,7 @@ t_list	*envp_to_env(char **envp)
 		eq = ft_strchr(envp[i++], '=');
 		if (!eq)
 			continue ;
-		key = ft_substr(envp[i], 0, eq - envp[i]);
+		key = ft_substr(envp[--i], 0, eq - envp[i]);
 		val = ft_strdup(eq + 1);
 		if (!key || !val)
 		{
