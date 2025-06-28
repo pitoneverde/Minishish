@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/26 01:00:27 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:19:26 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtin(t_ast *ast)
 	);
 }
 
-int	executor(t_ast *ast, int fd_in, t_sh *shell, int is_fork)
+int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork)
 {
 	int status;
 	(void) fd_in;
@@ -39,12 +39,12 @@ int	executor(t_ast *ast, int fd_in, t_sh *shell, int is_fork)
 	if (ast_is_command(ast))
 	{
 		if (is_fork)
-			status = execute_command(ast, fd_in, shell);
+			status = execute_command(ast, fd_in, fd_out, shell);
 		else
-			status = spawn_command(ast, fd_in, shell);
+			status = spawn_command(ast, fd_in, fd_out, shell);
 	}
 	else if (ast_is_simple_pipeline(ast))
-		status = execute_pipeline(ast, STDIN_FILENO, shell);
+		status = execute_pipeline(ast, fd_in, fd_out, shell);
 	else if (ast_is_operator(ast))
 		printf("operator\n"); // status = execute_operator()
 	else if (ast_is_redirection_chain(ast))

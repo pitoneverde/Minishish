@@ -6,13 +6,13 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 18:47:34 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:37:58 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// if cmd contains a '/' return
+// if cmd contains a '/' returns
 // otherwise split all the paths and check them one by one
 char	*search_path(char *cmd, t_sh *shell)
 {
@@ -57,7 +57,7 @@ char *find_command_path(char *cmd, char **paths)
 	return (temp);
 }
 
-int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
+int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	pid_t pid;
 	int status;
@@ -68,7 +68,7 @@ int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 	if (pid < 0)
 		return (1); // to do gestire errore
 	if (pid == 0)
-		execute_command(ast, fd_in, shell); // esce da solo
+		execute_command(ast, fd_in, fd_out, shell); // esce da solo
 	// ferma il waitpid del padre assoluto
 	// if (!is_last_child(ast))
 	// 	return (-1);
@@ -85,7 +85,7 @@ int spawn_command(t_ast *ast, int fd_in, t_sh *shell)
 		return (1); // to do gestire errore
 }
 
-int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
+int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;
 
@@ -102,6 +102,15 @@ int	execute_command(t_ast *ast, int fd_in, t_sh *shell)
 			exit (1);
 		}
 		close(fd_in);
+	}
+	if (fd_out != STDOUT_FILENO)
+	{
+		if (dup2(fd_out, STDOUT_FILENO) == -1)
+		{
+			perror("dup2 failed");
+			exit (1);
+		}
+		close(fd_out);
 	}
 	path = search_path(ast->argv[0], shell);
 	if (!path)

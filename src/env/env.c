@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:28:57 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 04:37:09 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 17:37:43 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*envp_to_env(char **envp)
 {
-	size_t	i;
+	int	i;
 	t_list	*env;
 	char	*eq;
 	char	*key;
@@ -27,7 +27,8 @@ t_list	*envp_to_env(char **envp)
 		eq = ft_strchr(envp[i++], '=');
 		if (!eq)
 			continue ;
-		key = ft_substr(envp[--i], 0, eq - envp[i]);
+		i--;
+		key = ft_substr(envp[i], 0, eq - envp[i]);
 		val = ft_strdup(eq + 1);
 		if (!key || !val)
 		{

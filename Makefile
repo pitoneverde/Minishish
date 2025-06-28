@@ -62,6 +62,7 @@ SRCS 		:= \
 	$(SRC_DIR)/parser/parse.c \
 	$(SRC_DIR)/parser/lex.c \
 	$(SRC_DIR)/env/env.c \
+	$(SRC_DIR)/env/env_internal.c \
 	$(SRC_DIR)/env/env_utils.c \
 	$(SRC_DIR)/feature1/sum.c \
 	$(SRC_DIR)/utils/utils.c \
@@ -76,6 +77,7 @@ SRCS 		:= \
 	$(SRC_DIR)/signals/signals.c \
 	$(SRC_DIR)/executor/executor.c \
 	$(SRC_DIR)/executor/exec_cmd.c \
+	$(SRC_DIR)/executor/exec_pipe.c \
 	$(SRC_DIR)/executor/exec_all.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \

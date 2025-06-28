@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env_internal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:26:22 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 04:36:18 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/06/28 17:39:01 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+char	*strdup_safe(const char *str)
+{
+	if (!str)
+		return (ft_strdup(""));
+	return (ft_strdup(str));
+}
 
 void	may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
 {
@@ -20,13 +27,6 @@ void	may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
 		entry->value = strdup_safe(val);
 		entry->exported = exp;
 	}
-}
-
-char	*strdup_safe(const char *str)
-{
-	if (!str)
-		return (ft_strdup(""));
-	return (ft_strdup(str));
 }
 
 void	free_key_val_inc(char *key, char *val, int *i)
