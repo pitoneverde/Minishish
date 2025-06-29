@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 23:47:25 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:46:23 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,23 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			dup2(fd_in, STDIN_FILENO);
 			close(fd_in);
 		}
-		exit(executor(ast->left, fd_in, STDOUT_FILENO, shell, 1));
+		exit(executor(ast->left, fd_in, STDOUT_FILENO, shell, 1, 1));
 	}
 	close(fd[1]);
-	status = executor(ast->right, fd[0], fd_out, shell, 0);
+	// To do salva in shell lo status se pipe non e' forkata
+	status = executor(ast->right, fd[0], fd_out, shell, 0, 1);
 	close(fd[0]);
 	// non ci interessa lo status dei nodi a sinistra
 	waitpid(left_pid, NULL, 0);
 	return (status);
 }
+
+/*
+aggiustare segnali
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status)); 
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	else
+		return (1); // to do gestire errore
+*/

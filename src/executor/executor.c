@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 22:56:40 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:44:30 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtin(t_ast *ast)
 	);
 }
 
-int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork)
+int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is_in_pipeline)
 {
 	int status;
 
@@ -37,10 +37,15 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork)
 		return (status);
 	if (ast_is_command(ast))
 	{
-		if (is_fork)
-			status = execute_command(ast, fd_in, fd_out, shell);
-		else
-			status = spawn_command(ast, fd_in, fd_out, shell);
+		if (is_fork) // uso il padre per eseguire direttamente
+		{
+			if (is_builtin(ast))
+				status = execute_builtin(ast, shell);
+			else
+				status = execute_command(ast, fd_in, fd_out, shell);
+		} 
+		else // processo principale: forki ed esegui cmd o esegui direttamente builtin
+			status = spawn_command(ast, fd_in, fd_out, shell, is_in_pipeline);
 	}
 	else if (ast_is_pipeline(ast))
 		status = execute_pipeline(ast, fd_in, fd_out, shell);

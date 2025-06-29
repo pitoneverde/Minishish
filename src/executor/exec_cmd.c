@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/28 23:48:27 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:44:56 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,23 @@ char *find_command_path(char *cmd, char **paths)
 	return (temp);
 }
 
-int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
+int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipeline)
 {
 	pid_t pid;
 	int status;
 
-	if (is_builtin(ast))
+	if (is_builtin(ast) && !is_in_pipeline)
 		return (execute_builtin(ast, shell));
+	// write(2, "spawn\n", 6);
 	pid = fork(); 
 	if (pid < 0)
 		return (1); // to do gestire errore
 	if (pid == 0)
+	{
+		if (is_builtin(ast))
+			return (execute_builtin(ast, shell));
 		execute_command(ast, fd_in, fd_out, shell); // esce da solo
+	}
 	// ferma il waitpid del padre assoluto
 	// if (!is_last_child(ast))
 	// 	return (-1);
@@ -89,6 +94,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;
 
+	// write(2, "exec\n", 5);
 	if (!ast || !ast->argv || !ast->argv[0])
 	{
 		perror("Invalid node");
