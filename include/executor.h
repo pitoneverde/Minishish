@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/29 23:45:00 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:48:43 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pip
 char	*find_command_path(char *cmd, char **paths);
 
 // execute pipeline
-int		execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell);
+int		execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork);
 
 // execute other
 int		execute_builtin(t_ast *ast, t_sh *shell);

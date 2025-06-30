@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/29 23:44:56 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:21:19 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 	if (pid == 0)
 	{
 		if (is_builtin(ast))
-			return (execute_builtin(ast, shell));
+			exit(execute_builtin(ast, shell));
 		execute_command(ast, fd_in, fd_out, shell); // esce da solo
 	}
 	// ferma il waitpid del padre assoluto

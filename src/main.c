@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/29 23:45:18 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:49:52 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (!line)
 			break ;
-		add_history(line);
+		if (ft_strlen(line) > 0)
+			add_history(line);
 		t_ast *tree = read_command_line(line);
 		expand_ast(tree, &shell);
 		if (tree)
 			shell.last_code = executor(tree, STDIN_FILENO, STDOUT_FILENO, &shell, 0, 0); // restituisce status code
+		ast_free(tree);
 		free(line);
 	}
 	rl_clear_history();
