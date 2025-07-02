@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mtxfree_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:07:56 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:13:03 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/02 15:11:18 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	mtxfree_str(char **matrix)
 {
+	if (!matrix)
+		return ;
 	mtxfree((void **)matrix, free);
 }

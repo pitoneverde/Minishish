@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:36 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 17:38:47 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:41:05 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_list	*envp_to_env(char **envp);
 char	**env_to_envp(t_list *env);
 void	free_env(t_list *env);
 void	free_env_entry(void *entry);
+void	free_envp(char **envp);
 
 // utils, assume that key AKA variable name is valid
 // validate input into builtin

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:28:57 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 17:37:43 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:23:50 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,21 @@ char	**env_to_envp(t_list *env)
 void	free_env(t_list *env)
 {
 	ft_lstclear(&env, free_env_entry);
+}
+
+void	free_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	if (!envp)
+		return;
+	while (envp[i] != NULL)
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
 }
 
 void	free_env_entry(void *entry)

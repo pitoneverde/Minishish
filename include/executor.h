@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/30 15:48:43 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:11:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "shell.h"
 
 // execute command
+int		check_command_access(char *path);
 int		execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell);
 char	*search_path(char *cmd, t_sh *shell);
 int		spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipeline);

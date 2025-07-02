@@ -6,12 +6,17 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/25 18:03:07 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:43:23 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define EXIT_PERMISSION_DENIED 126
+# define EXIT_CMD_NOT_FOUND 127
 
 # include "shell.h"
 # include "libft.h"
@@ -34,6 +39,7 @@ t_ast	*read_command_line(const char *line);
 // Utils
 void	init_shell(t_sh *shell, char *envp[]);
 void	free_all(t_sh *shell);
+void	cleanup_and_exit(char *path, char **envp, int exit_code, char *err_msg);
 int		is_numeric(const char *str);
 
 void	print_string_matrix(char **matrix);

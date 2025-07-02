@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/30 17:49:52 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:58:39 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	rl_clear_history();
 	free_all(&shell);
-    printf("exit\n");
+	printf("exit\n");
 	return (0);
 }

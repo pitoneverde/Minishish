@@ -6,55 +6,83 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/30 20:21:19 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:47:42 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// if cmd contains a '/' returns
-// otherwise split all the paths and check them one by one
-char	*search_path(char *cmd, t_sh *shell)
+int	check_command_access(char *path)
 {
-	char *paths;
-	char **split_paths;
-
-	if (!cmd || !shell)
-		return (NULL);
-	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	paths = get_env_value(shell->env, "PATH");
-	if (!paths)
-		return (NULL);
-	split_paths = ft_split(paths, ':');
-	free(paths);
-	if (!split_paths)
-		return (NULL);
-	return (find_command_path(cmd, split_paths));
+	if (access(path, F_OK) == -1) {
+		perror("No such file or directory");
+		// TO DO  ft_printf_fd(STDERR_FILENO, "minishell: %s: No such file or directory\n", path);
+		return (0);
+	}
+	if (access(path, X_OK) == -1) {
+		perror("Permission denied");
+		// ft_printf_fd(STDERR_FILENO, "minishell: %s: Permission denied\n", path);
+		return (0);
+	}
+	return (1);
 }
 
+// For every path in PATH, check if cmd works
 char *find_command_path(char *cmd, char **paths)
 {
 	int i;
 	char *temp;
 	char *full_path;
 	
+	if (!cmd || !*cmd || !paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
+		if (!temp)
+			return (NULL);
 		full_path = ft_strjoin(temp, cmd);
 		free(temp);
+		if (!full_path)
+			return (NULL);
 		if (access(full_path, X_OK) == 0)
-		{
-			mtxfree_str(paths);
 			return (full_path);
-		}
 		free(full_path);
 		i++;
 	}
-	mtxfree_str(paths);
-	return (temp);
+	return (NULL);
+}
+
+// if cmd contains a '/' returns cmd
+// otherwise split all the paths and check them one by one
+// 
+char	*search_path(char *cmd, t_sh *shell)
+{
+	char *res;
+	char *env_paths;
+	char **split_paths;
+
+	if (!cmd || !*cmd || !shell)
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
+		perror("Command not found or permission denied");
+		// ft_printf_fd(STDERR_FILENO, "minishell: %s: command not found or permission denied\n", cmd);
+		return (NULL);
+	}
+	env_paths = get_env_value(shell->env, "PATH");
+	if (!env_paths)
+		return (NULL);
+	split_paths = ft_split(env_paths, ':');
+	free(env_paths);
+	if (!split_paths)
+		return (NULL);
+	res = find_command_path(cmd, split_paths);
+	mtxfree_str(split_paths);
+	return (res);
 }
 
 int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipeline)
@@ -62,9 +90,10 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 	pid_t pid;
 	int status;
 
+	if (!ast || !ast->argv || !ast->argv[0] || !shell)
+		return (1);
 	if (is_builtin(ast) && !is_in_pipeline)
 		return (execute_builtin(ast, shell));
-	// write(2, "spawn\n", 6);
 	pid = fork(); 
 	if (pid < 0)
 		return (1); // to do gestire errore
@@ -81,7 +110,10 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 	// to do spostare dopo l'esecuzione di tutti i comandi 
 	// aspetta tutti i figli forkati (da solo si da' -1 quando i figli sono finiti)
 	// while (waitpid(-1, &status, 0) != -1) per l'ultimo figlio
-	waitpid(pid, &status, 0);
+	if (waitpid(pid, &status, 0) == -1) { // gestisco pid inesistente, zombie e processi gia' terminati
+		perror("waitpid failed");
+		return (1);
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status)); 
 	else if (WIFSIGNALED(status))
@@ -93,8 +125,8 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;
+	char	**envp;
 
-	// write(2, "exec\n", 5);
 	if (!ast || !ast->argv || !ast->argv[0])
 	{
 		perror("Invalid node");
@@ -107,7 +139,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			perror("dup2 failed");
 			exit (1);
 		}
-		close(fd_in); // Are we sure?
+		close(fd_in);
 	}
 	if (fd_out != STDOUT_FILENO)
 	{
@@ -116,15 +148,16 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 			perror("dup2 failed");
 			exit (1);
 		}
-		close(fd_out); // Are we sure?
+		close(fd_out);
 	}
 	path = search_path(ast->argv[0], shell);
-	if (!path)
-		exit (127);
-	// metter envp in var a parte -> rischio leaks
-	execve(path, ast->argv, env_to_envp(shell->env));
-	// free_envp()
-	free(path); // to do aggiustare
-	perror("execve error");
-	exit(127); // to do controllare EACCESS (126 o 127)
+	// caso non c'e path
+	envp = env_to_envp(shell->env);
+	if (!path || !envp)
+		cleanup_and_exit(path, envp, EXIT_CMD_NOT_FOUND, "command not found");
+	if (!check_command_access(path))
+		cleanup_and_exit(path, envp, EXIT_PERMISSION_DENIED, "Permission denied");
+	execve(path, ast->argv, envp);
+	cleanup_and_exit(path, envp, EXIT_PERMISSION_DENIED, "???"); // TO DO
+	return (1);
 }
