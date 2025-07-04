@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/02 21:11:29 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:42:37 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ char	*find_command_path(char *cmd, char **paths);
 
 // execute pipeline
 int		execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork);
+
+// execute redirection chain
+// int		execute_redirection(t_ast *ast);
+int		execute_redirection_chain(t_ast *ast, t_sh *shell, int is_fork, int is_in_pipeline);
 
 // execute other
 int		execute_builtin(t_ast *ast, t_sh *shell);

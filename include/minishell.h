@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/02 21:43:23 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:47:44 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "executor.h"
 # include "builtin.h"
 
+# include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <readline/readline.h>

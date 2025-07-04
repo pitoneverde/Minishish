@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/02 21:47:42 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:04:58 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*search_path(char *cmd, t_sh *shell)
 	return (res);
 }
 
+// crea e gestisce il fork
 int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipeline)
 {
 	pid_t pid;
@@ -122,6 +123,7 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 		return (1); // to do gestire errore
 }
 
+// effettua redirezioni ed esegue comando
 int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;

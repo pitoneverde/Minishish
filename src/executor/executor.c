@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/30 18:12:45 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:44:38 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 	status = 127;
 	if (!ast || !shell)
 		return (status);
+	print_ast(ast, 4);
 	if (ast_is_command(ast))
 	{
 		if (is_fork) // uso il padre per eseguire direttamente
@@ -47,12 +48,12 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 		else // processo principale: forki ed esegui cmd o esegui direttamente builtin
 			status = spawn_command(ast, fd_in, fd_out, shell, is_in_pipeline);
 	}
+	else if (ast_is_redirection_chain(ast))
+		status = execute_redirection_chain(ast, shell, is_fork, is_in_pipeline);
 	else if (ast_is_pipeline(ast))
 		status = execute_pipeline(ast, fd_in, fd_out, shell, is_fork);
 	else if (ast_is_operator(ast))
 		printf("operator\n"); // status = execute_operator()
-	else if (ast_is_redirection_chain(ast))
-		printf("redirection\n"); // status = execute_redirection
 	else
 		perror("Unknown node type");
 	if (g_signal_status != 0)

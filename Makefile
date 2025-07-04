@@ -77,6 +77,7 @@ SRCS 		:= \
 	$(SRC_DIR)/signals/signals.c \
 	$(SRC_DIR)/executor/executor.c \
 	$(SRC_DIR)/executor/exec_cmd.c \
+	$(SRC_DIR)/executor/exec_redir.c \
 	$(SRC_DIR)/executor/exec_pipe.c \
 	$(SRC_DIR)/executor/exec_all.c \
 	$(SRC_DIR)/builtin/echo.c \
