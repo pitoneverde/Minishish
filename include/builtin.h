@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:03:23 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 22:51:01 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:56:49 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	print_export_arr(char **arr);
 void	bubble_sort_arr(char **arr);
 int		print_env_export(t_list *env);
 
-int		is_valid_env(char *str);
+void	split_env(char *str, char **key, char **val);
 int		execute_builtin_export(t_ast *ast, t_sh *shell);
+
+// unset
+int		execute_builtin_unset(t_ast *ast, t_sh *shell);
 
 #endif

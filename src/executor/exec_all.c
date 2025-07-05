@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 18:48:10 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:53:43 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int execute_builtin(t_ast *ast, t_sh *shell)
 		return execute_builtin_pwd(ast);
 	if (ft_strcmp(cmd, "export") == 0)
 		return execute_builtin_export(ast, shell);
-	// if (ft_strcmp(cmd, "unset") == 0)
-	// 	return execute_builtin_unset(ast, shell);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return execute_builtin_unset(ast, shell);
 	if (ft_strcmp(cmd, "env") == 0)
 		return execute_builtin_env(ast, shell);
 	if (ft_strcmp(cmd, "exit") == 0)

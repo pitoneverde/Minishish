@@ -87,6 +87,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/env.c \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/export2.c \
+	$(SRC_DIR)/builtin/unset.c \
 	# $(TEST_MAINS)/heredoc.c
 	
 UNIT_TEST_SRCS	:= \
