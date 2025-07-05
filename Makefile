@@ -82,6 +82,7 @@ SRCS 		:= \
 	$(SRC_DIR)/executor/exec_all.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \
+	$(SRC_DIR)/builtin/cd.c \
 	$(SRC_DIR)/builtin/exit.c \
 	# $(TEST_MAINS)/heredoc.c
 	
