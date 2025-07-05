@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:15:39 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/05 21:36:15 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:45:56 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	set_env_var(t_list **env, const char *key, const char *val, int exp)
 	while (curr)
 	{
 		entry = curr->content;
-		may_re_env_var(entry, key, val, exp);
+		if (may_re_env_var(entry, key, val, exp))
+			return ;
 		curr = curr->next;
 	}
 	entry = (t_env *)malloc(sizeof(t_env));

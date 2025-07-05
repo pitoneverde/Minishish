@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/04 21:44:38 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:26:14 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 	status = 127;
 	if (!ast || !shell)
 		return (status);
-	print_ast(ast, 4);
+	// print_ast(ast, 1);
 	if (ast_is_command(ast))
 	{
 		if (is_fork) // uso il padre per eseguire direttamente

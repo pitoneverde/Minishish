@@ -6,11 +6,12 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:26:22 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 17:39:01 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:50:52 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include <stdio.h>
 
 char	*strdup_safe(const char *str)
 {
@@ -19,14 +20,16 @@ char	*strdup_safe(const char *str)
 	return (ft_strdup(str));
 }
 
-void	may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
+int		may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
 {
 	if (!ft_strcmp(entry->key, key))
 	{
 		free(entry->value);
 		entry->value = strdup_safe(val);
 		entry->exported = exp;
+		return (1);
 	}
+	return (0);
 }
 
 void	free_key_val_inc(char *key, char *val, int *i)

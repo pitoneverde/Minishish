@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 21:43:58 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:25:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	execute_builtin_export(t_ast *ast, t_sh *shell)
 	i = 1;
 	while (i < ast->argc)
 	{
-		if (!is_valid_var_name(ast->argv[i]))
+		split_env(ast->argv[i], &key, &value);
+		if (!is_valid_var_name(key))
 		{
 			perror("not a valid identifier"); // to do fprintf bash: export: `12VAR=dksf': not a valid identifier
 			i++;
 			continue ;
 		}
-		split_env(ast->argv[i], &key, &value);
 		set_env_var(&(shell->env), key, value, 1);
 		if (key)
 			free(key);

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:03:36 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/05 20:17:15 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:45:19 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_env_value(const t_list *env, const char *key);
 void	set_env_var(t_list **env, const char *key, const char *val, int exp);
 
 // internal
-void	may_re_env_var(t_env *entry, const char *key, const char *val, int exp);
+int		may_re_env_var(t_env *entry, const char *key, const char *val, int exp);
 int		is_valid_var_name(const char *name);
 char	*strdup_safe(const char *str);
 void	free_key_val_inc(char *key, char *val, int *i);
