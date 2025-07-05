@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:03:23 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 18:47:00 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:45:00 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,14 @@ int		execute_builtin_cd(t_ast *ast, t_sh *shell);
 
 // env
 int		execute_builtin_env(t_ast *ast, t_sh *shell);
+
+// export
+void	print_export_entry(char *entry);
+void	print_export_arr(char **arr);
+void	bubble_sort_arr(char **arr);
+int		print_env_export(t_list *env);
+
+int		is_valid_env(char *str);
+int		execute_builtin_export(t_ast *ast, t_sh *shell);
 
 #endif
