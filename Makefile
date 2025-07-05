@@ -84,6 +84,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/cd.c \
 	$(SRC_DIR)/builtin/exit.c \
+	$(SRC_DIR)/builtin/env.c \
 	# $(TEST_MAINS)/heredoc.c
 	
 UNIT_TEST_SRCS	:= \
