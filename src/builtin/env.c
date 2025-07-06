@@ -6,14 +6,14 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:39:34 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 18:45:10 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:11:43 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // stampa tutte le variabili env esportabili
-int		execute_builtin_env(t_ast *ast, t_sh *shell)
+int		execute_builtin_env(t_ast *ast, int fd_out, t_sh *shell)
 {
 	t_list	*node;
 	t_env	*entry;
@@ -28,10 +28,10 @@ int		execute_builtin_env(t_ast *ast, t_sh *shell)
 		entry = (t_env *)node->content;
 		if (entry->exported && entry->value)
 		{
-			ft_putstr_fd(entry->key, STDOUT_FILENO);
-			ft_putchar_fd('=', STDOUT_FILENO);
-			ft_putstr_fd(entry->value, STDOUT_FILENO);
-			ft_putchar_fd('\n', STDOUT_FILENO);
+			ft_putstr_fd(entry->key, fd_out);
+			ft_putchar_fd('=', fd_out);
+			ft_putstr_fd(entry->value, fd_out);
+			ft_putchar_fd('\n', fd_out);
 		}
 		node = node->next;
 	}

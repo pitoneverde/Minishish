@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 23:13:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 17:38:20 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 17:57:21 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	handle_redir_out(t_ast *ast, t_sh *shell)
 	(void) shell;
 	int fd;
 	
-	fd = open(ast->right->value, O_WRONLY | O_CREAT | O_TRUNC);
+	fd = open(ast->right->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		perror(ast->right->value); // to do
 	return (fd); 
@@ -57,34 +57,26 @@ int	handle_append(t_ast *ast, t_sh *shell)
 
 int	handle_heredoc(t_ast *ast, t_sh *shell)
 {
-	int pipefd[2];
+	int fd[2];
 	char *line;
 	char *delim;
 	
 	(void) shell;
 	if (!ast || !ast->right)
 		return (-1);
-
 	delim = ast->right->value;
-	
-	// Crea una pipe per comunicare tra processo padre e figlio
-	if (pipe(pipefd) == -1) {
-		perror("pipe");
-		return (-1);
-	}
-
-	// Scrive tutto l'input nella pipe
-	while (1) {
+	if (pipe(fd) == -1)
+		return (perror("pipe"), -1);
+	while (1)
+	{
 		line = readline("heredoc> ");
 		if (!line || strcmp(line, delim) == 0)
 			break;
-		write(pipefd[1], line, strlen(line));
-		write(pipefd[1], "\n", 1);  // Aggiungi newline
+		write(fd[1], line, strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
 	free(line);
-	close(pipefd[1]);  // Chiudi lato scrittura
-
-	// Restituisce l'FD di lettura (pipefd[0]) per essere usato come stdin
-	return (pipefd[0]);
+	close(fd[1]);
+	return (fd[0]);
 }

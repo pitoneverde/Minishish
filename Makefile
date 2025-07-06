@@ -80,7 +80,7 @@ SRCS 		:= \
 	$(SRC_DIR)/executor/exec_redir.c \
 	$(SRC_DIR)/executor/redir_helpers.c \
 	$(SRC_DIR)/executor/exec_pipe.c \
-	$(SRC_DIR)/executor/exec_all.c \
+	$(SRC_DIR)/executor/exec_builtin.c \
 	$(SRC_DIR)/builtin/echo.c \
 	$(SRC_DIR)/builtin/pwd.c \
 	$(SRC_DIR)/builtin/cd.c \

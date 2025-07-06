@@ -6,37 +6,37 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 22:52:07 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:11:12 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_export_entry(char *entry)
+void	print_export_entry(char *entry, int fd_out)
 {
 	const char	*equal;
 
 	if (!entry)
 		return ;
-	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd("declare -x ", fd_out);
 	equal = ft_strchr(entry, '=');
 	if (!equal)
 	{
-		ft_putstr_fd(entry, 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd(entry, fd_out);
+		ft_putchar_fd('\n', fd_out);
 		return ;
 	}
 	while (*entry && *entry != '=')
 	{
-		ft_putchar_fd(*entry, 1);
+		ft_putchar_fd(*entry, fd_out);
 		entry++;
 	}
-	ft_putstr_fd("=\"", 1);
-	ft_putstr_fd(entry + 1, 1);
-	ft_putstr_fd("\"\n", 1);
+	ft_putstr_fd("=\"", fd_out);
+	ft_putstr_fd(entry + 1, fd_out);
+	ft_putstr_fd("\"\n", fd_out);
 }
 
-void	print_export_arr(char **arr)
+void	print_export_arr(char **arr, int fd_out)
 {
 	int	i;
 
@@ -45,7 +45,7 @@ void	print_export_arr(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		print_export_entry(arr[i]);
+		print_export_entry(arr[i], fd_out);
 		i++;
 	}
 }
@@ -83,7 +83,7 @@ void	bubble_sort_arr(char **arr)
 // crea una array di "VAR=value"
 // ordina col bubble sort
 // stampa le entries con la dicitura declare -x VAR="value"
-int	print_env_export(t_list *env)
+int	print_env_export(t_list *env, int fd_out)
 {
 	char	**arr;
 
@@ -91,7 +91,7 @@ int	print_env_export(t_list *env)
 	if (!arr)
 		return (perror("env to envp"), 1);
 	bubble_sort_arr(arr);
-	print_export_arr(arr);
+	print_export_arr(arr, fd_out);
 	free_envp(arr);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 22:52:17 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:09:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	split_env(char *str, char **key, char **val)
 // oppure upsert variabili in formato valido
 // con la dicitura declare -x VAR="value"
 // se var non esiste la crea
-int	execute_builtin_export(t_ast *ast, t_sh *shell)
+int	execute_builtin_export(t_ast *ast, int fd_out, t_sh *shell)
 {
 	int		i;
 	char	*key;
 	char	*value;
 
 	if (ast->argc == 1)
-		return (print_env_export(shell->env));
+		return (print_env_export(shell->env, fd_out));
 	i = 1;
 	while (i < ast->argc)
 	{

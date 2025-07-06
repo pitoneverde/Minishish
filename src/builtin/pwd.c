@@ -6,13 +6,13 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:13:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 17:16:31 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:09:02 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_builtin_pwd(t_ast *ast)
+int	execute_builtin_pwd(t_ast *ast, int fd_out)
 {
 	char	*path;
 
@@ -27,7 +27,7 @@ int	execute_builtin_pwd(t_ast *ast)
 		perror("pwd");
 		return (1);
 	}
-	ft_putendl_fd(path, 1);
+	ft_putendl_fd(path, fd_out);
 	free(path);
 	return (0);
 }

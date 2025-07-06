@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 17:27:19 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:05:17 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		handle_append(t_ast *node, t_sh *shell);
 int		handle_heredoc(t_ast *node, t_sh *shell);
 
 // execute other
-int		execute_builtin(t_ast *ast, t_sh *shell);
+int		execute_builtin(t_ast *ast, int fd_out, t_sh *shell);
 
 // core
 int		executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is_in_pipeline);

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:03:23 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 22:57:02 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:10:41 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 // echo
 int		is_valid_flag_n(const char *arg);
-int		execute_builtin_echo(t_ast *ast);
+int		execute_builtin_echo(t_ast *ast, int fd_out); // to do update
 
 // pwd
-int		execute_builtin_pwd(t_ast *ast);
+int		execute_builtin_pwd(t_ast *ast, int fd_out); // to do update
 
 // exit
 int		execute_builtin_exit(t_ast *ast, t_sh *shell);
@@ -31,16 +31,16 @@ void	update_pwd_env(t_sh *shell, char *oldpwd);
 int		execute_builtin_cd(t_ast *ast, t_sh *shell);
 
 // env
-int		execute_builtin_env(t_ast *ast, t_sh *shell);
+int		execute_builtin_env(t_ast *ast, int fd_out, t_sh *shell); // update
 
 // export
-void	print_export_entry(char *entry);
-void	print_export_arr(char **arr);
+void	print_export_entry(char *entry, int fd_out);
+void	print_export_arr(char **arr, int fd_out);
 void	bubble_sort_arr(char **arr);
-int		print_env_export(t_list *env);
+int		print_env_export(t_list *env, int fd_out);
 
 void	split_env(char *str, char **key, char **val);
-int		execute_builtin_export(t_ast *ast, t_sh *shell);
+int		execute_builtin_export(t_ast *ast, int fd_out, t_sh *shell); // update
 
 // unset
 int		execute_builtin_unset(t_ast *ast, t_sh *shell);

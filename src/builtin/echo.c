@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:47:07 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/23 16:20:46 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:07:46 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int is_valid_flag_n(const char *arg)
 	return (arg[i] == '\0');
 }
 
-int	execute_builtin_echo(t_ast *ast)
+int	execute_builtin_echo(t_ast *ast, int fd_out)
 {
 	int i;
 	int newline;
@@ -38,12 +38,12 @@ int	execute_builtin_echo(t_ast *ast)
 	}
 	while (ast->argv[i])
 	{
-		ft_putstr_fd(ast->argv[i], 1);
+		ft_putstr_fd(ast->argv[i], fd_out);
 		if (ast->argv[i + 1])
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', fd_out);
 		i++;
 	}
 	if (newline)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', fd_out);
 	return (0);
 }
