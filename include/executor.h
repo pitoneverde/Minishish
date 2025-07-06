@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/05 23:15:27 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 17:27:19 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*find_command_path(char *cmd, char **paths);
 int		execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork);
 
 // execute redirection
-int		execute_redirection_chain(t_ast *ast, t_sh *shell, int is_fork, int is_in_pipeline);
+int		execute_redirection_chain(t_ast *ast, t_sh *shell, int fd_in, int fd_out, int is_fork, int is_in_pipeline);
 
 // redirection helpers
 int		handle_redir_in(t_ast *node, t_sh *shell);
