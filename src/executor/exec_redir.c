@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:50:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 18:12:45 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 19:16:40 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int execute_redirection_chain(t_ast *ast, t_sh *shell, int fd_in, int fd_out, in
 
 	if (!ast || !shell)
 		return (127);
-
+	printf("handle redir\n");
 	if (ast->type == AST_REDIR_IN)
 	{
 		fd = handle_redir_in(ast, shell);

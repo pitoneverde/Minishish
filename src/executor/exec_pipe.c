@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/01 17:41:25 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:35:13 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork
 	int		fd[2];
 	pid_t	left_pid;
 	int 	status;
-	(void)	is_fork;
 
+	(void)	is_fork;
+	printf("handle pipeline\n");
 	if (!ast || !ast->left || !ast->right)
 		return (127);
 	if (pipe(fd) == -1)	
