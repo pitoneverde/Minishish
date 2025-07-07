@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 17:19:17 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:37:57 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ char		*ast_to_string(const t_ast *node);
 void		ast_stringify(t_ast *node);
 t_fd_ctx	*ft_structdup(const t_fd_ctx *fd_ctx);
 t_fd_ctx	*fd_ctx_new(void);
+void		set_fd_ctx(t_fd_ctx *ctx, int fd, t_ast_type type);
+void		fd_ctx_free(t_fd_ctx *ctx);
 
 // types of nodes
 int		ast_is_operator(const t_ast *node);
@@ -109,6 +111,7 @@ int		ast_is_valid(const t_ast *node);
 
 // debug
 char	*node_type_name(t_ast_type type);
+void	print_fd_ctx(const t_ast *node);
 void	print_ast(const t_ast *node, int depth);
 
 // required to use libft utils

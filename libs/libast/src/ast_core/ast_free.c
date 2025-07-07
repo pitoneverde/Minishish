@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:26:14 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 16:10:55 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:26:35 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	ast_free(t_ast *tree)
 	if (tree->args)
 		ft_lstclear(&tree->args, ast_free_void);
 	if (tree->fd_ctx)
-		free(tree->fd_ctx);
+		fd_ctx_free(tree->fd_ctx);
 	free(tree);
 }

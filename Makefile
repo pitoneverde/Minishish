@@ -89,6 +89,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/export2.c \
 	$(SRC_DIR)/builtin/unset.c \
+	$(SRC_DIR)/preprocessor/preprocess.c \
 	# $(TEST_MAINS)/parser.c
 	
 UNIT_TEST_SRCS	:= \

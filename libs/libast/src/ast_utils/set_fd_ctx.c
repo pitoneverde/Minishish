@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fd_ctx_new.c                                       :+:      :+:    :+:   */
+/*   set_fd_ctx.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 17:18:06 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:34:50 by plichota         ###   ########.fr       */
+/*   Created: 2025/07/07 18:23:50 by plichota          #+#    #+#             */
+/*   Updated: 2025/07/07 18:24:46 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_fd_ctx	*fd_ctx_new(void)
+void	set_fd_ctx(t_fd_ctx *ctx, int fd, t_ast_type type)
 {
-	t_fd_ctx	*ctx;
-
-	printf("new context\n");
-	ctx = malloc(sizeof(t_fd_ctx));
-	if (!ctx)
-		return (NULL);
-	ctx->fd_in = STDIN_FILENO;
-	ctx->fd_out = STDOUT_FILENO;
-	return (ctx);
+	if (type == AST_REDIR_IN || type == AST_HEREDOC)
+	{
+		if (ctx->fd_in != STDIN_FILENO)
+			close(ctx->fd_in);
+		ctx->fd_in = fd;
+	}
+	else
+	{
+		if (ctx->fd_out != STDOUT_FILENO)
+			close(ctx->fd_out);
+		ctx->fd_out = fd;
+	}
 }

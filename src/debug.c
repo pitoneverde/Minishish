@@ -57,26 +57,26 @@ void print_lexed_tokens(t_list *tokens)
 // 	}
 // }
 
-// char *node_type_name(t_ast_type type)
-// {
-// 	if (type == AST_COMMAND)
-// 		return ("COMMAND");
-// 	if (type == AST_PIPE)
-// 		return ("PIPE");
-// 	if (type == AST_REDIR_IN)
-// 		return ("REDIRECT IN");
-// 	if (type == AST_REDIR_OUT)
-// 		return ("REDIRECT OUT");
-// 	if (type == AST_APPEND)
-// 		return ("APPEND");
-// 	if (type == AST_HEREDOC)
-// 		return ("HEREDOC");
-// 	if (type == AST_ERROR)
-// 		return ("ERROR");
-// 	if (type == AST_LITERAL)
-// 		return ("LITERAL");
-// 	return ("UNKNOWN");
-// }
+char *node_type_name(t_ast_type type)
+{
+	if (type == AST_COMMAND)
+		return ("COMMAND");
+	if (type == AST_PIPE)
+		return ("PIPE");
+	if (type == AST_REDIR_IN)
+		return ("REDIRECT IN");
+	if (type == AST_REDIR_OUT)
+		return ("REDIRECT OUT");
+	if (type == AST_APPEND)
+		return ("APPEND");
+	if (type == AST_HEREDOC)
+		return ("HEREDOC");
+	if (type == AST_ERROR)
+		return ("ERROR");
+	if (type == AST_LITERAL)
+		return ("LITERAL");
+	return ("UNKNOWN");
+}
 
 // // recursively print the Absract Syntax Tree
 // void print_ast(const t_ast *node, int depth)
@@ -197,6 +197,16 @@ void print_argv_array(char **argv, int indent)
 	}
 }
 
+void	print_fd_ctx(const t_ast *node)
+{
+	if (node && node->fd_ctx)
+	{
+		printf("	Fd\n");
+		printf("	 fd_in: %d, fd_out: %d\n",
+			node->fd_ctx->fd_in, node->fd_ctx->fd_out);
+	}
+}
+
 void print_ast(const t_ast *node, int depth)
 {
 	if (!node)
@@ -222,6 +232,9 @@ void print_ast(const t_ast *node, int depth)
 			printf("  ");
 		printf("Argv array:\n");
 		print_argv_array(node->argv, depth + 1);
+
+		if (node->fd_ctx)
+			print_fd_ctx(node);
 	}
 
 	if (node->left)

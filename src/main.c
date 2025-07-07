@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 13:56:19 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 17:48:28 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_sh	shell;
 	t_ast	*tree;
 	char	*line;
+	int		status;
 
 	init_shell(&shell, envp);
 	init_signals();
@@ -42,6 +43,9 @@ int	main(int argc, char *argv[], char *envp[])
 			perror("Generic parser error");
 			continue ;
 		}
+		status = preprocess_redirections(tree, &shell);
+		if (status == -1)
+			perror("preprocessor");
 		shell.last_code = executor(tree, STDIN_FILENO, STDOUT_FILENO, &shell, 0, 0); // restituisce status code
 		ast_free(tree);
 		free(line);

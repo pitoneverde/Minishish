@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fd_ctx_new.c                                       :+:      :+:    :+:   */
+/*   fd_ctx_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 17:18:06 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:34:50 by plichota         ###   ########.fr       */
+/*   Created: 2025/07/07 18:20:19 by plichota          #+#    #+#             */
+/*   Updated: 2025/07/07 18:20:37 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_fd_ctx	*fd_ctx_new(void)
+void	fd_ctx_free(t_fd_ctx *ctx)
 {
-	t_fd_ctx	*ctx;
-
-	printf("new context\n");
-	ctx = malloc(sizeof(t_fd_ctx));
 	if (!ctx)
-		return (NULL);
-	ctx->fd_in = STDIN_FILENO;
-	ctx->fd_out = STDOUT_FILENO;
-	return (ctx);
+		return ;
+	if (ctx->fd_in != STDIN_FILENO && ctx->fd_in >= 0)
+		close(ctx->fd_in);
+	if (ctx->fd_out != STDOUT_FILENO && ctx->fd_out >= 0)
+		close(ctx->fd_out);
+	free(ctx);
 }

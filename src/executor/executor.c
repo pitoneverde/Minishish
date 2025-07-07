@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 13:46:37 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 18:56:36 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 	status = 127;
 	if (!ast || !shell)
 		return (status);
-	// print_ast(ast, 1);
-	if (ast_is_redirection_chain(ast))
-		status = execute_redirection_chain(ast, shell, fd_in, fd_out, is_fork, is_in_pipeline);
-	else if (ast_is_simple_pipeline(ast) || ast->type == AST_PIPE)
+	print_ast(ast, 1);
+	// if (ast_is_redirection_chain(ast))
+		// status = execute_redirection_chain(ast, shell, fd_in, fd_out, is_fork, is_in_pipeline);
+	if (ast_is_simple_pipeline(ast) || ast->type == AST_PIPE)
 		status = execute_pipeline(ast, fd_in, fd_out, shell, is_fork);
 	else if (ast_is_command(ast))
 	{

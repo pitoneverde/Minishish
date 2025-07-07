@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fd_ctx_new.c                                       :+:      :+:    :+:   */
+/*   preprocessor.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 17:18:06 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:34:50 by plichota         ###   ########.fr       */
+/*   Created: 2025/07/07 17:31:24 by plichota          #+#    #+#             */
+/*   Updated: 2025/07/07 18:25:36 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_fd_ctx	*fd_ctx_new(void)
-{
-	t_fd_ctx	*ctx;
+int		get_redir_fd(t_ast *redir, t_sh *shell);
+int		apply_redirection(t_ast *ast, t_sh *shell);
 
-	printf("new context\n");
-	ctx = malloc(sizeof(t_fd_ctx));
-	if (!ctx)
-		return (NULL);
-	ctx->fd_in = STDIN_FILENO;
-	ctx->fd_out = STDOUT_FILENO;
-	return (ctx);
-}
+int		preprocess_redirections(t_ast *node, t_sh *shell);
