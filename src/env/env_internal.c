@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_internal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:26:22 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/05 22:50:52 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:34:15 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*strdup_safe(const char *str)
 	return (ft_strdup(str));
 }
 
-int		may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
+int	may_re_env_var(t_env *entry, const char *key, const char *val, int exp)
 {
 	if (!ft_strcmp(entry->key, key))
 	{

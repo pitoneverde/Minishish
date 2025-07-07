@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 15:20:53 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 15:32:53 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@ t_ast	*parse_pipeline(t_parser *p)
 		left = ast_binary_op(AST_PIPE, "|", left, right);
 	}
 	return (left);
-}
-t_ast *unwrap_command(t_ast *node)
-{
-	while (ast_is_redirection_chain(node))
-		node = node->left;
-	if (ast_is_command(node))
-		return (node);
-	return (NULL);
 }
 // Parse a command: simple_command redirection*
 t_ast	*parse_command(t_parser *p)

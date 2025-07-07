@@ -26,7 +26,6 @@ char *read_operator(const char *line, const char **p)
 {
 	const char	*start = *p;
 
-	// meaning that there are 2 equal operator chars
 	if (is_operator_char(**p) && *(*p + 1) == **p)
 		*p += 2;
 	else
@@ -39,7 +38,7 @@ char *read_quoted(const char *line, const char **p, char quote)
 {
 	const char *start = *p;
 
-	(*p)++;	//skip quote
+	(*p)++;
 	while (**p && **p != quote)
 		(*p)++;
 	if (**p == quote)

@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:28:57 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 13:42:28 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 15:33:59 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*envp_to_env(char **envp)
 {
-	int	i;
+	int		i;
 	t_list	*env;
 	char	*eq;
 	char	*key;
@@ -68,21 +68,6 @@ void	free_env(t_list *env)
 {
 	ft_lstclear(&env, free_env_entry);
 }
-
-// void	free_envp(char **envp)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!envp)
-// 		return;
-// 	while (envp[i] != NULL)
-// 	{
-// 		free(envp[i]);
-// 		i++;
-// 	}
-// 	free(envp);
-// }
 
 void	free_env_entry(void *entry)
 {
