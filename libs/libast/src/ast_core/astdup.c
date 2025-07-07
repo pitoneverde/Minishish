@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:28:50 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:31:00 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 17:12:51 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_ast	*astdup(const t_ast *node)
 		clone->quote = node->quote;
 	if (node->args)
 		clone->args = ft_lstmap(node->args, astdup_void, ast_free_void);
+	if (node->fd_ctx)
+		clone->fd_ctx = ft_structdup(node->fd_ctx);
 	clone->argc = node->argc;
 	clone->left = astdup(node->left);
 	clone->right = astdup(node->right);

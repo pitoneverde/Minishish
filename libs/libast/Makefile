@@ -57,6 +57,8 @@ SRCS = 	\
 	$(SRC_DIR)/ast_utils/ast_replace_subtree.c \
 	$(SRC_DIR)/ast_utils/ast_stringify.c \
 	$(SRC_DIR)/ast_utils/ast_to_string.c \
+	$(SRC_DIR)/ast_utils/ft_structdup.c \
+	$(SRC_DIR)/ast_utils/fd_ctx_new.c \
 	$(SRC_DIR)/ast_validate/ast_has_error.c \
 	$(SRC_DIR)/ast_validate/ast_is_valid.c
 

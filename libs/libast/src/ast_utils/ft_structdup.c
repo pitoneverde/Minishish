@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_free.c                                         :+:      :+:    :+:   */
+/*   ft_structdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 22:26:14 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 16:10:55 by plichota         ###   ########.fr       */
+/*   Created: 2025/07/07 17:09:09 by plichota          #+#    #+#             */
+/*   Updated: 2025/07/07 17:20:16 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-void	ast_free(t_ast *tree)
+t_fd_ctx	*ft_structdup(const t_fd_ctx *fd_ctx)
 {
-	if (!tree)
-		return ;
-	ast_free(tree->left);
-	ast_free(tree->right);
-	if (tree->value)
-		free(tree->value);
-	if (tree->error)
-		free(tree->error);
-	if (tree->argv)
-		mtxfree_str(tree->argv);
-	if (tree->args)
-		ft_lstclear(&tree->args, ast_free_void);
-	if (tree->fd_ctx)
-		free(tree->fd_ctx);
-	free(tree);
+	t_fd_ctx	*copy;
+
+	if (!fd_ctx)
+		return (NULL);
+	copy = malloc(sizeof(t_fd_ctx));
+	if (!copy)
+		return (NULL);
+	copy->fd_in = fd_ctx->fd_in;
+	copy->fd_out = fd_ctx->fd_out;
+	return (copy);
 }

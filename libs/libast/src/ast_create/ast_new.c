@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:33:15 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:33:24 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 17:13:49 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_ast	*ast_new(t_ast_type type, char *value)
 	node->argc = 0;
 	node->argv = NULL;
 	node->args = NULL;
+	node->fd_ctx = NULL;
 	if (value)
 		node->value = ft_strdup(value);
 	return (node);
