@@ -89,7 +89,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/export.c \
 	$(SRC_DIR)/builtin/export2.c \
 	$(SRC_DIR)/builtin/unset.c \
-	# $(TEST_MAINS)/heredoc.c
+	# $(TEST_MAINS)/parser.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 18:11:12 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:43:05 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ int	print_env_export(t_list *env, int fd_out)
 		return (perror("env to envp"), 1);
 	bubble_sort_arr(arr);
 	print_export_arr(arr, fd_out);
-	free_envp(arr);
+	mtxfree_str(arr);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/02 20:58:39 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:56:19 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	(void)	argc;
 	(void)	argv;
-	char	*line;
 	t_sh	shell;
+	t_ast	*tree;
+	char	*line;
 
 	init_shell(&shell, envp);
 	init_signals();
@@ -32,13 +32,17 @@ int	main(int argc, char *argv[], char *envp[])
 			g_signal_status = 0;
 		}
 		if (!line)
-			break ;
+			continue ;
 		if (ft_strlen(line) > 0)
 			add_history(line);
-		t_ast *tree = read_command_line(line);
+		tree = read_command_line(line);
 		expand_ast(tree, &shell);
-		if (tree)
-			shell.last_code = executor(tree, STDIN_FILENO, STDOUT_FILENO, &shell, 0, 0); // restituisce status code
+		if (!tree)
+		{
+			perror("Generic parser error");
+			continue ;
+		}
+		shell.last_code = executor(tree, STDIN_FILENO, STDOUT_FILENO, &shell, 0, 0); // restituisce status code
 		ast_free(tree);
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 04:42:33 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 15:20:53 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,46 @@ t_ast	*parse_pipeline(t_parser *p)
 	}
 	return (left);
 }
-
+t_ast *unwrap_command(t_ast *node)
+{
+	while (ast_is_redirection_chain(node))
+		node = node->left;
+	if (ast_is_command(node))
+		return (node);
+	return (NULL);
+}
 // Parse a command: simple_command redirection*
 t_ast	*parse_command(t_parser *p)
 {
+	t_ast	*base_cmd;
 	t_ast	*cmd;
+	t_ast	*arg;
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
 		return (NULL);
-	while (p->current && tkn_is_redirection(p->current))
+	while (p->current)
 	{
-		cmd = parse_redirection(p, cmd);
-		if (!cmd)
-			return (NULL);
+		if(tkn_is_redirection(p->current))
+		{
+			cmd = parse_redirection(p, cmd);
+			if (!cmd)
+				return (NULL);
+		}
+		else if (tkn_is_word(p->current))
+		{
+			arg = ast_new(AST_LITERAL, p->current->value);
+			if (!arg)
+				return (NULL);
+			base_cmd = unwrap_command(cmd);
+			if (!base_cmd)
+				return (ast_error("Expected command"));
+			arg->quote = p->current->quote;
+			ft_lstadd_back(&base_cmd->args, ft_lstnew(arg));
+			advance(p);
+		}
+		else
+			break ;
 	}
 	return (cmd);
 }
@@ -78,7 +104,7 @@ t_ast	*parse_simple_command(t_parser *p)
 	{
 		arg = ast_new(AST_LITERAL, p->current->value);
 		if (!arg)
-			return (ft_lstclear(&args, ast_free_void), ast_error("malloc"));
+			return (ft_lstclear(&args, ast_free_void), NULL);
 		arg->quote = p->current->quote;
 		ft_lstadd_back(&args, ft_lstnew(arg));
 		advance(p);

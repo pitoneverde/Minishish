@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 19:07:19 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:46:37 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 	// print_ast(ast, 1);
 	if (ast_is_redirection_chain(ast))
 		status = execute_redirection_chain(ast, shell, fd_in, fd_out, is_fork, is_in_pipeline);
-	else if (ast_is_pipeline(ast))
+	else if (ast_is_simple_pipeline(ast) || ast->type == AST_PIPE)
 		status = execute_pipeline(ast, fd_in, fd_out, shell, is_fork);
 	else if (ast_is_command(ast))
 	{
