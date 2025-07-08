@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 18:23:50 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:24:46 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:07:53 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	set_fd_ctx(t_fd_ctx *ctx, int fd, t_ast_type type)
 			close(ctx->fd_in);
 		ctx->fd_in = fd;
 	}
-	else
+	else if (type == AST_APPEND || type == AST_REDIR_OUT)
 	{
 		if (ctx->fd_out != STDOUT_FILENO)
 			close(ctx->fd_out);
 		ctx->fd_out = fd;
 	}
+	else
+		perror("Wrong type (fd_ctx)");
 }

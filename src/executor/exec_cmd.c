@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 18:08:41 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 00:15:12 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,26 +134,10 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 		perror("Invalid node");
 		exit(1);
 	}
-	if (fd_in != STDIN_FILENO)
-	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-		{
-			perror("dup2 failed");
-			exit (1);
-		}
-		close(fd_in);
-	}
-	if (fd_out != STDOUT_FILENO)
-	{
-		if (dup2(fd_out, STDOUT_FILENO) == -1)
-		{
-			perror("dup2 failed");
-			exit (1);
-		}
-		close(fd_out);
-	}
+	override_fd_with_ctx(ast, &fd_in, &fd_out);
+	set_std_fd(fd_in, fd_out);
 	path = search_path(ast->argv[0], shell);
-	// caso non c'e path
+	// to do caso non c'e path
 	envp = env_to_envp(shell->env);
 	if (!path || !envp)
 		cleanup_and_exit(path, envp, EXIT_CMD_NOT_FOUND, "command not found");

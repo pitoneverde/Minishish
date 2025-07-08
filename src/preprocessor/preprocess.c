@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:33:59 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:53:03 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:59:29 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	apply_redirection(t_ast *ast, t_sh *shell)
 
 	if (!ast || !ast->left)
 		return (-1);
-	cmd = get_command_node(ast->left);
+	cmd = get_command_node(ast->left); // to do gestire heredoc (apre anche senza comando)
 	if (!cmd)
 	{
 		fprintf(stderr, "❌ Nessun comando trovato per redirection '%s'\n", ast->value);
@@ -56,9 +56,7 @@ int	apply_redirection(t_ast *ast, t_sh *shell)
 			return (perror("malloc fd_ctx_new"), -1);
 	}
 	ctx = cmd->fd_ctx;
-	printf("context creato\n");
 	fd = get_redir_fd(ast, shell);
-	printf("context new fd:%d\n", fd);
 	if (fd < 0)
 		return (-1);
 	set_fd_ctx(ctx, fd, ast->type);
