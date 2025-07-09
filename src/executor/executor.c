@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 19:24:30 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:53:31 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 		if (is_fork) // uso il padre per eseguire direttamente
 		{
 			if (is_builtin(ast))
-				status = execute_builtin(ast, fd_out, shell);
+				status = execute_builtin(ast, fd_in, fd_out, shell);
 			else
 				status = execute_command(ast, fd_in, fd_out, shell);
 		}

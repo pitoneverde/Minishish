@@ -6,29 +6,11 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/06 18:09:29 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:52:27 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// splitto la stringa in chiave e valore con attenzione agli edge cases
-void	split_env(char *str, char **key, char **val)
-{
-	char	*equal;
-
-	equal = ft_strchr(str, '=');
-	if (!equal)
-	{
-		*key = ft_strdup(str);
-		*val = NULL;
-	}
-	else
-	{
-		*key = ft_substr(str, 0, equal - str);
-		*val = ft_strdup(equal + 1);
-	}
-}
 
 // stampa tutte le env ordinate (sia esportabili che non)
 // oppure upsert variabili in formato valido

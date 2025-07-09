@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 13:43:05 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 22:51:45 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,22 @@ int	print_env_export(t_list *env, int fd_out)
 	print_export_arr(arr, fd_out);
 	mtxfree_str(arr);
 	return (0);
+}
+
+// splitto la stringa in chiave e valore con attenzione agli edge cases
+void	split_env(char *str, char **key, char **val)
+{
+	char	*equal;
+
+	equal = ft_strchr(str, '=');
+	if (!equal)
+	{
+		*key = ft_strdup(str);
+		*val = NULL;
+	}
+	else
+	{
+		*key = ft_substr(str, 0, equal - str);
+		*val = ft_strdup(equal + 1);
+	}
 }

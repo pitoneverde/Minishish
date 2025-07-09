@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preprocess.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:33:59 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 16:17:12 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 22:52:09 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int	apply_redirection(t_ast *ast, t_sh *shell)
 	if (fd < 0)
 		return (-1);
 	set_fd_ctx(ctx, fd, ast->type);
-	fprintf(stderr,
-		"✅ Redirection '%s' (tipo=%s) applicata a comando '%s': fd_in=%d, fd_out=%d\n",
-		ast->value,
-		node_type_name(ast->type),
-		cmd->argv && cmd->argv[0] ? cmd->argv[0] : "(null)",
-		ctx->fd_in,
-		ctx->fd_out);
-		return (0);
+	// fprintf(stderr,
+	// 	"✅ Redirection '%s' (tipo=%s) applicata a comando '%s': fd_in=%d, fd_out=%d\n",
+	// 	ast->value,
+	// 	node_type_name(ast->type),
+	// 	cmd->argv && cmd->argv[0] ? cmd->argv[0] : "(null)",
+	// 	ctx->fd_in,
+	// 	ctx->fd_out);
+	return (0);
 }
 
 int		preprocess_redirections(t_ast *ast, t_sh *shell)

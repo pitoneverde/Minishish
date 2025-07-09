@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 19:34:49 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:30:12 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 	if (!ast || !ast->argv || !ast->argv[0] || !shell)
 		return (1);
 	if (is_builtin(ast) && !is_in_pipeline)
-		return (execute_builtin(ast, fd_out, shell));
+		return (execute_builtin(ast, fd_in, fd_out, shell));
 	pid = fork();
 	if (pid < 0)
 		return (1); // to do gestire errore
 	if (pid == 0)
 	{
 		if (is_builtin(ast))
-			exit(execute_builtin(ast, fd_out, shell));
+			exit(execute_builtin(ast, fd_in, fd_out, shell));
 		execute_command(ast, fd_in, fd_out, shell); // esce da solo
 	}
 	// ferma il waitpid del padre assoluto
@@ -128,19 +128,19 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;
 	char	**envp;
-	int		new_fd_in;
-	int		new_fd_out;
+	int		used_fd_in;
+	int		used_fd_out;
 
 	if (!ast || !ast->argv || !ast->argv[0])
 	{
 		perror("Invalid node");
 		exit(1);
 	}
-	new_fd_in = fd_in;
-	new_fd_out = fd_out;
-	override_fd_with_ctx(ast, &new_fd_in, &new_fd_out);
-	set_std_fd(new_fd_in, new_fd_out);
-	close_unused_fds(ast, new_fd_in, new_fd_out, fd_in, fd_out);
+	used_fd_in = fd_in;
+	used_fd_out = fd_out;
+	override_fd_with_ctx(ast, &used_fd_in, &used_fd_out);
+	set_std_fd(used_fd_in, used_fd_out);
+	close_unused_fds(ast, used_fd_in, used_fd_out);
 	path = search_path(ast->argv[0], shell);
 	// to do caso non c'e path
 	envp = env_to_envp(shell->env);

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:31:24 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 18:53:17 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:21:23 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@ void	override_fd_with_ctx(t_ast *ast, int *new_fd_in, int *new_fd_out);
 // utils
 int		apply_redirection(t_ast *ast, t_sh *shell);
 int		preprocess_redirections(t_ast *node, t_sh *shell);
+void	close_unused_fds(t_ast *ast, int used_fd_in, int used_fd_out);
