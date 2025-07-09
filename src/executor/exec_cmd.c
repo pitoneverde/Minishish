@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 00:15:12 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:33:05 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 		return (1);
 	if (is_builtin(ast) && !is_in_pipeline)
 		return (execute_builtin(ast, fd_out, shell));
-	pid = fork(); 
+	pid = fork();
 	if (pid < 0)
 		return (1); // to do gestire errore
 	if (pid == 0)
@@ -116,7 +116,7 @@ int spawn_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_in_pipe
 		return (1);
 	}
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status)); 
+		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	else
@@ -128,17 +128,22 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 {
 	char	*path;
 	char	**envp;
+	int		new_fd_in;
+	int		new_fd_out;
 
 	if (!ast || !ast->argv || !ast->argv[0])
 	{
 		perror("Invalid node");
 		exit(1);
 	}
-	override_fd_with_ctx(ast, &fd_in, &fd_out);
-	set_std_fd(fd_in, fd_out);
+	new_fd_in = fd_in;
+	new_fd_out = fd_out;
+	override_fd_with_ctx(ast, &new_fd_in, &new_fd_out);
+	set_std_fd(new_fd_in, new_fd_out);
 	path = search_path(ast->argv[0], shell);
 	// to do caso non c'e path
 	envp = env_to_envp(shell->env);
+	// to do aggiungere chiusura fd safe
 	if (!path || !envp)
 		cleanup_and_exit(path, envp, EXIT_CMD_NOT_FOUND, "command not found");
 	if (!check_command_access(path))
