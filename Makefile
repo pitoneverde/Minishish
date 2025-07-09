@@ -55,7 +55,7 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-# SRCS_MAIN 	:= $(SRC_DIR)/main.c
+SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
@@ -93,7 +93,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/export2.c \
 	$(SRC_DIR)/builtin/unset.c \
 	$(SRC_DIR)/preprocessor/preprocess.c \
-	$(TEST_MAINS)/parser.c
+	# $(TEST_MAINS)/parser.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

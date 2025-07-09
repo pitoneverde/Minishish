@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 15:33:05 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:34:49 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 	new_fd_out = fd_out;
 	override_fd_with_ctx(ast, &new_fd_in, &new_fd_out);
 	set_std_fd(new_fd_in, new_fd_out);
+	close_unused_fds(ast, new_fd_in, new_fd_out, fd_in, fd_out);
 	path = search_path(ast->argv[0], shell);
 	// to do caso non c'e path
 	envp = env_to_envp(shell->env);
@@ -149,6 +150,7 @@ int	execute_command(t_ast *ast, int fd_in, int fd_out, t_sh *shell)
 	if (!check_command_access(path))
 		cleanup_and_exit(path, envp, EXIT_PERMISSION_DENIED, "Permission denied");
 	execve(path, ast->argv, envp);
+	// to do close fds
 	cleanup_and_exit(path, envp, EXIT_PERMISSION_DENIED, "???"); // TO DO
 	return (1);
 }
