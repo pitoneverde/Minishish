@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_structdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:09:09 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 17:20:16 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:59:35 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_fd_ctx	*ft_structdup(const t_fd_ctx *fd_ctx)
+t_fctx	*ft_structdup(const t_fctx *fd_ctx)
 {
-	t_fd_ctx	*copy;
+	t_fctx	*copy;
 
 	if (!fd_ctx)
 		return (NULL);
-	copy = malloc(sizeof(t_fd_ctx));
+	copy = malloc(sizeof(t_fctx));
 	if (!copy)
 		return (NULL);
 	copy->fd_in = fd_ctx->fd_in;

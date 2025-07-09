@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 18:37:57 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:59:57 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ typedef enum e_quote_type
 	D_QUOTE,
 }	t_quote_type;
 
-typedef struct s_fd_ctx
+typedef struct s_fctx
 {
 	int	fd_in;
 	int	fd_out;
-}	t_fd_ctx;
+}	t_fctx;
 
 /*
  * value -> "echo", "<<", arguments
@@ -63,7 +63,7 @@ typedef struct s_ast
 	int				argc;
 	char			**argv;
 	char			*error;
-	t_fd_ctx		*fd_ctx;
+	t_fctx			*fd_ctx;
 }	t_ast;
 
 typedef struct s_ast_filter_ctx
@@ -86,15 +86,15 @@ t_ast	*ast_binary_op(t_ast_type type, char *op, t_ast *left, t_ast *right);
 t_ast	*ast_error(char *msg);
 
 // utils
-int			ast_find(t_ast *node, const char *value);
-void		ast_map(t_ast *node, void (*f)(t_ast *));
-void		ast_replace_subtree(t_ast **target, t_ast *replace);
-char		*ast_to_string(const t_ast *node);
-void		ast_stringify(t_ast *node);
-t_fd_ctx	*ft_structdup(const t_fd_ctx *fd_ctx);
-t_fd_ctx	*fd_ctx_new(void);
-void		set_fd_ctx(t_fd_ctx *ctx, int fd, t_ast_type type);
-void		fd_ctx_free(t_fd_ctx *ctx);
+int		ast_find(t_ast *node, const char *value);
+void	ast_map(t_ast *node, void (*f)(t_ast *));
+void	ast_replace_subtree(t_ast **target, t_ast *replace);
+char	*ast_to_string(const t_ast *node);
+void	ast_stringify(t_ast *node);
+t_fctx	*ft_structdup(const t_fctx *fd_ctx);
+t_fctx	*fd_ctx_new(void);
+void	set_fd_ctx(t_fctx *ctx, int fd, t_ast_type type);
+void	fd_ctx_free(t_fctx *ctx);
 
 // types of nodes
 int		ast_is_operator(const t_ast *node);

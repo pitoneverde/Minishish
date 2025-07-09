@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fd_ctx_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 18:20:19 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:20:37 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:59:35 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-void	fd_ctx_free(t_fd_ctx *ctx)
+void	fd_ctx_free(t_fctx *ctx)
 {
 	if (!ctx)
 		return ;

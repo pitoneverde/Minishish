@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   set_fd_ctx.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 18:23:50 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/08 19:07:53 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:59:35 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-void	set_fd_ctx(t_fd_ctx *ctx, int fd, t_ast_type type)
+void	set_fd_ctx(t_fctx *ctx, int fd, t_ast_type type)
 {
 	if (type == AST_REDIR_IN || type == AST_HEREDOC)
 	{

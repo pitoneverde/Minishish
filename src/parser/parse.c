@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 15:32:53 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/07 15:37:13 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_ast	*parse_pipeline(t_parser *p)
 	}
 	return (left);
 }
+
 // Parse a command: simple_command redirection*
 t_ast	*parse_command(t_parser *p)
 {
@@ -58,7 +59,7 @@ t_ast	*parse_command(t_parser *p)
 		return (NULL);
 	while (p->current)
 	{
-		if(tkn_is_redirection(p->current))
+		if (tkn_is_redirection(p->current))
 		{
 			cmd = parse_redirection(p, cmd);
 			if (!cmd)

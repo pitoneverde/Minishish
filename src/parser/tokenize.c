@@ -1,6 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 15:35:28 by sabruma           #+#    #+#             */
+/*   Updated: 2025/07/07 15:36:49 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-// TODO: now parses only words, and operators, add quotes
-t_list *tokenize(const char *line)
+// Creates tokens out of the command line
+// separated by spaces or operators
+// saves them into a t_list* of char*
+t_list	*tokenize(const char *line)
 {
 	t_list		*tokens;
 	t_list		*new_token;
