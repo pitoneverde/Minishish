@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 17:24:07 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:32:28 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,3 @@ int	execute_pipeline(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork
 	// 	return (1); // to do gestire errore
 	return (status);
 }
-
-/*
-aggiustare segnali
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status)); 
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	else
-		return (1); // to do gestire errore
-*/

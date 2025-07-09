@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 18:56:36 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:24:30 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 	status = 127;
 	if (!ast || !shell)
 		return (status);
-	print_ast(ast, 1);
-	// if (ast_is_redirection_chain(ast))
-		// status = execute_redirection_chain(ast, shell, fd_in, fd_out, is_fork, is_in_pipeline);
+	// print_ast(ast, 1);
+	if (ast_is_redirection(ast))
+		return (executor(ast->left, fd_in, fd_out, shell, is_fork, is_in_pipeline));
 	if (ast_is_simple_pipeline(ast) || ast->type == AST_PIPE)
 		status = execute_pipeline(ast, fd_in, fd_out, shell, is_fork);
 	else if (ast_is_command(ast))
@@ -48,14 +48,14 @@ int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is
 				status = execute_builtin(ast, fd_out, shell);
 			else
 				status = execute_command(ast, fd_in, fd_out, shell);
-		} 
+		}
 		else // processo principale: forki ed esegui cmd o esegui direttamente builtin
 			status = spawn_command(ast, fd_in, fd_out, shell, is_in_pipeline);
 	}
 	else if (ast_is_operator(ast))
 		printf("operator\n"); // status = execute_operator()
 	else
-		perror("Unknown node type");
+		return (0);
 	if (g_signal_status != 0)
 	{
 		shell->last_code = g_signal_status;
