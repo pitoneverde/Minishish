@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 17:32:58 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 18:39:25 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_ast			*parse(t_list *lexemes);
 t_ast			*parse_command(t_parser *p);
 t_ast			*parse_simple_command(t_parser *p);
 t_ast			*parse_pipeline(t_parser *p);
+void			validate_ast(t_ast **root);
 
 // parser utils
 void			advance(t_parser *p);

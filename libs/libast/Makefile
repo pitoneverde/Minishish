@@ -44,6 +44,7 @@ SRCS = 	\
 	$(SRC_DIR)/ast_lst_to_array/ast_lst_to_array_n.c \
 	$(SRC_DIR)/ast_traverse/ast_traverse_post.c \
 	$(SRC_DIR)/ast_traverse/ast_traverse_post_ctx.c \
+	$(SRC_DIR)/ast_traverse/ast_traverse_post_rpl.c \
 	$(SRC_DIR)/ast_traverse/ast_traverse_pre.c \
 	$(SRC_DIR)/ast_traverse/ast_traverse_pre_ctx.c \
 	$(SRC_DIR)/ast_types/ast_is_command.c \

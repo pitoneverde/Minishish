@@ -61,6 +61,7 @@ SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
 	$(SRC_DIR)/parser/parse.c \
 	$(SRC_DIR)/parser/lex.c \
+	$(SRC_DIR)/parser/validate_ast.c \
 	$(SRC_DIR)/env/env.c \
 	$(SRC_DIR)/env/env_internal.c \
 	$(SRC_DIR)/env/env_utils.c \

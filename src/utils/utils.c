@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 16:16:05 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 17:50:38 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_ast *read_command_line(const char *line)
 		return (NULL);
 	if (ast_has_error(tree) && tree && tree->error)
 		printf("❌ Parse error: %s\n", tree->error);
-	else
-		printf("❌ Parse error : unknown\n");
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
 	return(tree);

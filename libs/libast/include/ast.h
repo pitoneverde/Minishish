@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 15:59:57 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 18:28:37 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	astt_pre(t_ast *node, void (*visit)(t_ast *));
 void	astt_pre_ctx(t_ast *node, void (*visit)(t_ast *, void *), void *data);
 void	astt_post(t_ast *node, void (*visit)(t_ast *));
 void	astt_post_ctx(t_ast *node, void (*visit)(t_ast *, void *), void *data);
+void	astt_post_rpl(t_ast **node, t_ast *(*visit)(t_ast *));
 
 // filtering
 void	ast_filter_visit(t_ast *node, void *data);

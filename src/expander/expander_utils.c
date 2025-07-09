@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:39:29 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/28 04:39:29 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:13:07 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	expand_token_value(t_ast *node, t_sh *shell)
 	char	*exp;
 
 	exp = expand_token(node->value, node->quote, shell);
+	if (!exp)
+	{
+		node->error = ft_strdup("expansion error");
+		return ;
+	}
 	free(node->value);
 	node->value = exp;
 }
@@ -36,6 +41,11 @@ void	expand_command_args(t_ast *cmd, t_sh *shell)
 	{
 		arg = (t_ast *)curr->content;
 		exp_str = expand_token(arg->value, arg->quote, shell);
+		if (!exp_str)
+		{
+			cmd->error = ft_strdup("expansion error");
+			return (ft_lstclear(&exp, NULL));
+		}
 		if (arg->quote == N_QUOTE)
 			split_command_args(&exp, exp_str);
 		else

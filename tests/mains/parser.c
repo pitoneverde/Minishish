@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+t_sh shell;
 // Run single test case
 // IF IT LEAKS: check if strdup'ed value arg in ast_new-> no need since it strdup'es again internally
 void run_test(const char *input)
@@ -17,30 +18,47 @@ void run_test(const char *input)
 	print_lexed_tokens(lexed);
 
 	t_ast *tree = parse(lexed);
-	if (!tree || ast_has_error(tree))
+	if (!tree)
 	{
-		printf("❌ Parse error: %s\n", tree && tree->error ? tree->error : "unknown");
+		printf("❌ Parse error: null tree\n");
+		free_raw_tokens(&raw);
+		free_token_list(&lexed);
+		return;
 	}
+
+	if (ast_has_error(tree))
+	{
+		printf("❌ Parse error: %s\n", tree->error);
+		free_raw_tokens(&raw);
+		free_token_list(&lexed);
+		ast_free(tree);
+		return;
+	}
+	expand_ast(tree, &shell);
+	validate_ast(&tree);
+
+	if (ast_has_error(tree))
+		printf("❌ Parse error (validation): %s\n", tree->error);
 	else
 	{
 		printf("AST:\n");
 		print_ast(tree, 0);
 	}
+
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
 	ast_free(tree);
 }
 
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
+	(void)argc;
+	(void)argv;
+	init_shell(&shell, envp);
 	run_test("echo hello");
 	run_test("ls > out.txt");
 	run_test("cat file.txt | grep pattern");
 	run_test("echo data > tmp.txt | cat");
-	run_test("ls |");			   // edge
-	run_test("echo >");			   // edge
-	run_test("");				   // empty input edge
-	run_test(">> file");		   // lone redirection
 	run_test("echo 'quoted arg'"); // test quoting if lex handles it
 	run_test("grep \"some pattern\" < in.txt >> out.txt");
 	run_test("echo hi > out.txt | cat"); // tested ownership of cmd argv issue
@@ -54,9 +72,20 @@ int main(void)
 	run_test("sort < unsorted.txt > sorted.txt >> log.txt"); // Read, write, and append
 	run_test("tr -d 'a-z' < input | sort | uniq > result");
 	run_test("command < in | mid > out | tail"); // Nested redirection in a pipeline
-	run_test("cat|ls");
-	run_test("$$$$$HOME$.$");
-	run_test("echo > out.txt hello");
-	run_test("'echo");
+	run_test("cat|ls"); // no space between words and operands
+	run_test("$$$$$HOME$.$"); // many dollars
+	run_test("echo > out.txt hello"); // args and redirs mixed
+	// Should fail
+	run_test("'echo"); // unclosed quote
+	run_test("|");	   // lone pipe
+	run_test(">");	   // lone redir
+	run_test("ls |");	 // edge
+	run_test("echo >");	 // redir without filename
+	run_test("echo > >");	 // double redir without filename
+	run_test("");		 // empty input edge
+	run_test(">> file"); // start redirection
+	run_test("|cat"); // start pipe
+	run_test("echo hello || echo world"); // no support for logical operands
+	run_test("echo hello | >");  // no command after pipe
 	return 0;
 }

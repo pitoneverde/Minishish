@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:06:53 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 17:43:41 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 18:42:37 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ t_ast	*syntax_error_token(char *token_value)
 	t_ast	*err;
 
 	sb = sb_create(32);
+	if (!sb)
+	{
+		err = ast_error("syntax error");
+		if (!err)
+			return (NULL);
+		return (err);
+	}
 	sb_append_str(sb, "syntax error near unexpected token `");
 	sb_append_str(sb, token_value);
 	sb_append_char(sb, '`');

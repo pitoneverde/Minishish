@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:37:23 by sabruma           #+#    #+#             */
-/*   Updated: 2025/06/21 22:37:24 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:43:31 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 
 int	ast_is_operator(const t_ast *node)
 {
-	return (node && (node->type == AST_APPEND || node->type == AST_HEREDOC
-			|| node->type == AST_PIPE || node->type == AST_REDIR_IN
-			|| node->type == AST_REDIR_OUT));
+	return (node && (node->type == AST_PIPE || ast_is_redirection(node)));
 }

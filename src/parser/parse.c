@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 17:41:11 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:34:57 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_ast	*parse_pipeline(t_parser *p)
 
 	left = parse_command(p);
 	if (!left)
-		return (NULL);
+		return (syntax_error_token("|"));
 	while (p->current && p->current->type == TKN_PIPE)
 	{
 		advance(p);
@@ -71,14 +71,14 @@ t_ast	*parse_command(t_parser *p)
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
-		return (NULL);
+		return (syntax_error_token(p->current->value));
 	while (p->current)
 	{
 		if (tkn_is_redirection(p->current))
 		{
 			cmd = parse_redirection(p, cmd);
 			if (!cmd)
-				return (NULL);
+				return (syntax_error_token(p->current->value));
 		}
 		else if (tkn_is_word(p->current))
 		{
@@ -149,6 +149,6 @@ static t_ast	*parse_redirection(t_parser *p, t_ast *cmd)
 	ast_free(cmd);
 	free(op);
 	if (!r_node)
-		ast_free(f_node);
+		return (ast_free(f_node), syntax_error_token(p->current->value));
 	return (r_node);
 }
