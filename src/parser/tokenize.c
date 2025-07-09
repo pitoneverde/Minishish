@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:35:28 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 15:36:49 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 16:13:24 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_list	*tokenize(const char *line)
 	tokens = NULL;
 	while (*p)
 	{
-		while(is_whitespace(*p))
+		while (is_whitespace(*p))
 			p++;
-		if(*p == '\0')
+		if (*p == '\0')
 			break ;
 		word = read_next_token(line, &p);
 		if (!word)
@@ -41,17 +41,17 @@ t_list	*tokenize(const char *line)
 	return (tokens);
 }
 
-char *read_next_token(const char *line, const char **p)
+char	*read_next_token(const char *line, const char **p)
 {
 	if (**p == '\'' || **p == '"')
-		return read_quoted(line, p, **p);
+		return (read_quoted(line, p, **p));
 	else if (is_operator_char(**p))
-		return read_operator(line, p);
+		return (read_operator(line, p));
 	else
-		return read_word(line, p);
+		return (read_word(line, p));
 }
 
-void free_raw_tokens(t_list **tokens)
+void	free_raw_tokens(t_list **tokens)
 {
 	ft_lstclear(tokens, free);
 }

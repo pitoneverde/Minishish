@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/02 21:45:37 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:16:05 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ t_ast *read_command_line(const char *line)
 	tree = parse(lexed);
 	if (!tree)
 		return (NULL);
-	if (ast_has_error(tree))
-		printf("❌ Parse error: %s\n", tree && tree->error ? tree->error : "unknown");
+	if (ast_has_error(tree) && tree && tree->error)
+		printf("❌ Parse error: %s\n", tree->error);
+	else
+		printf("❌ Parse error : unknown\n");
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
 	return(tree);

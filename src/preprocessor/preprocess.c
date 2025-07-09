@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preprocess.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:33:59 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/08 22:59:29 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:17:12 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ast	*get_command_node(t_ast *node)
 int	apply_redirection(t_ast *ast, t_sh *shell)
 {
 	t_ast		*cmd;
-	t_fd_ctx	*ctx;
+	t_fctx		*ctx;
 	int			fd;
 
 	if (!ast || !ast->left)

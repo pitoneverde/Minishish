@@ -57,5 +57,6 @@ int main(void)
 	run_test("cat|ls");
 	run_test("$$$$$HOME$.$");
 	run_test("echo > out.txt hello");
+	run_test("'echo");
 	return 0;
 }

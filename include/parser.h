@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 15:33:18 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 17:32:58 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void			advance(t_parser *p);
 t_token			*peek(t_parser *p);
 int				match(t_parser *p, t_token_type type);
 t_ast			*unwrap_command(t_ast *node);
+t_ast			*syntax_error_token(char *token_value);
 
 #endif // !PARSER_H

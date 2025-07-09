@@ -25,12 +25,3 @@ int match(t_parser *p, t_token_type type)
 		return (advance(p), 1);
 	return 0;
 }
-
-t_ast *unwrap_command(t_ast *node)
-{
-	while (ast_is_redirection_chain(node))
-		node = node->left;
-	if (ast_is_command(node))
-		return (node);
-	return (NULL);
-}
