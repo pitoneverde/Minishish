@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:30:57 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:52:39 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 00:07:20 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	update_pwd_env(t_sh *shell, char *oldpwd)
 
 // cd . aggiorna oldpwd
 // cd .. ritorno alla cartella padre
-// cd - torna a oldpwd (non gestito)
-// cd ~ va a home
+// cd - torna a oldpwd (NON GESTITO)
+// cd ~ va a home (NON GESTITO)
 int	execute_builtin_cd(t_ast *ast, t_sh *shell)
 {
 	char	*path;
