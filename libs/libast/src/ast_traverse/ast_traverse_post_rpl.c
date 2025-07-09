@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:24:07 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 19:23:33 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/09 20:07:26 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	astt_post_rpl(t_ast **node, t_ast *(*visit)(t_ast *))
 	astt_post_rpl(&(*node)->left, visit);
 	astt_post_rpl(&(*node)->right, visit);
 	new_node = visit(*node);
-	if (new_node != NULL && new_node != *node)
+	if (new_node != NULL)
 		ast_replace_subtree(node, new_node);
+	else if (new_node == NULL)
+		fprintf(stderr, "WARN: visit() returned NULL — not replacing\n");
 }

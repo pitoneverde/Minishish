@@ -28,7 +28,7 @@ void run_test(const char *input)
 
 	if (ast_has_error(tree))
 	{
-		printf("❌ Parse error: %s\n", tree->error);
+		printf("❌ Parse error\n");
 		free_raw_tokens(&raw);
 		free_token_list(&lexed);
 		ast_free(tree);
@@ -87,5 +87,6 @@ int main(int argc, char *argv[], char *envp[])
 	run_test("|cat"); // start pipe
 	run_test("echo hello || echo world"); // no support for logical operands
 	run_test("echo hello | >");  // no command after pipe
+	free_all(&shell);
 	return 0;
 }
