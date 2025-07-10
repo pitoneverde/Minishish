@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:30:12 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:00:11 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*search_path(char *cmd, t_sh *shell)
 	if (!env_paths)
 		return (NULL);
 	split_paths = ft_split(env_paths, ':');
-	free(env_paths);
+	// free(env_paths);			// DO NOT FREE RESULT OF get_env_value: it returns an internal pointer variable (it will leak + invalid read)
 	if (!split_paths)
 		return (NULL);
 	res = find_command_path(cmd, split_paths);

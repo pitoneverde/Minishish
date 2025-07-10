@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:50:13 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 19:52:23 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/10 14:51:34 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ int ast_is_valid(const t_ast *node)
 	else if (ast_is_redirection(node))
 	{
 		// Redirection must have both children
-		if (!node->left || !node->right)
+		if (!node->right)
 			return (0);
 		// Right child must be a literal (the filename)
 		if (node->right->type != AST_LITERAL || !node->right->value)
 			return (0);
 		// Recurse on left
-		return (ast_is_valid(node->left));
+		if (node->left)
+			return (ast_is_valid(node->left));
 	}
 	// Unknown node type
 	return (0);
