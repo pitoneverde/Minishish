@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:30:30 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/08 19:32:16 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:35:20 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	handle_redir_out(t_ast *ast, t_sh *shell)
 {
 	(void) shell;
 	int fd;
-	
+
 	fd = open(ast->right->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		perror(ast->right->value); // to do
@@ -53,30 +53,4 @@ int	handle_append(t_ast *ast, t_sh *shell)
 	if (fd == -1)
 		return (perror("open"), -1); // to do
 	return (fd);
-}
-
-int	handle_heredoc(t_ast *ast, t_sh *shell)
-{
-	int fd[2];
-	char *line;
-	char *delim;
-	
-	(void) shell;
-	if (!ast || !ast->right)
-		return (-1);
-	delim = ast->right->value;
-	if (pipe(fd) == -1)
-		return (perror("pipe"), -1);
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line || strcmp(line, delim) == 0)
-			break;
-		write(fd[1], line, strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
-	}
-	free(line);
-	close(fd[1]);
-	return (fd[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:48:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:52:27 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:26:55 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 // oppure upsert variabili in formato valido
 // con la dicitura declare -x VAR="value"
 // se var non esiste la crea
-int	execute_builtin_export(t_ast *ast, int fd_out, t_sh *shell)
+int execute_builtin_export(t_ast *ast, int fd_out, t_sh *shell)
 {
-	int		i;
-	char	*key;
-	char	*value;
+	int i;
+	char *key;
+	char *value;
 
 	if (ast->argc == 1)
 		return (print_env_export(shell->env, fd_out));
@@ -32,7 +32,7 @@ int	execute_builtin_export(t_ast *ast, int fd_out, t_sh *shell)
 		{
 			perror("not a valid identifier"); // to do fprintf bash: export: `12VAR=dksf': not a valid identifier
 			i++;
-			continue ;
+			continue;
 		}
 		set_env_var(&(shell->env), key, value, 1);
 		if (key)

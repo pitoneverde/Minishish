@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:33:59 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:52:09 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/11 00:03:07 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	apply_redirection(t_ast *ast, t_sh *shell)
 	ctx = cmd->fd_ctx;
 	fd = get_redir_fd(ast, shell);
 	if (fd < 0)
+	{
+		perror("❌ Redir failed'\n");
 		return (-1);
+	}
 	set_fd_ctx(ctx, fd, ast->type);
 	// fprintf(stderr,
 	// 	"✅ Redirection '%s' (tipo=%s) applicata a comando '%s': fd_in=%d, fd_out=%d\n",

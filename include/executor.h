@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:50:27 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:35:32 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ int		execute_builtin(t_ast *ast, int fd_in, int fd_out, t_sh *shell);
 // core
 int		executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is_in_pipeline);
 int		is_builtin(t_ast *ast);
+
 #endif

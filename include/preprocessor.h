@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:31:24 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 21:21:23 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:36:22 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 int		handle_redir_in(t_ast *node, t_sh *shell);
 int		handle_redir_out(t_ast *node, t_sh *shell);
 int		handle_append(t_ast *node, t_sh *shell);
+
+// heredoc
+int		heredoc_loop(char *delim, int fd_out);
 int		handle_heredoc(t_ast *node, t_sh *shell);
 
 // utils

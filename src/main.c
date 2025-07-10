@@ -6,12 +6,13 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:51:36 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/07 17:48:28 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:26:17 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// It handles Ctrl+D with if (!line) break; 
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)	argv;
@@ -33,7 +34,7 @@ int	main(int argc, char *argv[], char *envp[])
 			g_signal_status = 0;
 		}
 		if (!line)
-			continue ;
+			break ;
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		tree = read_command_line(line);
@@ -45,7 +46,7 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		status = preprocess_redirections(tree, &shell);
 		if (status == -1)
-			perror("preprocessor");
+			perror("redirection error");
 		shell.last_code = executor(tree, STDIN_FILENO, STDOUT_FILENO, &shell, 0, 0); // restituisce status code
 		ast_free(tree);
 		free(line);

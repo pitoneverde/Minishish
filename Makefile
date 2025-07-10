@@ -83,6 +83,7 @@ SRCS 		:= \
 	$(SRC_DIR)/executor/executor.c \
 	$(SRC_DIR)/executor/exec_cmd.c \
 	$(SRC_DIR)/executor/handle_redir.c \
+	$(SRC_DIR)/executor/handle_heredoc.c \
 	$(SRC_DIR)/executor/fd_utils.c \
 	$(SRC_DIR)/executor/exec_pipe.c \
 	$(SRC_DIR)/executor/exec_builtin.c \
