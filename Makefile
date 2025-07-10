@@ -55,13 +55,15 @@ LDFLAGS 	:= \
 	-lreadline
 
 # === Sources ===
-SRCS_MAIN 	:= $(SRC_DIR)/main.c
+# SRCS_MAIN 	:= $(SRC_DIR)/main.c
 
 SRCS 		:= \
 	$(SRC_DIR)/parser/tokenize.c \
 	$(SRC_DIR)/parser/parse.c \
 	$(SRC_DIR)/parser/lex.c \
-	$(SRC_DIR)/parser/validate_ast.c \
+	$(SRC_DIR)/parser/validate/validate_ast.c \
+	$(SRC_DIR)/parser/validate/ast_has_error.c \
+	$(SRC_DIR)/parser/validate/ast_is_valid.c \
 	$(SRC_DIR)/env/env.c \
 	$(SRC_DIR)/env/env_internal.c \
 	$(SRC_DIR)/env/env_utils.c \
@@ -93,7 +95,7 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/export2.c \
 	$(SRC_DIR)/builtin/unset.c \
 	$(SRC_DIR)/preprocessor/preprocess.c \
-	# $(TEST_MAINS)/parser.c
+	$(TEST_MAINS)/parser.c
 	
 UNIT_TEST_SRCS	:= \
 	$(UNIT_TEST_DIR)/all_tests.c \

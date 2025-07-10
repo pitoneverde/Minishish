@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 18:28:37 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/10 17:00:11 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,6 @@ int		ast_is_pipeline(const t_ast *node);
 int		ast_is_redirection(const t_ast *node);
 int		ast_is_redirection_chain(const t_ast *node);
 int		ast_is_leaf(const t_ast *node);
-
-// errors and validation (also to move into parser)
-int		ast_has_error(const t_ast *node);
-int		ast_is_valid(const t_ast *node);
 
 // debug
 char	*node_type_name(t_ast_type type);

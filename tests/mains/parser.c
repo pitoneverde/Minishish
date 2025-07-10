@@ -10,12 +10,12 @@ void run_test(const char *input)
 	printf("\n=== Test: '%s' ===\n", input);
 
 	t_list *raw = tokenize(input);
-	printf("Raw tokens:\n");
-	print_raw_tokens(raw);
+	// printf("Raw tokens:\n");
+	// print_raw_tokens(raw);
 
 	t_list *lexed = lex(raw);
-	printf("Lexed tokens:\n");
-	print_lexed_tokens(lexed);
+	// printf("Lexed tokens:\n");
+	// print_lexed_tokens(lexed);
 
 	t_ast *tree = parse(lexed);
 	if (!tree)
@@ -26,24 +26,24 @@ void run_test(const char *input)
 		return;
 	}
 
-	if (ast_has_error(tree))
-	{
-		printf("❌ Parse error\n");
-		free_raw_tokens(&raw);
-		free_token_list(&lexed);
-		ast_free(tree);
-		return;
-	}
+	// if (ast_has_error(tree))
+	// {
+	// 	printf("❌ Parse error\n");
+	// 	free_raw_tokens(&raw);
+	// 	free_token_list(&lexed);
+	// 	ast_free(tree);
+	// 	return;
+	// }
 	expand_ast(tree, &shell);
 	validate_ast(&tree);
 
-	if (ast_has_error(tree))
-		printf("❌ Parse error (validation): %s\n", tree->error);
+	const char *err_msg = ast_get_error(tree);
+	if (err_msg)
+		printf("❌ Parse error: %s\n", err_msg);
 	else
-	{
-		printf("AST:\n");
-		print_ast(tree, 0);
-	}
+		printf("AST is valid\n");
+
+	print_ast(tree, 0);
 
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
@@ -87,6 +87,7 @@ int main(int argc, char *argv[], char *envp[])
 	run_test("|cat"); // start pipe
 	run_test("echo hello || echo world"); // no support for logical operands
 	run_test("echo hello | >");  // no command after pipe
+	// run_test("||||||||");
 	free_all(&shell);
 	return 0;
 }

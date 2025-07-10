@@ -151,14 +151,16 @@ const char *ast_type_to_str(t_ast_type t)
 		return "COMMAND";
 	case AST_PIPE:
 		return "PIPE";
-	case TKN_REDIR_IN:
+	case AST_REDIR_IN:
 		return "REDIR_IN";
-	case TKN_REDIR_OUT:
+	case AST_REDIR_OUT:
 		return "REDIR_OUT";
-	case TKN_APPEND:
+	case AST_APPEND:
 		return "APPEND";
-	case TKN_HEREDOC:
+	case AST_HEREDOC:
 		return "HEREDOC";
+	case AST_ERROR:
+		return "ERROR";
 	default:
 		return "UNKNOWN_TYPE";
 	}
@@ -206,7 +208,6 @@ void	print_fd_ctx(const t_ast *node)
 			node->fd_ctx->fd_in, node->fd_ctx->fd_out);
 	}
 }
-
 void print_ast(const t_ast *node, int depth)
 {
 	if (!node)
@@ -215,11 +216,17 @@ void print_ast(const t_ast *node, int depth)
 	for (int i = 0; i < depth; i++)
 		printf("  ");
 
-	printf("AST type=%s, value='%s', quote=%s, argc=%d\n",
+	printf("AST type=%s, value='%s', quote=%s, argc=%d",
 		   ast_type_to_str(node->type),
 		   node->value ? node->value : "(null)",
 		   quote_to_str(node->quote),
 		   node->argc);
+
+	// Print error if present
+	if (node->error)
+		printf(", error='%s'", node->error);
+
+	printf("\n");
 
 	if (node->type == AST_COMMAND)
 	{
