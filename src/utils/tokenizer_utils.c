@@ -1,28 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/14 01:08:41 by sabruma           #+#    #+#             */
+/*   Updated: 2025/07/14 01:10:06 by sabruma          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int is_operator_char(char c)
+int	is_operator_char(char c)
 {
 	return (c == '|' || c == '&' || c == '<' || c == '>');
 }
 
-int is_whitespace(char c)
+int	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
 // is const char **p -> modify char* pointer of line but not the chars inside
-char *read_word(const char *line, const char **p)
+// skips quotes
+char	*read_word(const char *line, const char **p)
 {
 	const char	*start = *p;
 
-	// skips quotes
-	while (**p && !is_whitespace(**p) && **p != '\'' && **p != '"' && !is_operator_char(**p))
+	while (**p && !is_whitespace(**p) && **p != '\''
+		&& **p != '"' && !is_operator_char(**p))
 		(*p)++;
 	return (ft_substr(line, start - line, *p - start));
 }
 
 // handles also 2-char operators (>>, <<, ||, &&)
-char *read_operator(const char *line, const char **p)
+char	*read_operator(const char *line, const char **p)
 {
 	const char	*start = *p;
 
@@ -34,16 +47,16 @@ char *read_operator(const char *line, const char **p)
 }
 
 //handles single and double quotes
-char *read_quoted(const char *line, const char **p, char quote)
+// else = unclosed quote
+char	*read_quoted(const char *line, const char **p, char quote)
 {
-	const char *start = *p;
+	const char	*start = *p;
 
 	(*p)++;
 	while (**p && **p != quote)
 		(*p)++;
 	if (**p == quote)
 		(*p)++;
-	// else = unclosed quote
 	return (ft_substr(line, start - line, *p - start));
 }
 

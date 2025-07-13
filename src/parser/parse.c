@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/09 19:34:57 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 00:35:37 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_ast	*parse_pipeline(t_parser *p)
 {
 	t_ast		*right;
 	t_ast		*left;
+	t_ast		*pipe;
 
 	left = parse_command(p);
 	if (!left)
@@ -57,7 +58,10 @@ t_ast	*parse_pipeline(t_parser *p)
 		right = parse_command(p);
 		if (!right)
 			return (ast_free(left), syntax_error_token("|"));
-		left = ast_binary_op(AST_PIPE, "|", left, right);
+		pipe = ast_binary_op(AST_PIPE, "|", left, right);
+		if (!pipe)
+			return (ast_free(left), ast_free(right), NULL);
+		left = pipe;
 	}
 	return (left);
 }
@@ -68,6 +72,7 @@ t_ast	*parse_command(t_parser *p)
 	t_ast		*base_cmd;
 	t_ast		*cmd;
 	t_ast		*arg;
+	t_list		*new_arg;
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
@@ -84,12 +89,15 @@ t_ast	*parse_command(t_parser *p)
 		{
 			arg = ast_new(AST_LITERAL, p->current->value);
 			if (!arg)
-				return (NULL);
+				return (ast_free(cmd), NULL);
 			base_cmd = unwrap_command(cmd);
 			if (!base_cmd)
 				return (syntax_error_token(p->current->value));
 			arg->quote = p->current->quote;
-			ft_lstadd_back(&base_cmd->args, ft_lstnew(arg));
+			new_arg = ft_lstnew(arg);
+			if (!new_arg)
+				return (ast_free(cmd), ast_free(arg), NULL);
+			ft_lstadd_back(&base_cmd->args, new_arg);
 			advance(p);
 		}
 		else
@@ -104,17 +112,22 @@ t_ast	*parse_simple_command(t_parser *p)
 	t_ast	*cmd;
 	t_ast	*arg;
 	t_list	*args;
+	t_list	*new_arg;
 
 	if (!p->current || !tkn_is_word(p->current))
 		return (syntax_error_token("newline"));
 	args = NULL;
+	new_arg = NULL;
 	while (p->current && tkn_is_word(p->current))
 	{
 		arg = ast_new(AST_LITERAL, p->current->value);
 		if (!arg)
 			return (ft_lstclear(&args, ast_free_void), NULL);
 		arg->quote = p->current->quote;
-		ft_lstadd_back(&args, ft_lstnew(arg));
+		new_arg = ft_lstnew(arg);
+		if (!new_arg)
+			return (ft_lstclear(&args, ast_free_void), NULL);
+		ft_lstadd_back(&args, new_arg);
 		advance(p);
 	}
 	cmd = ast_cmd(args);
@@ -144,7 +157,12 @@ static t_ast	*parse_redirection(t_parser *p, t_ast *cmd)
 	free(filename);
 	advance(p);
 	if (!f_node || !tkn_is_redirection(redir))
-		return (free(op), ast_free(cmd), ast_free(f_node), syntax_error_token(redir->value));
+	{
+		free(op);
+		ast_free(cmd);
+		ast_free(f_node);
+		return (syntax_error_token(redir->value));
+	}
 	r_node = ast_binary_op((t_ast_type)redir->type, op, astdup(cmd), f_node);
 	ast_free(cmd);
 	free(op);

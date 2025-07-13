@@ -6,13 +6,17 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:50:13 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/10 17:04:10 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 00:17:59 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-// SYNTAX CHECK
+static int	ast_cmd_is_valid(t_ast *node);
+static int	ast_literal_is_valid(t_ast *node);
+static int	ast_pipe_is_valid(t_ast *node);
+static int	ast_redir_is_valid(t_ast *node);
+
 // int	ast_is_valid(const t_ast *node)
 // {
 // 	if (!node || ast_has_error(node))
@@ -34,72 +38,80 @@
 // 		return (0);
 // }
 
-int ast_is_valid(t_ast *node)
+// SYNTAX CHECK
+int	ast_is_valid(t_ast *node)
 {
-	if (!node || ast_has_error(node))
+	if (!node)
+		return (1);
+	if (ast_has_error(node))
 		return (0);
-
 	if (node->type == AST_COMMAND)
-	{
-		// Must have argv[0] (command name), already set during expansion
-		if (!node->argv && !node->argv[0])
-		{
-			node->error = ft_strdup("newline");
-			return (0);
-		}
-		return (1);
-	}
+		return (ast_cmd_is_valid(node));
 	else if (node->type == AST_LITERAL)
-	{
-		// A literal must have a non-null value
-		if (!node->value)
-		{
-			node->error = ft_strdup("newline");
-			return (0);
-		}
-		return (1);
-	}
+		return (ast_literal_is_valid(node));
 	else if (node->type == AST_PIPE)
-	{
-		// Pipe must have left and right children
-		if (!node->left)
-		{
-			node->error = ft_strdup("|");
-			return (0);
-		}
-		if (!node->right)
-		{
-			node->error = ft_strdup("newline");
-			return (0);
-		}
-		// // Left and right must not be redirections (e.g., `> file | cmd`)
-		// if (ast_is_redirection(node->left) || ast_is_redirection(node->right))
-		// 	return (0);
-		// Recurse
-		if (!ast_is_valid(node->left) || !ast_is_valid(node->right))
-			return (0);
-		return (1);
-	}
+		return (ast_pipe_is_valid(node));
 	else if (ast_is_redirection(node))
-	{
-		// Redirection must have both children
-		if (!node->right)
-		{
-			node->error = ft_strdup("newline");
-			return (0);
-		}
-		// Right child must be a literal (the filename)
-		if (node->right->type != AST_LITERAL || !node->right->value)
-		{
-			node->error = ft_strdup("newline");
-			return (0);
-		}
-		// Recurse on left
-		if (node->left && !ast_is_valid(node->left))
-			return (0);
-		return (1);
-	}
-	// Unknown node type
-	node->error = ft_strdup("unknown");
+		return (ast_redir_is_valid(node));
+	node->error = ft_strdup("newline");
 	return (0);
+}
+
+static int	ast_redir_is_valid(t_ast *node)
+{
+	// if (!node->left && !ast_is_valid(node->left))
+	// 	return (0);
+	if (!node->right)
+	{
+		node->error = ft_strdup(node->value);
+		return (0);
+	}
+	if (node->right->type != AST_LITERAL || !node->right->value)
+	{
+		node->error = ft_strdup(node->value);
+		return (0);
+	}
+	if (node->left && !ast_is_valid(node->left))
+	{
+		node->error = ft_strdup("newline");
+		return (0);
+	}
+	return (1);
+}
+
+static int	ast_pipe_is_valid(t_ast *node)
+{
+	if (!node->left)
+	{
+		node->error = ft_strdup("|");
+		return (0);
+	}
+	if (!node->right)
+	{
+		node->error = ft_strdup("newline");
+		return (0);
+	}
+	if (!ast_is_valid(node->left) || !ast_is_valid(node->right))
+		return (0);
+	return (1);
+}
+
+static int	ast_literal_is_valid(t_ast *node)
+{
+	if (!node->value)
+	{
+		node->error = ft_strdup("newline");
+		return (0);
+	}
+	return (1);
+}
+
+static int	ast_cmd_is_valid(t_ast *node)
+{
+	if (!node->argv || !node->argv[0])
+	{
+		node->error = ft_strdup("newline");
+		return (0);
+	}
+	return (1);
 }

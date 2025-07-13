@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:07:48 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/10 17:00:44 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:27:52 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int				ast_is_valid(t_ast *node);
 void			validate_ast(t_ast **root);
 
 // parser utils
-void advance(t_parser *p);
+void			advance(t_parser *p);
 t_token			*peek(t_parser *p);
 int				match(t_parser *p, t_token_type type);
 t_ast			*unwrap_command(t_ast *node);

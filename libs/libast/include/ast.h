@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:53:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/10 17:00:11 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 00:58:54 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ast_map(t_ast *node, void (*f)(t_ast *));
 void	ast_replace_subtree(t_ast **target, t_ast *replace);
 char	*ast_to_string(const t_ast *node);
 void	ast_stringify(t_ast *node);
-t_fctx	*ft_structdup(const t_fctx *fd_ctx);
+t_fctx	*ft_fctxdup(const t_fctx *fd_ctx);
 t_fctx	*fd_ctx_new(void);
 void	set_fd_ctx(t_fctx *ctx, int fd, t_ast_type type);
 void	fd_ctx_free(t_fctx *ctx);

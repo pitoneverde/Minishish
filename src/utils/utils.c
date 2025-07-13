@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 17:50:38 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:08:25 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,31 @@ void	init_shell(t_sh *shell, char *envp[])
 	shell->is_interactive = isatty(STDIN_FILENO);
 }
 
-t_ast *read_command_line(const char *line)
+t_ast	*read_command_line(const char *line)
 {
-	t_list	*raw;
-	t_list	*lexed;
-	t_ast	*tree;
+	const char	*err;
+	t_list		*raw;
+	t_list		*lexed;
+	t_ast		*tree;
 
 	raw = tokenize(line);
 	if (!raw)
 		return (NULL);
 	lexed = lex(raw);
 	if (!lexed)
-		return(NULL);
+		return (NULL);
 	tree = parse(lexed);
 	if (!tree)
 		return (NULL);
-	if (ast_has_error(tree) && tree && tree->error)
-		printf("❌ Parse error: %s\n", tree->error);
+	err = ast_get_error(tree);
+	if (err)
+	{
+		printf("❌ Parse error: %s\n", err);
+		return (NULL);
+	}
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
-	return(tree);
+	return (tree);
 }
 
 void	cleanup_and_exit(char *path, char **envp, int exit_code, char *err_msg)
@@ -51,17 +56,17 @@ void	cleanup_and_exit(char *path, char **envp, int exit_code, char *err_msg)
 	exit(exit_code);
 }
 
-
 void	free_all(t_sh *shell)
 {
 	if (shell)
 		free_env(shell->env);
 }
 
-int is_numeric(const char *str)
+int	is_numeric(const char *str)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (!str)
 		return (0);
 	if (str[0] == '-' || str[0] == '+')

@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:46:12 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/10 17:03:41 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:26:21 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 // 	*target = replace;
 // }
 
-void ast_replace_subtree(t_ast **target, t_ast *replace)
+void	ast_replace_subtree(t_ast **target, t_ast *replace)
 {
 	if (!target || *target == replace)
-		return;
+		return ;
 	ast_free(*target);
 	*target = replace;
 }

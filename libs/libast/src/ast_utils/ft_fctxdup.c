@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_structdup.c                                     :+:      :+:    :+:   */
+/*   ft_fctxdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ast.h"
 
-t_fctx	*ft_structdup(const t_fctx *fd_ctx)
+t_fctx	*ft_fctxdup(const t_fctx *fd_ctx)
 {
 	t_fctx	*copy;
 
