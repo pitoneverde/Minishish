@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:52:41 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 18:57:49 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_ast	*parse_pipeline(t_parser *p)
 t_ast	*parse_command(t_parser *p)
 {
 	t_ast	*cmd;
+	t_ast	*err;
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
@@ -84,7 +85,9 @@ t_ast	*parse_command(t_parser *p)
 		}
 		else if (tkn_is_word(p->current))
 		{
-			parse_arg(p, cmd);
+			err = parse_arg(p, cmd);
+			if (err)
+				return (err);
 		}
 		else
 			break ;
@@ -138,4 +141,5 @@ static t_ast	*parse_arg(t_parser *p, t_ast *cmd)
 		return (ast_free(cmd), ast_free(arg), NULL);
 	ft_lstadd_back(&base_cmd->args, new_arg);
 	advance(p);
+	return (NULL);
 }
