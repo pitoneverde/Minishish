@@ -6,20 +6,22 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 18:12:47 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/10 22:50:33 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:48:32 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(SIGNALS_H)
 # define SIGNALS_H
 
+# include "ast.h"
 # include <signal.h>
 
-# define EXIT_SIGINT	130		/* Ctrl-C */
-# define EXIT_SIGQUIT	131		/* Ctrl-\ */
-# define EXIT_SIGTERM	143		/* kill */
-# define EXIT_SIGPIPE	141		/* scrivere su pipe con lettura chiusa */
-# define EXIT_SIGSTP	146		/* Ctrl-Z End of Transmission*/
+# define EXIT_HEREDOC_SIGINT	-2
+# define EXIT_SIGINT			130		/* Ctrl-C */
+# define EXIT_SIGQUIT			131		/* Ctrl-\ */
+// # define EXIT_SIGTERM		143		/* kill */
+// # define EXIT_SIGPIPE		141		/* write on pipe with no reader */
+// # define EXIT_SIGSTP			146		/* Ctrl-Z End of Transmission*/
 
 /*
 	Ctrl-D NON e' un segnale:
@@ -34,12 +36,20 @@
 		digita altri caratteri
 */
 
-extern volatile sig_atomic_t	g_signal_status;
+extern volatile sig_atomic_t	g_last_signal;
 
+// core
 void	init_signals(void);
-void	handler_sigaction(int sig);
+void	init_heredoc_signals(void);
+void	set_default_signals(void);
+void	ignore_signals(void);
 
-// heredoc
+// handlers
+void	handler_sigaction(int sig);
 void	handler_sigint_heredoc(int sig);
+
+// utils
+void	print_newline(int sig);
+void	update_signal_status(t_sh *shell);
 
 #endif

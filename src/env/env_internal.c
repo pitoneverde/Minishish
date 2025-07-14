@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_internal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
+/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:26:22 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/07 15:34:15 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:32:28 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

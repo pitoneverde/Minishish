@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 20:03:29 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 17:35:59 by plichota         ###   ########.fr       */
+/*   Created: 2025/07/13 19:22:18 by plichota          #+#    #+#             */
+/*   Updated: 2025/07/13 22:10:43 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#ifndef PROCESS_H
+# define PROCESS_H
 
-# include "list.h"
-# include "ast.h"
-# include "process.h"
-
-typedef struct s_sh
+typedef struct s_process_data
 {
-	// list of t_env
-	t_list			*env;
-	// for $?
-	int				last_code;
-	// set if running interactively
-	int				is_interactive;
-	// current AST
-	t_ast			*tree;
-	// current readline line
-	char			*line;
-	// dup stdio
-	int				fd_stdin;
-	int				fd_stdout;
-	// current process data
-	t_process_data	process;
-}	t_sh;
+	char	*path;
+	char	**envp;
+	int		fd_in;
+	int		fd_out;
+	int		is_in_pipeline;
+	int		is_fork;
+}	t_process_data;
 
 #endif

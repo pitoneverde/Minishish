@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:52:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/08 19:32:53 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:48:57 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "signals.h"
 # include "executor.h"
 # include "builtin.h"
-# include "preprocessor.h"
+# include "redirections.h"
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -38,10 +38,13 @@
 // Parse line
 t_ast	*read_command_line(const char *line);
 
+// Process utils
+void	init_process(t_process_data *process);
+void	cleanup_and_exit(t_sh *shell, int exit_code);
+
 // Utils
 void	init_shell(t_sh *shell, char *envp[]);
 void	free_all(t_sh *shell);
-void	cleanup_and_exit(char *path, char **envp, int exit_code, char *err_msg);
 int		is_numeric(const char *str);
 
 void	print_string_matrix(char **matrix);

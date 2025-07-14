@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:30:57 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/10 00:07:20 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/12 22:43:23 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute_builtin_cd(t_ast *ast, t_sh *shell)
 	if (!ast)
 		return (perror("Ast error"), 1);
 	if (ast->argc > 2)
-		return (perror("Too many arguments"), 1); // ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		return (perror("Too many arguments"), 1);
 	if (ast->argc == 1)
 		path = get_env_value(shell->env, "HOME");
 	else

@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:17:05 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/10 17:24:23 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:14:37 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,61 @@
 
 int	is_builtin(t_ast *ast)
 {
+	const char	*cmd;
+	int			is_builtin;
+
+	is_builtin = 0;
 	if (!ast || !ast->argv || !ast->argv[0])
 		return (0);
-	const char *cmd = ast->argv[0];
-	return (
-		ft_strcmp(cmd, "echo") == 0 ||
-		ft_strcmp(cmd, "cd") == 0 ||
-		ft_strcmp(cmd, "pwd") == 0 ||
-		ft_strcmp(cmd, "export") == 0 ||
-		ft_strcmp(cmd, "unset") == 0 ||
-		ft_strcmp(cmd, "env") == 0 ||
-		ft_strcmp(cmd, "exit") == 0
-	);
+	cmd = ast->argv[0];
+	if (
+		ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "exit") == 0
+	)
+		is_builtin = 1;
+	return (is_builtin);
 }
 
-int	executor(t_ast *ast, int fd_in, int fd_out, t_sh *shell, int is_fork, int is_in_pipeline)
+int	dispatch_command(t_ast *ast, t_sh *shell)
 {
-	int status;
+	int	status;
+
+	if (shell->process.is_fork)
+	{
+		if (is_builtin(ast))
+			status = execute_builtin(ast, shell);
+		else
+			status = execute_command(ast, shell);
+	}
+	else
+		status = spawn_command(ast, shell);
+	if (status == EXIT_SIGQUIT)
+		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+	return (status);
+}
+
+int	executor(t_ast *ast, t_sh *shell)
+{
+	int	status;
 
 	status = 127;
 	if (!ast || !shell)
 		return (status);
-	// print_ast(ast, 1);
 	if (ast_is_redirection(ast))
-		return (executor(ast->left, fd_in, fd_out, shell, is_fork, is_in_pipeline));
+		return (executor(ast->left, shell));
 	if (ast_is_simple_pipeline(ast) || ast->type == AST_PIPE)
-		status = execute_pipeline(ast, fd_in, fd_out, shell, is_fork);
+		status = execute_pipeline(ast, shell);
 	else if (ast_is_command(ast))
-	{
-		if (is_fork) // uso il padre per eseguire direttamente
-		{
-			if (is_builtin(ast))
-				status = execute_builtin(ast, fd_in, fd_out, shell);
-			else
-				status = execute_command(ast, fd_in, fd_out, shell);
-		}
-		else // processo principale: forki ed esegui cmd o esegui direttamente builtin
-			status = spawn_command(ast, fd_in, fd_out, shell, is_in_pipeline);
-	}
-	else if (ast_is_operator(ast))
-		printf("operator\n"); // status = execute_operator()
+		status = dispatch_command(ast, shell);
 	else
 		return (0);
-	if (g_signal_status != 0)
-	{
-		shell->last_code = g_signal_status;
-		g_signal_status = 0;
-	}
-	else if (!is_fork) // prendere solo status ultimo figlio (non forkato)
+	update_signal_status(shell);
+	if (!shell->process.is_fork)
 		shell->last_code = status;
 	return (shell->last_code);
 }

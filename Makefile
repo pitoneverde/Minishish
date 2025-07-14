@@ -67,7 +67,6 @@ SRCS 		:= \
 	$(SRC_DIR)/env/env.c \
 	$(SRC_DIR)/env/env_internal.c \
 	$(SRC_DIR)/env/env_utils.c \
-	$(SRC_DIR)/feature1/sum.c \
 	$(SRC_DIR)/utils/utils.c \
 	$(SRC_DIR)/utils/tokenizer_utils.c \
 	$(SRC_DIR)/utils/lexer_utils.c \
@@ -75,13 +74,16 @@ SRCS 		:= \
 	$(SRC_DIR)/utils/parser_utils.c \
 	$(SRC_DIR)/utils/parser_helpers.c \
 	$(SRC_DIR)/utils/matrix_utils.c \
+	$(SRC_DIR)/utils/process_utils.c \
 	$(SRC_DIR)/expander/expand.c \
 	$(SRC_DIR)/expander/expand_token.c \
 	$(SRC_DIR)/expander/expander_utils.c \
-	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/signals/signals.c \
+	$(SRC_DIR)/signals/signals_handlers.c \
+	$(SRC_DIR)/signals/signals_utils.c \
 	$(SRC_DIR)/executor/executor.c \
 	$(SRC_DIR)/executor/exec_cmd.c \
+	$(SRC_DIR)/executor/exec_cmd_utils.c \
 	$(SRC_DIR)/executor/handle_redir.c \
 	$(SRC_DIR)/executor/handle_heredoc.c \
 	$(SRC_DIR)/executor/fd_utils.c \
@@ -225,5 +227,8 @@ fclean: clean tclean
 	@$(MAKE) fclean -C $(LIBAST_DIR) --silent
 
 re: fclean all
+
+val: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --suppressions=good.supp ./$(NAME)
 
 .PHONY: all test test2 clean fclean tclean re

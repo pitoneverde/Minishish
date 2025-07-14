@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 23:13:51 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 21:20:43 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/13 22:28:37 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_std_fd(int fd_in, int fd_out)
 {
-	if (fd_in != STDIN_FILENO)
+	if (fd_in != STDIN_FILENO && fd_in != -1)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 		{
@@ -23,7 +23,7 @@ void	set_std_fd(int fd_in, int fd_out)
 		}
 		close(fd_in);
 	}
-	if (fd_out != STDOUT_FILENO)
+	if (fd_out != STDOUT_FILENO && fd_out != -1)
 	{
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 		{

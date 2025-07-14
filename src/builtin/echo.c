@@ -6,28 +6,28 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:47:07 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:53:06 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/12 22:45:01 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_valid_flag_n(const char *arg)
+int	is_valid_flag_n(const char *arg)
 {
+	int	i;
+
 	if (!arg || arg[0] != '-' || arg[1] != 'n')
 		return (0);
-
-	int i = 2;
+	i = 2;
 	while (arg[i] == 'n')
 		i++;
-
 	return (arg[i] == '\0');
 }
 
 int	execute_builtin_echo(t_ast *ast, int fd_out)
 {
-	int i;
-	int newline;
+	int	i;
+	int	newline;
 
 	i = 1;
 	newline = 1;

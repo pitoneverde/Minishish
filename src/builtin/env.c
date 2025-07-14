@@ -6,20 +6,20 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 18:39:34 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/09 22:52:33 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/12 22:45:48 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // stampa tutte le variabili env esportabili
-int		execute_builtin_env(t_ast *ast, int fd_out, t_sh *shell)
+int	execute_builtin_env(t_ast *ast, int fd_out, t_sh *shell)
 {
 	t_list	*node;
 	t_env	*entry;
 
 	if (!ast)
-		return(perror("ast error"), 1);
+		return (perror("ast error"), 1);
 	if (ast->argc > 1)
 		return (perror("env: too many arguments"), 1);
 	node = shell->env;
