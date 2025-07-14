@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:26:14 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:16:36 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 20:58:45 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ast_free(t_ast *tree)
 	ast_free(tree->right);
 	if (tree->value)
 		free(tree->value);
+	if (tree->error)
+		free(tree->error);
 	if (tree->argv)
 		mtxfree_str(tree->argv);
 	if (tree->args)

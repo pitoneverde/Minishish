@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/14 18:23:12 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 21:20:10 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ void	init_shell(t_sh *shell, char *envp[])
 
 t_ast	*read_command_line(const char *line)
 {
-	t_list		*raw;
-	t_list		*lexed;
-	t_ast		*tree;
-	const char	*err;
+	t_list	*raw;
+	t_list	*lexed;
+	t_ast	*tree;
 
 	if (!*line)
 		return (NULL);
@@ -40,9 +39,8 @@ t_ast	*read_command_line(const char *line)
 	tree = parse(lexed);
 	if (!tree)
 		return (NULL);
-	err = ast_get_error(tree);
-	if (err)
-		printf("Parse error: %s\n", err);
+	if (ast_has_error(tree) && tree && tree->error)
+		printf("❌ Parse error: %s\n", tree->error);
 	free_raw_tokens(&raw);
 	free_token_list(&lexed);
 	return (tree);

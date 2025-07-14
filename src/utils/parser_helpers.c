@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:06:53 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:20:57 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 21:01:52 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_ast	*syntax_error_token(char *token_value)
 	sb_append_char(sb, '`');
 	msg = sb_build(sb);
 	err = ast_error(msg);
-	free(msg);
 	sb_free(sb);
 	if (!err)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:50:13 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:32:31 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 21:15:56 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ast_is_valid(t_ast *node)
 		return (ast_pipe_is_valid(node));
 	else if (ast_is_redirection(node))
 		return (ast_redir_is_valid(node));
-	node->error = "newline";
+	node->error = ft_strdup("newline");
 	return (0);
 }
 
@@ -63,17 +63,17 @@ static int	ast_redir_is_valid(t_ast *node)
 {
 	if (!node->right)
 	{
-		node->error = node->value;
+		node->error = ft_strdup(node->value);
 		return (0);
 	}
 	if (node->right->type != AST_LITERAL || !node->right->value)
 	{
-		node->error = node->value;
+		node->error = ft_strdup(node->value);
 		return (0);
 	}
 	if (node->left && !ast_is_valid(node->left))
 	{
-		node->error = "newline";
+		node->error = ft_strdup("newline");
 		return (0);
 	}
 	return (1);
@@ -83,12 +83,12 @@ static int	ast_pipe_is_valid(t_ast *node)
 {
 	if (!node->left)
 	{
-		node->error = "|";
+		node->error = ft_strdup("|");
 		return (0);
 	}
 	if (!node->right)
 	{
-		node->error = "newline";
+		node->error = ft_strdup("newline");
 		return (0);
 	}
 	if (!ast_is_valid(node->left) || !ast_is_valid(node->right))
@@ -100,7 +100,7 @@ static int	ast_literal_is_valid(t_ast *node)
 {
 	if (!node->value)
 	{
-		node->error = "newline";
+		node->error = ft_strdup("newline");
 		return (0);
 	}
 	return (1);
@@ -110,7 +110,7 @@ static int	ast_cmd_is_valid(t_ast *node)
 {
 	if (!node->argv || !node->argv[0])
 	{
-		node->error = "newline";
+		node->error = ft_strdup("newline");
 		return (0);
 	}
 	return (1);

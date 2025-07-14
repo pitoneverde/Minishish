@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:28:48 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:22:52 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 21:10:25 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static t_ast	*validate_ast_node(t_ast *node)
 	if (!ast_is_valid(node))
 	{
 		if (node->error)
-			msg = node->error;
+			msg = ft_strdup(node->error);
 		else
-			msg = "newline";
-		return (syntax_error_token((char *)msg));
+			msg = ft_strdup("newline");
+		return (syntax_error_token(ft_strdup((char *)msg)));
 	}
 	return (node);
 }
