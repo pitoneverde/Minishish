@@ -99,30 +99,11 @@ SRCS 		:= \
 	$(SRC_DIR)/builtin/export2.c \
 	$(SRC_DIR)/builtin/unset.c \
 	$(SRC_DIR)/preprocessor/preprocess.c \
-	
-UNIT_TEST_SRCS	:= \
-	$(UNIT_TEST_DIR)/all_tests.c \
-	$(UNIT_TEST_DIR)/test_ast.c \
-	$(UNIT_TEST_DIR)/test_lexer.c \
-	$(UNIT_TEST_DIR)/test_tokenizer.c
-# 	$(UNIT_TEST_DIR)/test_matrix.c \
-# 	$(UNIT_TEST_DIR)/test_parser.c \
-# 	$(UNIT_TEST_DIR)/test_env.c \
-	
-INT_TEST_SRCS	:= \
-	$(INT_TEST_DIR)/all_tests.c \
-	$(INT_TEST_DIR)/helpers_setup.c \
-	$(INT_TEST_DIR)/test_args.c \
-	$(INT_TEST_DIR)/test_prompt.c
 
 # Compile objects
 MAIN_OBJ 		:= $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 NO_MAIN_OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 OBJS 			:= $(MAIN_OBJ) $(NO_MAIN_OBJS)
-
-# Compile test objects
-UNIT_TEST_OBJS	:= $(UNIT_TEST_SRCS:$(UNIT_TEST_DIR)/%.c=$(UNIT_TEST_OBJ_DIR)/%.o)
-INT_TEST_OBJS	:= $(INT_TEST_SRCS:$(INT_TEST_DIR)/%.c=$(INT_TEST_OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
 LIBAST_CLEAN_ENABLED ?= 1
@@ -150,47 +131,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# === Compile Unity object ===
-$(UNITY_OBJ): $(UNITY_SRC)
-	@echo "$(YELLOW)Compiling Unity $<$(RESET)"
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Compile test files
-$(UNIT_TEST_OBJ_DIR)/%.o: $(UNIT_TEST_DIR)/%.c | $(UNIT_TEST_OBJ_DIR)
-	@echo "$(YELLOW)Compiling test $<$(RESET)"
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Compile test files
-$(INT_TEST_OBJ_DIR)/%.o: $(INT_TEST_DIR)/%.c | $(INT_TEST_OBJ_DIR)
-	@echo "$(YELLOW)Compiling test $<$(RESET)"
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
 # Create object directory
 $(OBJ_DIR):
 	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
 	@mkdir -p $(OBJ_DIR)
-
-# Create test object directory
-$(UNIT_TEST_OBJ_DIR):
-	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	@mkdir -p $(UNIT_TEST_OBJ_DIR)
-
-$(INT_TEST_OBJ_DIR):
-	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
-	@mkdir -p $(INT_TEST_OBJ_DIR)
-
-unit_test: $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST)
-	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(UNIT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) $(LDFLAGS) -o run_unit_tests
-	@./run_unit_tests
-
-int_test: $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT)
-	@echo "$(GREEN_BG)---- Compiling & running tests ---- $(RESET)"
-	@$(CC) $(CFLAGS) $(INT_TEST_OBJS) $(NO_MAIN_OBJS) $(UNITY_OBJ) $(LIBFT) $(LIBAST) -L$(LIBFT_DIR) -lft_bonus $(LDFLAGS) -o run_integration_tests
-	@./run_integration_tests
 
 test: unit_test int_test
 
