@@ -6,13 +6,13 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:39:29 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 18:53:04 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:27:02 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-static void	handle_args(t_ast *arg, t_list *exp, char *exp_str);
+static void	handle_args(t_ast *arg, t_list **exp, char *exp_str);
 
 // Expands any other token->value field (except commands)
 void	expand_token_value(t_ast *node, t_sh *shell)
@@ -48,7 +48,7 @@ void	expand_command_args(t_ast *cmd, t_sh *shell)
 			cmd->error = "expansion error";
 			return (ft_lstclear(&exp, NULL));
 		}
-		handle_args(arg, exp, exp_str);
+		handle_args(arg, &exp, exp_str);
 		free(exp_str);
 		curr = curr->next;
 	}
@@ -57,22 +57,22 @@ void	expand_command_args(t_ast *cmd, t_sh *shell)
 	ft_lstclear(&exp, NULL);
 }
 
-static void	handle_args(t_ast *arg, t_list *exp, char *exp_str)
+static void	handle_args(t_ast *arg, t_list **exp, char *exp_str)
 {
 	t_list	*new_arg;
 	char	*new_exp_str;
 
 	if (arg->quote == N_QUOTE)
-		split_command_args(&exp, exp_str);
+		split_command_args(exp, exp_str);
 	else
 	{
 		new_exp_str = ft_strdup(exp_str);
 		if (!new_exp_str)
-			return (ft_lstclear(&exp, NULL));
+			return (ft_lstclear(exp, NULL));
 		new_arg = ft_lstnew(new_exp_str);
 		if (!new_arg)
-			return (ft_lstclear(&exp, NULL));
-		ft_lstadd_back(&exp, new_arg);
+			return (ft_lstclear(exp, NULL));
+		ft_lstadd_back(exp, new_arg);
 	}
 }
 
