@@ -9,6 +9,8 @@ void run_test(const char *input)
 {
 	printf("\n=== Test: '%s' ===\n", input);
 
+	if (!input || !*input)
+		return ;
 	t_list *raw = tokenize(input);
 	// printf("Raw tokens:\n");
 	// print_raw_tokens(raw);
@@ -25,7 +27,6 @@ void run_test(const char *input)
 		free_token_list(&lexed);
 		return;
 	}
-
 	// if (ast_has_error(tree))
 	// {
 	// 	printf("❌ Parse error\n");
@@ -87,6 +88,7 @@ int main(int argc, char *argv[], char *envp[])
 	run_test("|cat"); // start pipe
 	run_test("echo hello || echo world"); // no support for logical operands
 	run_test("echo hello | >");  // no command after pipe
+	run_test(NULL);
 	// run_test("||||||||");
 	free_all(&shell);
 	return 0;

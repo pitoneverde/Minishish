@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:22:58 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/14 01:08:25 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:17:09 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_ast	*read_command_line(const char *line)
 	t_list		*lexed;
 	t_ast		*tree;
 
+	if (!*line)
+		return (NULL);
 	raw = tokenize(line);
 	if (!raw)
 		return (NULL);
