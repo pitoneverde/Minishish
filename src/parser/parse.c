@@ -6,13 +6,13 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 04:40:05 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 00:35:37 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 18:52:41 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static t_ast	*parse_redirection(t_parser *p, t_ast *cmd);
+static t_ast	*parse_arg(t_parser *p, t_ast *cmd);
 
 // driver: checks if there's some errors propagated from the lexer
 t_ast	*parse(t_list *lexemes)
@@ -69,10 +69,7 @@ t_ast	*parse_pipeline(t_parser *p)
 // Parse a command: simple_command redirection*
 t_ast	*parse_command(t_parser *p)
 {
-	t_ast		*base_cmd;
-	t_ast		*cmd;
-	t_ast		*arg;
-	t_list		*new_arg;
+	t_ast	*cmd;
 
 	cmd = parse_simple_command(p);
 	if (!cmd)
@@ -87,18 +84,7 @@ t_ast	*parse_command(t_parser *p)
 		}
 		else if (tkn_is_word(p->current))
 		{
-			arg = ast_new(AST_LITERAL, p->current->value);
-			if (!arg)
-				return (ast_free(cmd), NULL);
-			base_cmd = unwrap_command(cmd);
-			if (!base_cmd)
-				return (syntax_error_token(p->current->value));
-			arg->quote = p->current->quote;
-			new_arg = ft_lstnew(arg);
-			if (!new_arg)
-				return (ast_free(cmd), ast_free(arg), NULL);
-			ft_lstadd_back(&base_cmd->args, new_arg);
-			advance(p);
+			parse_arg(p, cmd);
 		}
 		else
 			break ;
@@ -134,39 +120,22 @@ t_ast	*parse_simple_command(t_parser *p)
 	return (cmd);
 }
 
-// Helper to parse a single redirection and return the updated command node
-static t_ast	*parse_redirection(t_parser *p, t_ast *cmd)
+static t_ast	*parse_arg(t_parser *p, t_ast *cmd)
 {
-	char	*op;
-	char	*filename;
-	t_ast	*f_node;
-	t_ast	*r_node;
-	t_token	*redir;
+	t_ast	*base_cmd;
+	t_ast	*arg;
+	t_list	*new_arg;
 
-	redir = p->current;
+	arg = ast_new(AST_LITERAL, p->current->value);
+	if (!arg)
+		return (ast_free(cmd), NULL);
+	base_cmd = unwrap_command(cmd);
+	if (!base_cmd)
+		return (syntax_error_token(p->current->value));
+	arg->quote = p->current->quote;
+	new_arg = ft_lstnew(arg);
+	if (!new_arg)
+		return (ast_free(cmd), ast_free(arg), NULL);
+	ft_lstadd_back(&base_cmd->args, new_arg);
 	advance(p);
-	if (!p->current)
-		return (ast_free(cmd), syntax_error_token("newline"));
-	if (!tkn_is_word(p->current))
-		return (ast_free(cmd), syntax_error_token(p->current->value));
-	op = ft_strdup(redir->value);
-	filename = ft_strdup(p->current->value);
-	f_node = ast_new(AST_LITERAL, filename);
-	if (f_node)
-		f_node->quote = p->current->quote;
-	free(filename);
-	advance(p);
-	if (!f_node || !tkn_is_redirection(redir))
-	{
-		free(op);
-		ast_free(cmd);
-		ast_free(f_node);
-		return (syntax_error_token(redir->value));
-	}
-	r_node = ast_binary_op((t_ast_type)redir->type, op, astdup(cmd), f_node);
-	ast_free(cmd);
-	free(op);
-	if (!r_node)
-		return (ast_free(f_node), syntax_error_token(p->current->value));
-	return (r_node);
 }

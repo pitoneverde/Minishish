@@ -6,7 +6,7 @@
 /*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:28:48 by sabruma           #+#    #+#             */
-/*   Updated: 2025/07/14 00:19:23 by sabruma          ###   ########.fr       */
+/*   Updated: 2025/07/14 18:22:52 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static t_ast	*validate_ast_node(t_ast *node)
 // Returns the error message from the first AST_ERROR node found in the tree.
 // Searches current node, then left subtree, then right subtree.
 // Returns NULL if no error node is found.
+// DO NOT FREE ERROR STRING
 const char	*ast_get_error(const t_ast *node)
 {
 	const char	*err;

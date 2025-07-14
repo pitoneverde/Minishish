@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: sabruma <sabruma@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:30:30 by plichota          #+#    #+#             */
-/*   Updated: 2025/07/14 17:42:44 by plichota         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:33:05 by sabruma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	handle_heredoc(t_ast *ast, t_sh *shell)
 	init_heredoc_signals();
 	if (pipe(fd) == -1)
 		return (restore_state(saved_stdin), perror("pipe"), -1);
-	status = heredoc_loop(ast->right->value,fd[1], shell);
+	status = heredoc_loop(ast->right->value, fd[1], shell);
 	restore_state(saved_stdin);
 	close(fd[1]);
 	if (status == EXIT_SIGINT)
